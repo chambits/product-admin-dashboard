@@ -1,19 +1,58 @@
+import { ProductOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu as AntMenu } from "antd";
-import { useAppSelector } from "../app/hooks";
-import { selectCategoryMenuItems } from "../app/store/selectors/categorySelectors";
-import { useGetCategoriesQuery } from "../features/categories/categoryApi";
+import { useCategoryMenuItems } from "../app/store/selectors/categorySelectors";
+import { useNavigate } from "react-router-dom";
+
+type MenuKey = "products-list" | "dashboard" | "categories" | "products";
+
+export const ROUTE_MAP: Record<MenuKey, string> = {
+  "products-list": "/products",
+  dashboard: "/",
+  categories: "/categories",
+  products: "/products",
+};
 
 const Menu = () => {
-  useGetCategoriesQuery();
-  const menuItems = useAppSelector(selectCategoryMenuItems);
+  const menuItems = useCategoryMenuItems();
+  const navigate = useNavigate();
+
+  const menuItemClickHandler = ({ key }: { key: MenuKey }) => {
+    const route = ROUTE_MAP[key] ?? `/categories/${key}`;
+    navigate(route);
+  };
+
   return (
     <AntMenu
-      //   onClick={onClick}
+      onClick={(info) => menuItemClickHandler({ key: info.key as MenuKey })}
       theme="dark"
-      defaultSelectedKeys={["1"]}
-      defaultOpenKeys={["sub1"]}
+      defaultSelectedKeys={["dashboard"]}
+      defaultOpenKeys={["dashboard"]}
       mode="inline"
-      items={menuItems}
+      items={[
+        {
+          key: "dashboard",
+          label: "Dashboard",
+          icon: <UserOutlined />,
+        },
+        {
+          key: "products",
+          label: "Products",
+          icon: <ProductOutlined />,
+          children: [
+            {
+              key: "products-list",
+              label: "Products List",
+              icon: <UserOutlined />,
+            },
+            {
+              key: "categories",
+              label: "Categories",
+              icon: <ProductOutlined />,
+              children: menuItems,
+            },
+          ],
+        },
+      ]}
     />
   );
 };

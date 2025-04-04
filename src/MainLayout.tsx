@@ -3,6 +3,7 @@ import React from "react";
 import Breadcrumb from "./components/Breadcrumb";
 import Header from "./components/Header";
 import Sider from "./components/Sider";
+import { useGetCategoriesQuery } from "./features/categories/categoryApi";
 
 const { Content } = Layout;
 
@@ -11,6 +12,7 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  useGetCategoriesQuery();
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider />

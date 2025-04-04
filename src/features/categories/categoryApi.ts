@@ -1,14 +1,6 @@
 import { apiSlice } from "../../app/api/apiSlice";
 import { endpoints } from "../../endpoints";
-
-export interface Category {
-  id: number;
-  parent_id?: number;
-  name: string;
-  slug: string;
-  level: number;
-}
-
+import { Category } from "./types";
 export const categoryApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
