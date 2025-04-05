@@ -1,11 +1,16 @@
-import { Breadcrumb as AntBreadcrumb } from "antd";
+import { Breadcrumb as AntBreadcrumb, Typography, Flex } from "antd";
 
 const Breadcrumb = () => {
   return (
-    <AntBreadcrumb style={{ margin: "16px 16px" }}>
-      <AntBreadcrumb.Item>User</AntBreadcrumb.Item>
-      <AntBreadcrumb.Item>Bill</AntBreadcrumb.Item>
-    </AntBreadcrumb>
+    <>
+      <Flex vertical align="flex-start" style={{ margin: 16 }}>
+        <AntBreadcrumb>
+          <AntBreadcrumb.Item>User</AntBreadcrumb.Item>
+          <AntBreadcrumb.Item>Bill</AntBreadcrumb.Item>
+        </AntBreadcrumb>
+        <Typography.Title level={3}>Products</Typography.Title>
+      </Flex>
+    </>
   );
 };
 

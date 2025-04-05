@@ -17,7 +17,7 @@ export const selectCategoryMenuItems = createSelector(
     const categoryMap = new Map<string | null, Category[]>();
 
     categories.forEach((category: Category) => {
-      const parentId = category.parent_id ?? null;
+      const parentId = category.parentId ?? null;
       if (!categoryMap.has(parentId)) {
         categoryMap.set(parentId, []);
       }

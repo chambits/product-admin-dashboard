@@ -1,4 +1,4 @@
-import { Card, Layout } from "antd";
+import { Layout } from "antd";
 import React from "react";
 import Breadcrumb from "./components/Breadcrumb";
 import Header from "./components/Header";
@@ -22,14 +22,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Content
           style={{
             margin: "0 16px",
-            padding: 24,
-            background: "#fff",
+            // background: "#fff",
             minHeight: 280,
             borderRadius: 10,
             marginBottom: 16,
           }}
         >
-          <Card>{children}</Card>
+          {children}
         </Content>
       </Layout>
     </Layout>

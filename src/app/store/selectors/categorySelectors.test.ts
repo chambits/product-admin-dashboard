@@ -4,12 +4,12 @@ import { RootState } from "..";
 import { Category } from "../../../features/categories/types";
 
 const mockCategories: Category[] = [
-  { id: "C1", parent_id: null, name: "Electronics" },
-  { id: "C2", parent_id: "C1", name: "Smartphones" },
-  { id: "C3", parent_id: "C1", name: "Laptops" },
-  { id: "C4", parent_id: null, name: "Furniture" },
-  { id: "C5", parent_id: "C4", name: "Chairs" },
-  { id: "C6", parent_id: "C4", name: "Tables" },
+  { id: "c1", parentId: null, name: "Electronics" },
+  { id: "c2", parentId: "c1", name: "Smartphones" },
+  { id: "c3", parentId: "c1", name: "Laptops" },
+  { id: "c4", parentId: null, name: "Furniture" },
+  { id: "c5", parentId: "c4", name: "Chairs" },
+  { id: "c6", parentId: "c4", name: "Tables" },
 ];
 
 describe("selectCategoryMenuItems", () => {
@@ -37,19 +37,19 @@ describe("selectCategoryMenuItems", () => {
 
     expect(result).toEqual([
       {
-        key: "C1",
+        key: "c1",
         label: "Electronics",
         children: [
-          { key: "C2", label: "Smartphones", children: [] },
-          { key: "C3", label: "Laptops", children: [] },
+          { key: "c2", label: "Smartphones", children: undefined },
+          { key: "c3", label: "Laptops", children: undefined },
         ],
       },
       {
-        key: "C4",
+        key: "c4",
         label: "Furniture",
         children: [
-          { key: "C5", label: "Chairs", children: [] },
-          { key: "C6", label: "Tables", children: [] },
+          { key: "c5", label: "Chairs", children: undefined },
+          { key: "c6", label: "Tables", children: undefined },
         ],
       },
     ]);
