@@ -35,7 +35,7 @@ A responsive product management dashboard built with React and TypeScript. This 
 1. Clone the repository:
 
    ```
-   git clone https://github.com/yourusername/product-admin-dashboard.git
+   git clone https://github.com/chambits/product-admin-dashboard.git
    cd product-admin-dashboard
    ```
 
