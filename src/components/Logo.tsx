@@ -7,26 +7,26 @@ const { Title } = Typography;
 interface LogoProps {
   collapsed?: boolean;
   title?: string;
-  style?: React.CSSProperties;
+  color?: "black" | "white";
 }
 
 export const Logo = ({
   collapsed = false,
   title = "Home PRO",
-  style,
+  color = "white",
 }: LogoProps) => {
   return (
     <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
-      <Flex align="center" gap={8} justify="center" style={style}>
+      <Flex align="center" gap={8} justify="center">
         {collapsed ? (
-          <HomeOutlined style={{ fontSize: 24 }} />
+          <HomeOutlined style={{ fontSize: 24, color }} />
         ) : (
           <Flex align="center" gap={8} justify="center">
-            <HomeOutlined style={{ fontSize: 24, color: "white" }} />
+            <HomeOutlined style={{ fontSize: 24, color }} />
             <Title
               level={1}
               style={{
-                color: "white",
+                color,
                 textAlign: "center",
                 marginTop: 16,
               }}

@@ -19,7 +19,7 @@ const Sider = () => {
       width="250"
       style={{
         background: "#001529",
-        // overflowY: "auto",
+        overflowY: "auto",
         // overflowX: "hidden",
         // minHeight: "100vh",
       }}

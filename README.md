@@ -1,54 +1,86 @@
-# React + TypeScript + Vite
+# Product Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive product management dashboard built with React and TypeScript. This application provides a comprehensive interface for managing products, categories, and inventory.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Product Management**: Add, edit, view, and delete products
+- **Category Organization**: Manage product categories
+- **Inventory Tracking**: Track product stock and status
+- **Responsive Design**: Mobile-friendly interface built with Ant Design
+- **Data Visualization**: View product statistics on the dashboard
+- **Authentication**: Secure login system
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: React 19, TypeScript
+- **UI Library**: Ant Design 5
+- **State Management**: Redux Toolkit with RTK Query
+- **Routing**: React Router v7
+- **Data Grid**: AG Grid for efficient data display
+- **Animation**: Framer Motion
+- **Form Handling**: Antd Forms
+- **Testing**: Vitest with React Testing Library
+- **API**: JSON Server (development)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Getting Started
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Prerequisites
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Node.js (v16+)
+- Yarn or npm
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Installation
+
+1. Clone the repository:
+
+   ```
+   git clone https://github.com/yourusername/product-admin-dashboard.git
+   cd product-admin-dashboard
+   ```
+
+2. Install dependencies:
+
+   ```
+   yarn install
+   ```
+
+3. Start the development server:
+
+   ```
+   yarn dev
+   ```
+
+4. Start the API server:
+
+   ```
+   yarn server
+   ```
+
+5. Open your browser and navigate to:
+   ```
+   http://localhost:5173
+   ```
+
+## Available Scripts
+
+- `yarn dev`: Start development server
+- `yarn build`: Build for production
+- `yarn preview`: Preview production build
+- `yarn server`: Start JSON Server API
+- `yarn test`: Run tests
+- `yarn coverage`: Generate test coverage report
+- `yarn lint`: Run ESLint
+
+## Project Structure
+
+- `/src`: Source code
+  - `/app`: Core app configuration (store, API)
+  - `/components`: Reusable UI components
+  - `/features`: Feature-based modules
+  - `/layouts`: Page layouts
+  - `/pages`: Page components
+  - `/providers`: Context providers
+  - `/utils`: Utility functions
+- `/db`: JSON Server database
+- `/public`: Static assets

@@ -30,18 +30,6 @@ const DashboardPage = () => {
             </h2>
           </Card>
         </Col>
-
-        {/* Recent Activity */}
-        {/* <Col xs={24} md={12}>
-        <LastModifiedProduct />
-      </Col> */}
-
-        {/* Could add more widgets here */}
-        <Col xs={24} md={12}>
-          <Card title="Popular Products">
-            {/* Add popular products list */}
-          </Card>
-        </Col>
       </Row>
     </PageTransition>
   );

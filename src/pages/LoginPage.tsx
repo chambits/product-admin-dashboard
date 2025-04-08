@@ -54,7 +54,7 @@ const LoginPage = () => {
       <LoginWrapper>
         <LoginCard>
           <LoginHeader>
-            <Logo style={{ color: "#1f2937" }} />
+            <Logo color="black" />
             <Text type="secondary">
               Welcome Back! Enter your details to Sign In
             </Text>
