@@ -1,6 +1,6 @@
 # Product Admin Dashboard
 
-A responsive product management dashboard built with React and TypeScript. This application provides a comprehensive interface for managing products, categories, and inventory.
+A responsive product management dashboard built with React, TypeScript and Ant Design 5. This application provides a comprehensive interface for managing products, categories, and inventory.
 
 ## Features
 
@@ -24,11 +24,6 @@ A responsive product management dashboard built with React and TypeScript. This 
 - **API**: JSON Server (development)
 
 ## Getting Started
-
-### Prerequisites
-
-- Node.js (v16+)
-- Yarn or npm
 
 ### Installation
 
