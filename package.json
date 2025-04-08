@@ -15,14 +15,21 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@reduxjs/toolkit": "^2.6.1",
     "ag-grid-react": "^33.2.1",
     "antd": "^5.24.6",
+    "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
+    "formik": "^2.4.6",
+    "framer-motion": "^12.6.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.4.1"
+    "react-router-dom": "^7.4.1",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
@@ -39,8 +46,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "jsdom": "^26.0.0",
-    "json-server": "1.0.0-beta.3",
-    "json-server-auth": "^2.1.0",
+    "json-server": "0.17.4",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",

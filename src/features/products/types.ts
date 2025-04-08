@@ -1,3 +1,5 @@
+import { StatusType } from "../../hooks/useStatusColor";
+
 export interface Product {
   id: string;
   name: string;
@@ -5,11 +7,15 @@ export interface Product {
   description: string;
   categoryId: string;
   stock: number;
-  status: string;
+  status: StatusType;
   attributes: ProductAttribute[];
+  createdDate: string;
+  modifiedDate: string;
 }
+
+export type ProductAttributeValue = string | number | boolean | string[];
 
 export interface ProductAttribute {
   code: string;
-  value: string | number | boolean;
+  value: ProductAttributeValue;
 }

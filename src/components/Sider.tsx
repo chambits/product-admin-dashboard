@@ -1,11 +1,13 @@
 import { Flex, Layout } from "antd";
 import { useUiSlice } from "../app/uiSlice";
 import Menu from "./Menu";
+import { Logo } from "./Logo";
 
 const { Sider: AntSider } = Layout;
 
 const Sider = () => {
   const { siderCollapsed, setSiderCollapsed } = useUiSlice();
+
   return (
     <AntSider
       trigger={null}
@@ -14,23 +16,16 @@ const Sider = () => {
       onCollapse={setSiderCollapsed}
       breakpoint="lg"
       collapsedWidth="60"
-      width="300"
+      width="250"
       style={{
         background: "#001529",
-        overflowY: "auto",
-        overflowX: "hidden",
-        minHeight: "100vh",
+        // overflowY: "auto",
+        // overflowX: "hidden",
+        // minHeight: "100vh",
       }}
     >
-      <Flex vertical>
-        <div
-          className="logo"
-          style={{
-            height: "32px",
-            margin: "16px",
-            background: "rgba(255, 255, 255, 0.2)",
-          }}
-        />
+      <Flex vertical align="center" gap={8} style={{ marginTop: 16 }}>
+        <Logo collapsed={siderCollapsed} />
         <Menu />
       </Flex>
     </AntSider>

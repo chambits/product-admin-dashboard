@@ -1,17 +1,13 @@
 import { Layout } from "antd";
 import React from "react";
-import Breadcrumb from "./components/Breadcrumb";
-import Header from "./components/Header";
-import Sider from "./components/Sider";
-import { useGetCategoriesQuery } from "./features/categories/categoryApi";
+import Breadcrumb from "../components/Breadcrumb";
+import Header from "../components/Header";
+import Sider from "../components/Sider";
+import { useGetCategoriesQuery } from "../features/categories/categoryApi";
+import { Outlet } from "react-router-dom";
 
 const { Content } = Layout;
-
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
-
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: React.FC = () => {
   useGetCategoriesQuery();
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -22,13 +18,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Content
           style={{
             margin: "0 16px",
-            // background: "#fff",
             minHeight: 280,
             borderRadius: 10,
             marginBottom: 16,
           }}
         >
-          {children}
+          <Outlet />
         </Content>
       </Layout>
     </Layout>

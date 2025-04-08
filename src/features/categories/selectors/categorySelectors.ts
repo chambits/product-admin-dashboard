@@ -1,8 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit";
 import type { MenuProps } from "antd";
-import { useAppSelector } from "../../hooks";
-import { RootState } from "../index";
-import { Category } from "../../../features/categories/types";
+import { RootState } from "../../../app/store/index";
+import { Category } from "../types";
+import { useAppSelector } from "../../../app/store/hooks";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -39,7 +39,28 @@ export const selectCategoryMenuItems = createSelector(
     return buildTree(null);
   }
 );
+
+export const selectCategoryNames = createSelector(
+  [selectCategories],
+  (categories): { [key: string]: string } => {
+    if (!categories) return {};
+
+    return categories.reduce(
+      (acc: { [key: string]: string }, category: Category) => ({
+        ...acc,
+        [category.id]: category.name,
+      }),
+      {}
+    );
+  }
+);
+
 export const useCategoryMenuItems = (): MenuItem[] => {
   const menuItems = useAppSelector(selectCategoryMenuItems);
   return menuItems;
+};
+
+export const useCategoryNames = (): { [key: string]: string } => {
+  const categoryNames = useAppSelector(selectCategoryNames);
+  return categoryNames;
 };

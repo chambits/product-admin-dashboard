@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest";
 import { selectCategoryMenuItems } from "./categorySelectors";
-import { RootState } from "..";
-import { Category } from "../../../features/categories/types";
+import { RootState } from "../../../app/store";
+import { Category } from "../types";
 
 const mockCategories: Category[] = [
   { id: "c1", parentId: null, name: "Electronics" },

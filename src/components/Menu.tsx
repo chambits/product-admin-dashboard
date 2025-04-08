@@ -1,20 +1,17 @@
-import {
-  ProductOutlined,
-  UserOutlined,
-  OrderedListOutlined,
-  ContainerOutlined,
-} from "@ant-design/icons";
+import { OrderedListOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu as AntMenu } from "antd";
-import { useCategoryMenuItems } from "../app/store/selectors/categorySelectors";
 import { useNavigate } from "react-router-dom";
+import { useCategoryMenuItems } from "../features/categories/selectors/categorySelectors";
 
 type MenuKey = "product-list" | "dashboard" | "categories" | "products";
 
-export const ROUTE_MAP: Record<MenuKey, string> = {
-  "product-list": "/products",
+export const ROUTE_MAP: Record<string, string> = {
   dashboard: "/",
   categories: "/categories",
   products: "/products",
+  productAdd: "/products/new",
+  productDetails: "/products/:id",
+  categoryDetails: "/categories/:id",
 };
 
 const Menu = () => {
@@ -42,17 +39,15 @@ const Menu = () => {
         {
           key: "products",
           label: "Products",
-          icon: <ContainerOutlined />,
+          icon: <OrderedListOutlined />,
           children: [
             {
-              key: "product-list",
+              key: "products",
               label: "Product List",
-              icon: <OrderedListOutlined />,
             },
             {
               key: "categories",
               label: "Categories",
-              icon: <ProductOutlined />,
               children: menuItems,
             },
           ],
