@@ -7,7 +7,6 @@ import { Product, ProductStatus } from "../../features/products/types";
 import { fireEvent, render, screen } from "../../test/test-utils";
 import ProductsPage from "../ProductsPage";
 
-// Mock the hooks
 vi.mock("../../features/products/api", () => ({
   useGetProductsQuery: vi.fn(),
 }));
@@ -20,7 +19,6 @@ vi.mock("../../features/products/selectors/productSelectors", () => ({
   useEnrichedProducts: vi.fn(),
 }));
 
-// Mock child components
 vi.mock("../../features/products/components/LastModifiedProducts", () => ({
   default: () => <div data-testid="last-modified-products" />,
 }));
@@ -128,7 +126,6 @@ describe("ProductsPage", () => {
 
     fireEvent.change(searchInput, { target: { value: "test search" } });
 
-    // Verify that the search text is passed to the product table
     expect(screen.getByTestId("product-table")).toBeInTheDocument();
   });
 

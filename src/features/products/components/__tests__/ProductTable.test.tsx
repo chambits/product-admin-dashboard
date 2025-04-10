@@ -59,11 +59,4 @@ describe("ProductTable", () => {
     expect(screen.getByText("Test Product 1")).toBeInTheDocument();
     expect(screen.getByText("Test Product 2")).toBeInTheDocument();
   });
-
-  //   it("navigates to product details on row click", () => {
-  //     render(<ProductTable data={mockProducts} isLoading={false} />);
-
-  //     fireEvent.click(screen.getByTestId("row-1"));
-  //     expect(mockNavigate).toBeCalled();
-  //   });
 });

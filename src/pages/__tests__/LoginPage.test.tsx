@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen } from "../../test/test-utils";
+import { fireEvent, mockNavigate, render, screen } from "../../test/test-utils";
 import LoginPage from "../LoginPage";
 
 vi.mock("react-router-dom", async () => {
@@ -28,55 +28,31 @@ describe("LoginPage", () => {
     ).toBeInTheDocument();
   });
 
-  //   it("handles successful login", async () => {
-  //     render(<LoginPage />);
+  it("handles successful login", async () => {
+    render(<LoginPage />);
 
-  //     const submitButton = screen.getByRole("button", { name: /sign in/i });
-  //     await fireEvent.click(submitButton);
+    const submitButton = screen.getByRole("button", { name: /sign in/i });
+    await fireEvent.click(submitButton);
 
-  //     expect(localStorage.getItem("token")).toBe("1234567890");
-  //     expect(mockNavigate).toHaveBeenCalledWith("/dashboard", { replace: true });
-  //   });
+    expect(localStorage.getItem("token")).toBe("1234567890");
+    expect(mockNavigate).toHaveBeenCalledWith("/dashboard", { replace: true });
+  });
 
-  //   it("handles failed login", async () => {
-  //     render(
-  //       <MemoryRouter>
-  //         <LoginPage />
-  //       </MemoryRouter>
-  //     );
+  it("redirects to home when no from path is provided", async () => {
+    vi.mock("react-router-dom", async () => {
+      const actual = await vi.importActual("react-router-dom");
+      return {
+        ...actual,
+        useNavigate: vi.fn(),
+        useLocation: () => ({ state: null }),
+      };
+    });
 
-  //     // Mock the form submission with invalid credentials
-  //     const submitButton = screen.getByRole("button", { name: /sign in/i });
-  //     await fireEvent.click(submitButton);
+    render(<LoginPage />);
 
-  //     expect(mockShowNotification).toHaveBeenCalledWith(
-  //       "error",
-  //       "Invalid credentials"
-  //     );
-  //     expect(localStorage.getItem("token")).toBeNull();
-  //     expect(mockNavigate).not.toHaveBeenCalled();
-  //   });
+    const submitButton = screen.getByRole("button", { name: /sign in/i });
+    await fireEvent.click(submitButton);
 
-  //   it("redirects to home when no from path is provided", async () => {
-  //     // Override the useLocation mock for this test
-  //     vi.mock("react-router-dom", async () => {
-  //       const actual = await vi.importActual("react-router-dom");
-  //       return {
-  //         ...actual,
-  //         useNavigate: vi.fn(),
-  //         useLocation: () => ({ state: null }),
-  //       };
-  //     });
-
-  //     render(
-  //       <MemoryRouter>
-  //         <LoginPage />
-  //       </MemoryRouter>
-  //     );
-
-  //     const submitButton = screen.getByRole("button", { name: /sign in/i });
-  //     await fireEvent.click(submitButton);
-
-  //     expect(mockNavigate).toHaveBeenCalledWith("/", { replace: true });
-  //   });
+    expect(mockNavigate).toHaveBeenCalledWith("/", { replace: true });
+  });
 });

@@ -80,9 +80,13 @@ const Header = () => {
 
       <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
         <Space style={{ cursor: "pointer" }}>
-          <Text>{user?.firstName}</Text>
-          <Avatar icon={<UserOutlined />} size={40} />
-          <CaretDownOutlined style={{ fontSize: 12 }} />
+          <Flex gap={8} align="center">
+            <Text color="gray" strong>
+              {user?.firstName}
+            </Text>
+            <Avatar icon={<UserOutlined />} size={40} />
+            <CaretDownOutlined style={{ fontSize: 12 }} />
+          </Flex>
         </Space>
       </Dropdown>
     </AppHeader>

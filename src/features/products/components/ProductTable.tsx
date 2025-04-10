@@ -14,11 +14,12 @@ import {
 } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { StatusBadge } from "../../../components/StatusBadge";
+import { Badge } from "../../../components/ui/Badge";
 import { RouteMap } from "../../../constants";
 import { formatDate } from "../../../utils/dateFormat";
 import { useCategoryNames } from "../../categories/selectors/categorySelectors";
 import { useDeleteProduct } from "..//hooks/useDeleteProduct";
+import { useStatusColor } from "../hooks/useStatusColor";
 import { Product, ProductStatus } from "../types";
 import { ProductEditView } from "./ProductEditView";
 
@@ -48,6 +49,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
   const categoryNames = useCategoryNames();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const { deleteProductData } = useDeleteProduct();
+  const { getStatusColor } = useStatusColor();
 
   useEffect(() => {
     if (selectedProduct) {
@@ -56,7 +58,9 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
   }, [selectedProduct]);
 
   const statusCellRenderer = (params: { value: ProductStatus }) => {
-    return <StatusBadge status={params.value} />;
+    return (
+      <Badge color={getStatusColor(params.value)} content={params.value} />
+    );
   };
 
   const priceCellRenderer = (params: { value: number; data: Product }) => {
@@ -166,7 +170,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
       cellRenderer: actionsCellRenderer,
       sortable: false,
       filter: false,
-      width: 100,
+      width: 120,
       pinned: "right",
     },
   ]);

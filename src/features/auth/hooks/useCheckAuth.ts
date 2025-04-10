@@ -22,6 +22,7 @@ export const useCheckAuth = () => {
             lastName: decodedToken.lastName,
             email: decodedToken.email,
           },
+          token: token,
         });
       }
     } catch {

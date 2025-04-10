@@ -169,18 +169,70 @@ const ProductAddPage = () => {
                       </Form.Item>
                       <Form.Item
                         {...restField}
-                        name={[name, "value"]}
-                        rules={[{ required: true, message: "Missing value" }]}
+                        name={[name, "type"]}
+                        rules={[{ required: true, message: "Missing type" }]}
                       >
-                        <Input placeholder="Value" />
+                        <Select placeholder="Type" style={{ width: 120 }}>
+                          <Select.Option value="string">Text</Select.Option>
+                          <Select.Option value="number">Number</Select.Option>
+                          <Select.Option value="boolean">Yes/No</Select.Option>
+                          <Select.Option value="array">Tags</Select.Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item noStyle shouldUpdate>
+                        {({ getFieldValue }) => {
+                          const type = getFieldValue([
+                            "attributes",
+                            name,
+                            "type",
+                          ]);
+                          return (
+                            <Form.Item
+                              {...restField}
+                              name={[name, "value"]}
+                              rules={[
+                                { required: true, message: "Missing value" },
+                              ]}
+                            >
+                              {type === "boolean" ? (
+                                <Select
+                                  placeholder="Value"
+                                  style={{ width: 120 }}
+                                >
+                                  <Select.Option value={true}>
+                                    Yes
+                                  </Select.Option>
+                                  <Select.Option value={false}>
+                                    No
+                                  </Select.Option>
+                                </Select>
+                              ) : type === "number" ? (
+                                <InputNumber
+                                  placeholder="Value"
+                                  style={{ width: 120 }}
+                                />
+                              ) : type === "array" ? (
+                                <Select
+                                  mode="tags"
+                                  placeholder="Value"
+                                  style={{ width: 200 }}
+                                />
+                              ) : (
+                                <Input
+                                  placeholder="Value"
+                                  style={{ width: 120 }}
+                                />
+                              )}
+                            </Form.Item>
+                          );
+                        }}
                       </Form.Item>
                       <MinusCircleOutlined onClick={() => remove(name)} />
                     </Space>
                   ))}
                   <Form.Item>
                     <Button
-                      variant="dashed"
-                      type="primary"
+                      type="dashed"
                       onClick={() => add()}
                       icon={<PlusOutlined />}
                     >

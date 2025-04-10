@@ -1,25 +1,15 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Col,
-  Empty,
-  Flex,
-  Popconfirm,
-  Row,
-  Skeleton,
-  Space,
-} from "antd";
+import { Button, Card, Col, Empty, Flex, Popconfirm, Row, Space } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageTransition from "../components/PageTransition";
+import { RouteMap } from "../constants";
 import { ProductEditView } from "../features/products/components/ProductEditView";
 import { ProductView } from "../features/products/components/ProductView";
 import { useDeleteProduct } from "../features/products/hooks/useDeleteProduct";
 import { useProductWithCategory } from "../features/products/selectors/productSelectors";
 import { Product } from "../features/products/types";
-import { RouteMap } from "../constants";
 
 const ProductDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,11 +17,7 @@ const ProductDetailsPage = () => {
   const { deleteProductData } = useDeleteProduct();
   const [isEditing, setIsEditing] = useState(false);
 
-  const { productWithCategory: product, isLoading } = useProductWithCategory(
-    id ?? ""
-  );
-
-  if (isLoading) return <Skeleton active />;
+  const { productWithCategory: product } = useProductWithCategory(id ?? "");
 
   if (!product) {
     return (

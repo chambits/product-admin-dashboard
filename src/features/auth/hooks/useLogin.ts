@@ -25,6 +25,7 @@ export const useLogin = () => {
             firstName: user.firstName,
             lastName: user.lastName,
           },
+          token: response.data.token,
         });
         navigate(from, { replace: true });
         return { success: true };

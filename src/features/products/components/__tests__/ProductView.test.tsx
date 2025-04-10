@@ -11,6 +11,7 @@ vi.mock("../../hooks/useFormatAttributeLabel", () => ({
 
 vi.mock("../../hooks/useRenderAttribute", () => ({
   useRenderAttribute: () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     renderAttribute: (attr: { value: any }) => attr.value.toString(),
   }),
 }));

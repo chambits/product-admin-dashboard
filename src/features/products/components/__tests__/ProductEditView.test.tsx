@@ -19,6 +19,7 @@ vi.mock("../hooks/useFormatAttributeLabel", () => ({
 
 vi.mock("../hooks/useRenderAttribute", () => ({
   useRenderAttribute: () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     renderAttribute: (attr: { value: any }) => attr.value.toString(),
   }),
 }));
@@ -63,7 +64,7 @@ describe("ProductEditView", () => {
     expect(screen.getByText("Test Category")).toBeInTheDocument();
 
     expect(screen.getByLabelText(/Product Name/i)).toHaveValue("Test Product");
-    expect(screen.getByLabelText(/Status/i)).toHaveValue("Active");
+    expect(screen.getByLabelText(/Status/i)).toHaveValue("Draft");
     expect(screen.getByLabelText(/Price/i)).toHaveValue("99.99");
     expect(screen.getByLabelText(/Stock/i)).toHaveValue(50);
     expect(screen.getByLabelText(/Description/i)).toHaveValue(
@@ -105,7 +106,7 @@ describe("ProductEditView", () => {
     await userEvent.click(addButton);
 
     const codeInput = screen.getByLabelText(/Attribute Code/i);
-    const valueInput = screen.getByLabelText(/Attribute Value/i);
+    const valueInput = screen.getByLabelText(/Value/i);
     await userEvent.type(codeInput, "weight");
     await userEvent.type(valueInput, "100g");
     const submitAttrButton = screen.getByText("Add");

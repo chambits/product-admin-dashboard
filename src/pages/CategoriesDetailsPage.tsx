@@ -1,6 +1,7 @@
-import { Col, Row, Skeleton } from "antd";
+import { Col, Row } from "antd";
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
+import PageTransition from "../components/PageTransition";
 import {
   useGetProductsByCategoryQuery,
   useGetProductsQuery,
@@ -16,35 +17,21 @@ const CategoriesDetailsPage = () => {
   const [searchText, setSearchText] = useState("");
   const { id } = useParams();
   const { isLoading: isProductsLoading } = useGetProductsQuery(searchText);
-  const { isLoading: isProductsByCategoryLoading } =
-    useGetProductsByCategoryQuery(
-      {
-        categoryId: id || "",
-        searchTerm: searchText,
-      },
-      { skip: !id }
-    );
+  useGetProductsByCategoryQuery(
+    {
+      categoryId: id || "",
+      searchTerm: searchText,
+    },
+    { skip: !id }
+  );
   const enrichedProducts = useEnrichedProductsByCategory(id || "", searchText);
 
   const searchHandler = useCallback((value: string) => {
     setSearchText(value);
   }, []);
 
-  if (isProductsLoading || isProductsByCategoryLoading) {
-    return <Skeleton active />;
-  }
-
-  // if (enrichedProducts.length === 0) {
-  //   return (
-  //     <Empty
-  //       description="Unable to find any products in this category"
-  //       image={Empty.PRESENTED_IMAGE_SIMPLE}
-  //     />
-  //   );
-  // }
-
   return (
-    <>
+    <PageTransition>
       <LastModifiedProducts />
       <Row
         justify="space-between"
@@ -63,7 +50,7 @@ const CategoriesDetailsPage = () => {
         data={enrichedProducts as Product[]}
         isLoading={isProductsLoading}
       />
-    </>
+    </PageTransition>
   );
 };
 

@@ -1,4 +1,3 @@
-// src/features/products/api/productsAdapter.ts
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { Product } from "../types";
 

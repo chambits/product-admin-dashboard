@@ -2,15 +2,6 @@
 
 A responsive product management dashboard built with React, TypeScript and Ant Design 5. This application provides a comprehensive interface for managing products, categories, and inventory.
 
-## Features
-
-- **Product Management**: Add, edit, view, and delete products
-- **Category Organization**: Manage product categories
-- **Inventory Tracking**: Track product stock and status
-- **Responsive Design**: Mobile-friendly interface built with Ant Design
-- **Data Visualization**: View product statistics on the dashboard
-- **Authentication**: Secure login system
-
 ## Tech Stack
 
 - **Frontend**: React 19, TypeScript
@@ -53,19 +44,16 @@ A responsive product management dashboard built with React, TypeScript and Ant D
    ```
 
 5. Open your browser and navigate to:
+
    ```
    http://localhost:5173
    ```
 
-## Available Scripts
+6. Login Credentials:
 
-- `yarn dev`: Start development server
-- `yarn build`: Build for production
-- `yarn preview`: Preview production build
-- `yarn server`: Start JSON Server API
-- `yarn test`: Run tests
-- `yarn coverage`: Generate test coverage report
-- `yarn lint`: Run ESLint
+   • **Username:** admin
+
+   • **Password:** password123
 
 ## Project Structure
 
@@ -77,5 +65,5 @@ A responsive product management dashboard built with React, TypeScript and Ant D
   - `/pages`: Page components
   - `/providers`: Context providers
   - `/utils`: Utility functions
-- `/db`: JSON Server database
+- `/server`: JSON Server database and auth endpoint
 - `/public`: Static assets

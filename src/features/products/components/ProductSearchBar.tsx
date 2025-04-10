@@ -1,12 +1,25 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import React from "react";
+import React, { useCallback } from "react";
+import debounce from "lodash.debounce";
 
 interface ProductSearchBarProps {
   onSearch: (value: string) => void;
 }
 
 const ProductSearchBar = React.memo(({ onSearch }: ProductSearchBarProps) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      onSearch(value);
+    }, 300),
+    [onSearch]
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(e.target.value);
+  };
+
   return (
     <Input
       placeholder="Search products..."
@@ -14,7 +27,7 @@ const ProductSearchBar = React.memo(({ onSearch }: ProductSearchBarProps) => {
       prefix={<SearchOutlined />}
       size="large"
       style={{ width: "100%" }}
-      onChange={(e) => onSearch(e.target.value)}
+      onChange={handleChange}
     />
   );
 });

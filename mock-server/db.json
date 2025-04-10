@@ -254,7 +254,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "adjustable",
@@ -302,7 +306,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "weight",
@@ -328,7 +336,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "manualUrl",
@@ -900,7 +912,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "adjustable",
@@ -938,7 +954,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         }
       ],
       "modifiedDate": "2025-03-18T21:53:08.417Z",
@@ -1082,7 +1102,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "finish",
@@ -1116,7 +1140,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "warrantyUrl",
@@ -1164,7 +1192,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "weight",
@@ -1210,7 +1242,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         }
       ],
       "modifiedDate": "2025-03-24T21:30:40.565Z",
@@ -1228,7 +1264,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         }
       ],
       "modifiedDate": "2025-04-03T19:46:47.772Z",
@@ -1246,7 +1286,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "material",
@@ -1320,7 +1364,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "material",
@@ -1482,7 +1530,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "style",
@@ -1512,7 +1564,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "dimensions",
@@ -1568,7 +1624,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "color",
@@ -1712,7 +1772,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         }
       ],
       "modifiedDate": "2025-04-07T14:19:46.153Z",
@@ -1752,7 +1816,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "finish",
@@ -1842,7 +1910,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         }
       ],
       "modifiedDate": "2025-04-04T00:09:21.832Z",
@@ -1868,7 +1940,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "capacity",
@@ -1930,7 +2006,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         }
       ],
       "modifiedDate": "2025-04-04T20:17:04.722Z",
@@ -2078,7 +2158,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         }
       ],
       "modifiedDate": "2025-04-02T19:11:12.046Z",
@@ -2227,7 +2311,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         }
       ],
       "modifiedDate": "2025-04-09T11:12:24.460Z",
@@ -2378,7 +2466,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "capacity",
@@ -2438,7 +2530,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "manualUrl",
@@ -2520,7 +2616,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         }
       ],
       "modifiedDate": "2025-01-27T06:12:59.334Z",
@@ -2576,7 +2676,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         }
       ],
       "modifiedDate": "2025-03-31T00:53:44.845Z",
@@ -2702,7 +2806,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "warrantyUrl",
@@ -2728,7 +2836,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "style",
@@ -2758,7 +2870,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "manualUrl",
@@ -2896,7 +3012,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         }
       ],
       "modifiedDate": "2025-04-01T09:31:28.529Z",
@@ -2948,7 +3068,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "assemblyRequired",
@@ -2982,7 +3106,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "warrantyUrl",
@@ -3048,7 +3176,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "dimensions",
@@ -3086,7 +3218,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         }
       ],
       "modifiedDate": "2025-03-04T23:29:50.375Z",
@@ -3376,7 +3512,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "capacity",
@@ -3480,7 +3620,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "assemblyRequired",
@@ -3774,7 +3918,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "material",
@@ -3996,7 +4144,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         }
       ],
       "modifiedDate": "2025-03-24T07:26:15.520Z",
@@ -4082,7 +4234,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         }
       ],
       "modifiedDate": "2025-02-02T03:15:37.576Z",
@@ -4196,7 +4352,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "freeDelivery",
@@ -4486,7 +4646,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         }
       ],
       "modifiedDate": "2025-04-06T18:36:59.728Z",
@@ -5226,7 +5390,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "style",
@@ -5704,7 +5872,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "dimensions",
@@ -5834,7 +6006,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "style",
@@ -5882,7 +6058,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "material",
@@ -6060,7 +6240,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         }
       ],
       "modifiedDate": "2025-03-22T18:10:06.112Z",
@@ -6108,7 +6292,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "adjustable",
@@ -6390,7 +6578,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         }
       ],
       "modifiedDate": "2025-01-25T03:03:20.702Z",
@@ -6412,7 +6604,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "assemblyRequired",
@@ -6670,7 +6866,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         }
       ],
       "modifiedDate": "2025-04-05T11:34:09.429Z",
@@ -6696,7 +6896,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "warrantyUrl",
@@ -6838,7 +7042,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "color",
@@ -7000,7 +7208,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "assemblyRequired",
@@ -7120,7 +7332,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         }
       ],
       "modifiedDate": "2025-03-28T05:37:12.114Z",
@@ -7264,7 +7480,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         }
       ],
       "modifiedDate": "2025-04-02T14:41:31.710Z",
@@ -7290,7 +7510,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "warrantyUrl",
@@ -7358,7 +7582,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         }
       ],
       "modifiedDate": "2025-04-05T08:25:55.253Z",
@@ -7428,7 +7656,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "style",
@@ -7744,7 +7976,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         }
       ],
       "modifiedDate": "2025-02-27T19:17:14.334Z",
@@ -7864,7 +8100,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "material",
@@ -8120,7 +8360,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "freeDelivery",
@@ -8194,7 +8438,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "adjustable",
@@ -8432,7 +8680,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         }
       ],
       "modifiedDate": "2025-02-20T10:11:31.160Z",
@@ -8672,7 +8924,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "material",
@@ -8776,7 +9032,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "adjustable",
@@ -9006,7 +9266,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         }
       ],
       "modifiedDate": "2025-04-06T04:39:47.577Z",
@@ -9274,7 +9538,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "manualUrl",
@@ -9476,7 +9744,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "manualUrl",
@@ -9651,7 +9923,10 @@
         },
         {
           "code": "erwt",
-          "value": ["abc", "efg"]
+          "value": [
+            "abc",
+            "efg"
+          ]
         }
       ],
       "modifiedDate": "2025-04-09T10:02:14.103Z",
@@ -9736,7 +10011,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "adjustable",
@@ -9844,7 +10123,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "color",
@@ -9982,7 +10265,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "capacity",
@@ -10112,7 +10399,11 @@
         },
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         }
       ],
       "modifiedDate": "2025-04-07T18:12:55.854Z",
@@ -10198,7 +10489,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         }
       ],
       "modifiedDate": "2025-03-03T19:01:20.361Z",
@@ -10616,7 +10911,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "manualUrl",
@@ -10982,7 +11281,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "manualUrl",
@@ -11104,7 +11407,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "finish",
@@ -11152,7 +11459,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["handmade", "artisan", "custom"]
+          "value": [
+            "handmade",
+            "artisan",
+            "custom"
+          ]
         },
         {
           "code": "material",
@@ -11434,7 +11745,11 @@
       "attributes": [
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "capacity",
@@ -11480,7 +11795,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         }
       ],
       "modifiedDate": "2025-02-08T19:58:02.628Z",
@@ -11528,7 +11847,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "manualUrl",
@@ -11666,7 +11989,11 @@
         },
         {
           "code": "productTags",
-          "value": ["sale", "clearance", "best-seller"]
+          "value": [
+            "sale",
+            "clearance",
+            "best-seller"
+          ]
         },
         {
           "code": "adjustable",
@@ -11708,7 +12035,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         }
       ],
       "modifiedDate": "2025-03-27T15:14:50.378Z",
@@ -11968,7 +12299,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "finish",
@@ -12112,7 +12447,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         }
       ],
       "modifiedDate": "2025-04-05T21:46:00.961Z",
@@ -12230,7 +12569,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "capacity",
@@ -12426,7 +12769,11 @@
         },
         {
           "code": "productTags",
-          "value": ["eco-friendly", "sustainable", "organic"]
+          "value": [
+            "eco-friendly",
+            "sustainable",
+            "organic"
+          ]
         },
         {
           "code": "dimensions",
@@ -12550,7 +12897,11 @@
         },
         {
           "code": "productTags",
-          "value": ["premium", "luxury", "high-end"]
+          "value": [
+            "premium",
+            "luxury",
+            "high-end"
+          ]
         },
         {
           "code": "warrantyUrl",
@@ -12706,7 +13057,11 @@
         },
         {
           "code": "productTags",
-          "value": ["new-arrival", "trending", "featured"]
+          "value": [
+            "new-arrival",
+            "trending",
+            "featured"
+          ]
         },
         {
           "code": "freeDelivery",
@@ -12807,6 +13162,34 @@
       ],
       "modifiedDate": "2025-03-25T01:53:16.839Z",
       "createdDate": "2025-01-30T02:31:58.498Z"
+    },
+    {
+      "name": "Test prod",
+      "status": "Draft",
+      "price": 12,
+      "stock": 34,
+      "attributes": [
+        {
+          "code": "att",
+          "value": "er"
+        },
+        {
+          "code": "arrr",
+          "value": [
+            "abc",
+            "bcd"
+          ]
+        },
+        {
+          "code": "sdd",
+          "value": "23"
+        }
+      ],
+      "modifiedDate": "2025-04-10T09:31:37.742Z",
+      "createdDate": "2025-04-10T09:31:06.025Z",
+      "currency": "$",
+      "categoryId": "C2",
+      "id": "P466025963"
     }
   ]
 }

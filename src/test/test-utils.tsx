@@ -72,6 +72,7 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export * from "@testing-library/react";
 export { configureStore };
 export { render, mockNavigate };

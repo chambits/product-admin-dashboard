@@ -2,7 +2,6 @@ import { afterEach, vi } from "vitest";
 import { cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 
-// Mock window.matchMedia
 window.matchMedia =
   window.matchMedia ||
   function () {
@@ -16,7 +15,6 @@ window.matchMedia =
     };
   };
 
-// Mock ResizeObserver
 class ResizeObserverMock {
   observe = vi.fn();
   unobserve = vi.fn();
@@ -25,7 +23,6 @@ class ResizeObserverMock {
 
 window.ResizeObserver = ResizeObserverMock;
 
-// Mock scrollTo
 window.scrollTo = vi.fn();
 
 afterEach(() => {

@@ -4,12 +4,22 @@ import {
   ShoppingOutlined,
   TagOutlined,
 } from "@ant-design/icons";
-import { Card, Col, Row, Space, Statistic, Tag, theme, Typography } from "antd";
-import CopyButton from "../../../components/CopyButton";
-import { StatusBadge } from "../../../components/StatusBadge";
+import {
+  Badge,
+  Card,
+  Col,
+  Row,
+  Space,
+  Statistic,
+  Tag,
+  theme,
+  Typography,
+} from "antd";
+import CopyButton from "../../../components/ui/CopyButton";
 import { formatDate } from "../../../utils/dateFormat";
 import { useFormatAttributeLabel } from "../hooks/useFormatAttributeLabel";
 import { useRenderAttribute } from "../hooks/useRenderAttribute";
+import { useStatusColor } from "../hooks/useStatusColor";
 import { Product, ProductStatus } from "../types";
 
 const { Title, Text, Paragraph } = Typography;
@@ -21,6 +31,7 @@ interface ProductViewProps {
 export const ProductView = ({ product }: ProductViewProps) => {
   const { formatAttributeLabel } = useFormatAttributeLabel();
   const { renderAttribute } = useRenderAttribute(false);
+  const { getStatusColor } = useStatusColor();
   const { token } = theme.useToken();
 
   return (
@@ -32,7 +43,10 @@ export const ProductView = ({ product }: ProductViewProps) => {
               <Title level={2} style={{ margin: 0 }}>
                 {product.name}
               </Title>
-              <StatusBadge status={product.status as ProductStatus} />
+              <Badge
+                color={getStatusColor(product.status as ProductStatus)}
+                content={product.status as ProductStatus}
+              />
             </Space>
             <Paragraph type="secondary" style={{ marginTop: token.marginSM }}>
               {product.description || "No description available"}
@@ -81,12 +95,6 @@ export const ProductView = ({ product }: ProductViewProps) => {
                 {formatDate.full(product.modifiedDate) === "Invalid date"
                   ? "Not available"
                   : formatDate.full(product.modifiedDate)}
-              </Text>
-              <Text type="secondary">
-                Created:{" "}
-                {formatDate.full(product.createdDate) === "Invalid date"
-                  ? "Not available"
-                  : formatDate.full(product.createdDate)}
               </Text>
             </Space>
           </Card>

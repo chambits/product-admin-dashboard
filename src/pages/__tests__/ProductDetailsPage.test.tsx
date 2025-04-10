@@ -1,7 +1,9 @@
-import { render, screen } from "../../test/test-utils";
+import { render, screen, fireEvent } from "../../test/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Product, ProductStatus } from "../../features/products/types";
 import ProductDetailsPage from "../ProductDetailsPage";
+import { useProductWithCategory } from "../../features/products/selectors/productSelectors";
+import { useParams } from "react-router-dom";
 
 const mockNavigate = vi.fn();
 const mockDeleteProduct = vi.fn();
@@ -18,7 +20,7 @@ vi.mock("../../features/products/hooks/useDeleteProduct", () => ({
 }));
 
 vi.mock("../../features/products/selectors/productSelectors", () => ({
-  useProductWithCategory: (id: string) => ({
+  useProductWithCategory: () => ({
     productWithCategory: mockProduct,
     isLoading: false,
   }),
@@ -58,15 +60,15 @@ describe("ProductDetailsPage", () => {
     vi.clearAllMocks();
   });
 
-  //   it("renders loading state", () => {
-  //     vi.mocked(useProductWithCategory).mockReturnValueOnce({
-  //       productWithCategory: null,
-  //       isLoading: true,
-  //     });
+  it("renders loading state", () => {
+    vi.mocked(useProductWithCategory).mockReturnValueOnce({
+      productWithCategory: null,
+      isLoading: true,
+    });
 
-  //     render(<ProductDetailsPage />);
-  //     expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
-  //   });
+    render(<ProductDetailsPage />);
+    expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
+  });
 
   it("renders product view", () => {
     render(<ProductDetailsPage />);
@@ -77,60 +79,60 @@ describe("ProductDetailsPage", () => {
     expect(screen.getByText("Delete")).toBeInTheDocument();
   });
 
-  //   it("switches to edit mode when edit button is clicked", async () => {
-  //     render(<ProductDetailsPage />);
+  it("switches to edit mode when edit button is clicked", async () => {
+    render(<ProductDetailsPage />);
 
-  //     const editButton = screen.getByText("Edit");
-  //     fireEvent.click(editButton);
+    const editButton = screen.getByText("Edit");
+    fireEvent.click(editButton);
 
-  //     expect(screen.getByTestId("product-edit-view")).toBeInTheDocument();
-  //   });
+    expect(screen.getByTestId("product-edit-view")).toBeInTheDocument();
+  });
 
-  //   it("returns to view mode when edit is cancelled", async () => {
-  //     render(<ProductDetailsPage />);
+  it("returns to view mode when edit is cancelled", async () => {
+    render(<ProductDetailsPage />);
 
-  //     fireEvent.click(screen.getByText("Edit"));
-  //     fireEvent.click(screen.getByText("Cancel Edit"));
+    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByText("Cancel Edit"));
 
-  //     expect(screen.getByTestId("product-view")).toBeInTheDocument();
-  //   });
+    expect(screen.getByTestId("product-view")).toBeInTheDocument();
+  });
 
-  //   it("shows delete confirmation and handles delete", async () => {
-  //     render(<ProductDetailsPage />);
+  it("shows delete confirmation and handles delete", async () => {
+    render(<ProductDetailsPage />);
 
-  //     const confirmButton = screen.getByText("Yes");
-  //     fireEvent.click(confirmButton);
+    const confirmButton = screen.getByText("Yes");
+    fireEvent.click(confirmButton);
 
-  //     expect(mockDeleteProduct).toHaveBeenCalledWith("P123");
-  //   });
+    expect(mockDeleteProduct).toHaveBeenCalledWith("P123");
+  });
 
-  //   it("handles missing product ID", () => {
-  //     vi.mocked(useParams).mockReturnValueOnce({ id: undefined });
+  it("handles missing product ID", () => {
+    vi.mocked(useParams).mockReturnValueOnce({ id: undefined });
 
-  //     render(<ProductDetailsPage />);
+    render(<ProductDetailsPage />);
 
-  //     expect(screen.getByText("Product not found")).toBeInTheDocument();
-  //     expect(screen.getByText("Go to products")).toBeInTheDocument();
-  //   });
+    expect(screen.getByText("Product not found")).toBeInTheDocument();
+    expect(screen.getByText("Go to products")).toBeInTheDocument();
+  });
 
-  //   it("navigates back to products list when no product found", () => {
-  //     vi.mocked(useParams).mockReturnValueOnce({ id: undefined });
+  it("navigates back to products list when no product found", () => {
+    vi.mocked(useParams).mockReturnValueOnce({ id: undefined });
 
-  //     render(<ProductDetailsPage />);
+    render(<ProductDetailsPage />);
 
-  //     const backButton = screen.getByText("Go to products");
-  //     fireEvent.click(backButton);
+    const backButton = screen.getByText("Go to products");
+    fireEvent.click(backButton);
 
-  //     expect(mockNavigate).toHaveBeenCalledWith("/products");
-  //   });
+    expect(mockNavigate).toHaveBeenCalledWith("/products");
+  });
 
-  //   it("handles animation transitions", () => {
-  //     render(<ProductDetailsPage />);
+  it("handles animation transitions", () => {
+    render(<ProductDetailsPage />);
 
-  //     const container = screen.getByTestId("product-view").parentElement;
-  //     expect(container).toHaveStyle({
-  //       opacity: 1,
-  //       transform: "translateY(0px)",
-  //     });
-  //   });
+    const container = screen.getByTestId("product-view").parentElement;
+    expect(container).toHaveStyle({
+      opacity: 1,
+      transform: "translateY(0px)",
+    });
+  });
 });

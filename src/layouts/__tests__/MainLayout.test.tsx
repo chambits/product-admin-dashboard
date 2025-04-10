@@ -19,7 +19,6 @@ vi.mock("react-router-dom", () => ({
   Outlet: () => <div data-testid="outlet">Outlet</div>,
 }));
 
-// Mock hooks
 vi.mock("../../features/categories/categoryApi", () => ({
   useGetCategoriesQuery: vi.fn(),
 }));

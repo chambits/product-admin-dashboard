@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { StatusBadge } from "../../../components/StatusBadge";
-import { Product } from "../types";
+import { Badge } from "../../../components/ui/Badge";
+import { Product, ProductStatus } from "../types";
 import { useNavigate } from "react-router-dom";
 import { ReactNode } from "react";
-import { Tag } from "antd";
+import { useStatusColor } from "../hooks/useStatusColor";
 
 const WidgetContainer = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const WidgetContainer = styled.div`
   border-radius: 8px;
   padding: 16px;
   cursor: pointer;
-  border: 1px solid #f0f0f0;
+  border: 1px solid #d9d9d9;
 `;
 
 const Title = styled.h3`
@@ -26,14 +26,16 @@ const Title = styled.h3`
 const ProductName = styled.div`
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 `;
 
 const Info = styled.div`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   gap: 16px;
-  font-size: 13px;
+  font-size: 12px;
+  flex-wrap: wrap;
 `;
 
 interface ProductInfoWidgetProps {
@@ -43,13 +45,17 @@ interface ProductInfoWidgetProps {
 
 const ProductInfoWidget = ({ title, product }: ProductInfoWidgetProps) => {
   const navigate = useNavigate();
+  const { getStatusColor } = useStatusColor();
   return (
     <WidgetContainer onClick={() => navigate(`/products/${product.id}`)}>
       <Title>{title}</Title>
       <ProductName>{product.name}</ProductName>
       <Info>
-        <StatusBadge status={product.status} />
-        <Tag color="cyan">{product.categoryName}</Tag>
+        <Badge
+          color={getStatusColor(product.status as ProductStatus)}
+          content={product.status}
+        />
+        <Badge color="cyan" content={product.categoryName} />
         <span>Stock: {product.stock}</span>
       </Info>
     </WidgetContainer>
