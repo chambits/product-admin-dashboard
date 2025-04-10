@@ -1,10 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  fireEvent,
-  render,
-  screen,
-  mockNavigate,
-} from "../../../../test/test-utils";
+import { render, screen } from "../../../../test/test-utils";
 import { Product, ProductStatus } from "../../types";
 import ProductTable from "../ProductTable";
 

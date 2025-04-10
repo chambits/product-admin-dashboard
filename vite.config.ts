@@ -3,7 +3,10 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === "production" ? "/home-pro" : "/",
+  base:
+    process.env.NODE_ENV === "production"
+      ? "/product-admin-dashboard/login"
+      : "/",
   test: {
     environment: "jsdom",
     globals: true,

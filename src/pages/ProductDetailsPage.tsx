@@ -10,7 +10,6 @@ import {
   Skeleton,
   Space,
 } from "antd";
-import { Product } from "../features/products/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,6 +18,7 @@ import { ProductEditView } from "../features/products/components/ProductEditView
 import { ProductView } from "../features/products/components/ProductView";
 import { useDeleteProduct } from "../features/products/hooks/useDeleteProduct";
 import { useProductWithCategory } from "../features/products/selectors/productSelectors";
+import { Product } from "../features/products/types";
 import { RouteMap } from "../constants";
 
 const ProductDetailsPage = () => {
@@ -33,15 +33,19 @@ const ProductDetailsPage = () => {
 
   if (isLoading) return <Skeleton active />;
 
-  if (!id)
+  if (!product) {
     return (
       <Flex align="center" vertical gap={16}>
-        <Empty description="Product not found" />
+        <Empty
+          description="Unable to find product details for this product"
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+        />
         <Button onClick={() => navigate(RouteMap.products)}>
           Go to products
         </Button>
       </Flex>
     );
+  }
 
   return (
     <PageTransition>

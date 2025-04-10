@@ -1,16 +1,16 @@
-import { Card, Col, Row, Space, Typography, Tag, Statistic, theme } from "antd";
+import {
+  CalendarOutlined,
+  InboxOutlined,
+  ShoppingOutlined,
+  TagOutlined,
+} from "@ant-design/icons";
+import { Card, Col, Row, Space, Statistic, Tag, theme, Typography } from "antd";
 import CopyButton from "../../../components/CopyButton";
 import { StatusBadge } from "../../../components/StatusBadge";
 import { formatDate } from "../../../utils/dateFormat";
 import { useFormatAttributeLabel } from "../hooks/useFormatAttributeLabel";
 import { useRenderAttribute } from "../hooks/useRenderAttribute";
 import { Product, ProductStatus } from "../types";
-import {
-  ShoppingOutlined,
-  CalendarOutlined,
-  TagOutlined,
-  InboxOutlined,
-} from "@ant-design/icons";
 
 const { Title, Text, Paragraph } = Typography;
 

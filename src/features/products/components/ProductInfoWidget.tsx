@@ -3,6 +3,7 @@ import { StatusBadge } from "../../../components/StatusBadge";
 import { Product } from "../types";
 import { useNavigate } from "react-router-dom";
 import { ReactNode } from "react";
+import { Tag } from "antd";
 
 const WidgetContainer = styled.div`
   display: flex;
@@ -48,10 +49,7 @@ const ProductInfoWidget = ({ title, product }: ProductInfoWidgetProps) => {
       <ProductName>{product.name}</ProductName>
       <Info>
         <StatusBadge status={product.status} />
-        <span>
-          Price: {product.currency}
-          {product.price}
-        </span>
+        <Tag color="cyan">{product.categoryName}</Tag>
         <span>Stock: {product.stock}</span>
       </Info>
     </WidgetContainer>

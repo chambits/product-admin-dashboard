@@ -1,13 +1,12 @@
 import { Tag } from "antd";
-import { StatusType } from "../hooks/useStatusColor";
-
+import { ProductStatus } from "../features/products/types";
 interface StatusBadgeProps {
-  status: StatusType;
+  status: ProductStatus;
   style?: React.CSSProperties;
 }
 
 export const StatusBadge = ({ status, style }: StatusBadgeProps) => {
-  const getStatusColor = (status: StatusType) => {
+  const getStatusColor = (status: ProductStatus) => {
     switch (status) {
       case "Active":
         return "success";

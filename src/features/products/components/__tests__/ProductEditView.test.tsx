@@ -3,8 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Product, ProductStatus } from "../../types";
 import { ProductEditView } from "../ProductEditView";
+import { useUpdateProduct } from "../../hooks/useUpdateProduct";
 
-// Mock the hooks
 vi.mock("../../../providers/NotificationProvider", () => ({
   useNotification: () => ({
     showNotification: vi.fn(),
@@ -56,73 +56,66 @@ describe("ProductEditView", () => {
     vi.clearAllMocks();
   });
 
-  //   it("renders basic form fields correctly", () => {
-  //     render(<ProductEditView product={mockProduct} />);
+  it("renders basic form fields correctly", () => {
+    render(<ProductEditView product={mockProduct} />);
 
-  //     // Check basic information
-  //     expect(screen.getByText("P123")).toBeInTheDocument();
-  //     expect(screen.getByText("Test Category")).toBeInTheDocument();
+    expect(screen.getByText("P123")).toBeInTheDocument();
+    expect(screen.getByText("Test Category")).toBeInTheDocument();
 
-  //     // Check form fields
-  //     expect(screen.getByLabelText(/Product Name/i)).toHaveValue("Test Product");
-  //     expect(screen.getByLabelText(/Status/i)).toHaveValue("Active");
-  //     expect(screen.getByLabelText(/Price/i)).toHaveValue("99.99");
-  //     expect(screen.getByLabelText(/Stock/i)).toHaveValue(50);
-  //     expect(screen.getByLabelText(/Description/i)).toHaveValue(
-  //       "Test Description"
-  //     );
-  //   });
+    expect(screen.getByLabelText(/Product Name/i)).toHaveValue("Test Product");
+    expect(screen.getByLabelText(/Status/i)).toHaveValue("Active");
+    expect(screen.getByLabelText(/Price/i)).toHaveValue("99.99");
+    expect(screen.getByLabelText(/Stock/i)).toHaveValue(50);
+    expect(screen.getByLabelText(/Description/i)).toHaveValue(
+      "Test Description"
+    );
+  });
 
-  //   it("renders advanced view with attributes table", () => {
-  //     render(<ProductEditView product={mockProduct} view="advanced" />);
+  it("renders advanced view with attributes table", () => {
+    render(<ProductEditView product={mockProduct} view="advanced" />);
 
-  //     expect(screen.getByText("Additional Information")).toBeInTheDocument();
-  //     expect(screen.getByText("Add Attribute")).toBeInTheDocument();
-  //     expect(screen.getByText("COLOR")).toBeInTheDocument();
-  //     expect(screen.getByText("SIZE")).toBeInTheDocument();
-  //   });
+    expect(screen.getByText("Additional Information")).toBeInTheDocument();
+    expect(screen.getByText("Add Attribute")).toBeInTheDocument();
+    expect(screen.getByText("COLOR")).toBeInTheDocument();
+    expect(screen.getByText("SIZE")).toBeInTheDocument();
+  });
 
-  //   it("handles form submission", async () => {
-  //     const { updateProductData } = useUpdateProduct();
-  //     render(<ProductEditView product={mockProduct} onSuccess={mockOnSuccess} />);
+  it("handles form submission", async () => {
+    const { updateProductData } = useUpdateProduct();
+    render(<ProductEditView product={mockProduct} onSuccess={mockOnSuccess} />);
 
-  //     const nameInput = screen.getByLabelText(/Product Name/i);
-  //     await userEvent.clear(nameInput);
-  //     await userEvent.type(nameInput, "Updated Product");
+    const nameInput = screen.getByLabelText(/Product Name/i);
+    await userEvent.clear(nameInput);
+    await userEvent.type(nameInput, "Updated Product");
 
-  //     const submitButton = screen.getByText("Save Changes");
-  //     await userEvent.click(submitButton);
+    const submitButton = screen.getByText("Save Changes");
+    await userEvent.click(submitButton);
 
-  //     expect(updateProductData).toHaveBeenCalledWith(
-  //       "P123",
-  //       expect.objectContaining({ name: "Updated Product" }),
-  //       expect.any(Object)
-  //     );
-  //   });
+    expect(updateProductData).toHaveBeenCalledWith(
+      "P123",
+      expect.objectContaining({ name: "Updated Product" }),
+      expect.any(Object)
+    );
+  });
 
-  //   it("handles attribute addition", async () => {
-  //     render(<ProductEditView product={mockProduct} view="advanced" />);
+  it("handles attribute addition", async () => {
+    render(<ProductEditView product={mockProduct} view="advanced" />);
 
-  //     // Open modal
-  //     const addButton = screen.getByText("Add Attribute");
-  //     await userEvent.click(addButton);
+    const addButton = screen.getByText("Add Attribute");
+    await userEvent.click(addButton);
 
-  //     // Fill attribute form
-  //     const codeInput = screen.getByLabelText(/Attribute Code/i);
-  //     const valueInput = screen.getByLabelText(/Attribute Value/i);
-  //     await userEvent.type(codeInput, "weight");
-  //     await userEvent.type(valueInput, "100g");
+    const codeInput = screen.getByLabelText(/Attribute Code/i);
+    const valueInput = screen.getByLabelText(/Attribute Value/i);
+    await userEvent.type(codeInput, "weight");
+    await userEvent.type(valueInput, "100g");
+    const submitAttrButton = screen.getByText("Add");
+    await userEvent.click(submitAttrButton);
 
-  //     // Submit attribute
-  //     const submitAttrButton = screen.getByText("Add");
-  //     await userEvent.click(submitAttrButton);
-
-  //     // Check if attribute is added
-  //     await waitFor(() => {
-  //       expect(screen.getByText("WEIGHT")).toBeInTheDocument();
-  //       expect(screen.getByText("100g")).toBeInTheDocument();
-  //     });
-  //   });
+    await waitFor(() => {
+      expect(screen.getByText("WEIGHT")).toBeInTheDocument();
+      expect(screen.getByText("100g")).toBeInTheDocument();
+    });
+  });
 
   it("handles attribute deletion", async () => {
     render(<ProductEditView product={mockProduct} view="advanced" />);

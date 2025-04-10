@@ -1,5 +1,5 @@
 export const RouteMap: Record<string, string> = {
-  dashboard: "/",
+  home: "/",
   categories: "/categories",
   products: "/products",
   productAdd: "/products/new",

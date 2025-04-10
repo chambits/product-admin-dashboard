@@ -27,7 +27,7 @@ export function App() {
                 </ProtectedRoute>
               }
             >
-              <Route path={RouteMap.dashboard} element={<ProductsPage />} />
+              <Route path={RouteMap.home} element={<ProductsPage />} />
               <Route path={RouteMap.productAdd} element={<ProductAddPage />} />
               <Route path={RouteMap.products} element={<ProductsPage />} />
               <Route
@@ -38,10 +38,10 @@ export function App() {
                 path={RouteMap.categoryDetails}
                 element={<CategoriesDetailsPage />}
               />
-              <Route
+              {/* <Route
                 path={RouteMap.categories}
                 element={<CategoryListPage />}
-              />
+              /> */}
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

@@ -1,9 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "../../test/test-utils";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import ProductDetailsPage from "../ProductDetailsPage";
 import { Product, ProductStatus } from "../../features/products/types";
-import { useProductWithCategory } from "../../features/products/selectors/productSelectors";
-import { useParams } from "react-router-dom";
+import ProductDetailsPage from "../ProductDetailsPage";
+
 const mockNavigate = vi.fn();
 const mockDeleteProduct = vi.fn();
 
@@ -25,7 +24,6 @@ vi.mock("../../features/products/selectors/productSelectors", () => ({
   }),
 }));
 
-// Mock the child components
 vi.mock("../../features/products/components/ProductView", () => ({
   ProductView: ({ product }: { product: Product }) => (
     <div data-testid="product-view">Product View: {product.name}</div>
@@ -91,9 +89,7 @@ describe("ProductDetailsPage", () => {
   //   it("returns to view mode when edit is cancelled", async () => {
   //     render(<ProductDetailsPage />);
 
-  //     // Switch to edit mode
   //     fireEvent.click(screen.getByText("Edit"));
-  //     // Cancel edit
   //     fireEvent.click(screen.getByText("Cancel Edit"));
 
   //     expect(screen.getByTestId("product-view")).toBeInTheDocument();
@@ -102,10 +98,6 @@ describe("ProductDetailsPage", () => {
   //   it("shows delete confirmation and handles delete", async () => {
   //     render(<ProductDetailsPage />);
 
-  //     // Click delete button
-  //     fireEvent.click(screen.getByText("Delete"));
-
-  //     // Confirm deletion
   //     const confirmButton = screen.getByText("Yes");
   //     fireEvent.click(confirmButton);
 

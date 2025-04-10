@@ -75,7 +75,6 @@ const selectLastModifiedProducts = createSelector(
   (productsData, limit) => {
     if (!productsData?.entities || !productsData?.ids.length) return [];
 
-    // Create a memoized array of product IDs sorted by modification date
     const sortedIds = [...productsData.ids].sort((a, b) => {
       const entityA = productsData.entities[a];
       const entityB = productsData.entities[b];
@@ -85,16 +84,13 @@ const selectLastModifiedProducts = createSelector(
       const dateA = new Date(entityA.modifiedDate || "").getTime();
       const dateB = new Date(entityB.modifiedDate || "").getTime();
 
-      return dateB - dateA; // Descending order (newest first)
+      return dateB - dateA;
     });
 
-    // Return only the IDs, not the full entities
-    // This allows components to decide what data they need
     return sortedIds.slice(0, limit);
   }
 );
 
-// Helper selector to get full product entities from IDs
 export const selectProductEntitiesByIds = createSelector(
   [
     (state: RootState) => selectProductsResult()(state).data,
@@ -103,11 +99,10 @@ export const selectProductEntitiesByIds = createSelector(
   (productsData, ids) => {
     if (!productsData?.entities) return [];
 
-    return ids.map((id) => productsData.entities[id]).filter(Boolean); // Remove any undefined entries
+    return ids.map((id) => productsData.entities[id]).filter(Boolean);
   }
 );
 
-// Hook that returns both IDs and entities for flexibility
 export const useLastModifiedProducts = (limit: number = 3) => {
   const lastModifiedIds = useAppSelector((state: RootState) =>
     selectLastModifiedProducts(state, limit)

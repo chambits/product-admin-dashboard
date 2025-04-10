@@ -107,7 +107,7 @@ describe("LastModifiedProducts", () => {
       .getAllByRole("generic")
       .filter((element) => element.className.includes("ant-col"));
 
-    expect(columns).toHaveLength(2); // Two products
+    expect(columns).toHaveLength(2);
     columns.forEach((column) => {
       expect(column).toHaveClass("ant-col-xs-24");
       expect(column).toHaveClass("ant-col-md-8");
@@ -127,25 +127,11 @@ describe("LastModifiedProducts", () => {
       .getAllByRole("generic")
       .filter((element) => element.className.includes("ant-col"));
 
-    expect(columns).toHaveLength(3); // Three skeleton loaders
+    expect(columns).toHaveLength(3);
     columns.forEach((column) => {
       expect(column).toHaveClass("ant-col-xs-24");
       expect(column).toHaveClass("ant-col-md-8");
       expect(column).toHaveClass("ant-col-lg-8");
     });
   });
-
-  //   it("handles empty products array", () => {
-  //     vi.mocked(useLastModifiedProducts).mockReturnValue({
-  //       lastModifiedIds: [],
-  //       lastModifiedEntities: [],
-  //     });
-
-  //     render(<LastModifiedProducts />);
-
-  //     const skeletonCards = screen
-  //       .getAllByRole("generic")
-  //       .filter((element) => element.className.includes("ant-card"));
-  //     expect(skeletonCards).toHaveLength(3);
-  //   });
 });

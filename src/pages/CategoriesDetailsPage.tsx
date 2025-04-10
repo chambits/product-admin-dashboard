@@ -1,4 +1,4 @@
-import { Col, Empty, Row } from "antd";
+import { Col, Row, Skeleton } from "antd";
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -16,27 +16,32 @@ const CategoriesDetailsPage = () => {
   const [searchText, setSearchText] = useState("");
   const { id } = useParams();
   const { isLoading: isProductsLoading } = useGetProductsQuery(searchText);
-  useGetProductsByCategoryQuery(
-    {
-      categoryId: id || "",
-      searchTerm: searchText,
-    },
-    { skip: !id }
-  );
+  const { isLoading: isProductsByCategoryLoading } =
+    useGetProductsByCategoryQuery(
+      {
+        categoryId: id || "",
+        searchTerm: searchText,
+      },
+      { skip: !id }
+    );
   const enrichedProducts = useEnrichedProductsByCategory(id || "", searchText);
 
   const searchHandler = useCallback((value: string) => {
     setSearchText(value);
   }, []);
 
-  if (enrichedProducts.length === 0) {
-    return (
-      <Empty
-        description="Unable to find any products in this category"
-        image={Empty.PRESENTED_IMAGE_SIMPLE}
-      />
-    );
+  if (isProductsLoading || isProductsByCategoryLoading) {
+    return <Skeleton active />;
   }
+
+  // if (enrichedProducts.length === 0) {
+  //   return (
+  //     <Empty
+  //       description="Unable to find any products in this category"
+  //       image={Empty.PRESENTED_IMAGE_SIMPLE}
+  //     />
+  //   );
+  // }
 
   return (
     <>
