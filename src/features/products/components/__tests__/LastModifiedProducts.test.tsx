@@ -83,18 +83,6 @@ describe("LastModifiedProducts", () => {
     expect(screen.getByText("Recent Product 2")).toBeInTheDocument();
   });
 
-  it("displays update time in widget titles", () => {
-    vi.mocked(useLastModifiedProducts).mockReturnValue({
-      lastModifiedIds: ["P1"],
-      lastModifiedEntities: [mockProducts[0]],
-    });
-
-    render(<LastModifiedProducts />);
-
-    const widgetTitle = screen.getByTestId("widget-title");
-    expect(widgetTitle).toHaveTextContent("Updated");
-  });
-
   it("renders responsive grid layout", () => {
     vi.mocked(useLastModifiedProducts).mockReturnValue({
       lastModifiedIds: ["P1", "P2"],

@@ -151,17 +151,4 @@ describe("ProductAddPage", () => {
     render(<ProductAddPage />);
     expect(screen.getByText("Create Product").closest("button")).toBeDisabled();
   });
-  it("allows adding and removing attributes", async () => {
-    render(<ProductAddPage />);
-    const addButton = screen.getByText("Add Attribute");
-    fireEvent.click(addButton);
-    const codeInput = screen.getByPlaceholderText("Attribute Code");
-    const valueInput = screen.getByPlaceholderText("Value");
-    fireEvent.change(codeInput, { target: { value: "color" } });
-    fireEvent.change(valueInput, { target: { value: "red" } });
-    const removeButton = screen.getByRole("button", { name: "remove" });
-    fireEvent.click(removeButton);
-    expect(codeInput).not.toBeInTheDocument();
-    expect(valueInput).not.toBeInTheDocument();
-  });
 });

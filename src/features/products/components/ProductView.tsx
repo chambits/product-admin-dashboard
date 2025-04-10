@@ -105,7 +105,7 @@ export const ProductView = ({ product }: ProductViewProps) => {
         <Card
           title={
             <Title level={5} style={{ margin: 0 }}>
-              Product Specifications
+              Additional Information
             </Title>
           }
         >

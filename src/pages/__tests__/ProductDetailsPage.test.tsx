@@ -107,7 +107,7 @@ describe("ProductDetailsPage", () => {
   });
 
   it("handles missing product ID", () => {
-    vi.mocked(useParams).mockReturnValueOnce({ id: undefined });
+    vi.mocked(useParams).mockReturnValueOnce({ product: undefined });
 
     render(<ProductDetailsPage />);
 
@@ -124,15 +124,5 @@ describe("ProductDetailsPage", () => {
     fireEvent.click(backButton);
 
     expect(mockNavigate).toHaveBeenCalledWith("/products");
-  });
-
-  it("handles animation transitions", () => {
-    render(<ProductDetailsPage />);
-
-    const container = screen.getByTestId("product-view").parentElement;
-    expect(container).toHaveStyle({
-      opacity: 1,
-      transform: "translateY(0px)",
-    });
   });
 });

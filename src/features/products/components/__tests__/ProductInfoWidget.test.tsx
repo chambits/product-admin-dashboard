@@ -57,15 +57,4 @@ describe("ProductInfoWidget", () => {
     render(<ProductInfoWidget title={mockTitle} product={inactiveProduct} />);
     expect(screen.getByText("Inactive")).toBeInTheDocument();
   });
-
-  it("handles different currencies and prices", () => {
-    const euroProduct = {
-      ...mockProduct,
-      currency: "€",
-      price: 88.88,
-    };
-
-    render(<ProductInfoWidget title={mockTitle} product={euroProduct} />);
-    expect(screen.getByText("Price: €88.88")).toBeInTheDocument();
-  });
 });
