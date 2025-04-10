@@ -40,14 +40,13 @@ A responsive product management dashboard built with React, TypeScript and Ant D
    yarn install
    ```
 
-3. Start the development server:
+3. Start the app in development server:
 
    ```
-   cd mock-server
-   yarn server
+   yarn dev
    ```
 
-4. Start the API server:
+4. Start the Mock API server:
 
    ```
    yarn server
