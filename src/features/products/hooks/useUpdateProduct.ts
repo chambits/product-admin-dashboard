@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../../../app/store/hooks";
 import { useNotification } from "../../../providers/NotificationProvider";
-import { productApi } from "../../products/productApi";
-import { useUpdateProductMutation } from "../productApi";
+import { useUpdateProductMutation } from "../api";
+import { productQueries } from "../api/productQueries";
 import { Product, ProductAttribute } from "../types";
 
 export const useUpdateProduct = () => {
@@ -30,11 +30,10 @@ export const useUpdateProduct = () => {
   ) => {
     try {
       const productResult = await dispatch(
-        productApi.endpoints.getProduct.initiate(productId)
+        productQueries.endpoints.getProduct.initiate(productId)
       );
 
       const existingProduct = productResult.data;
-      console.log(existingProduct, "existingProduct");
       const transformedValues = options?.transformValues
         ? {
             ...values,
@@ -49,10 +48,14 @@ export const useUpdateProduct = () => {
             modifiedDate: new Date().toISOString(),
             createdDate:
               existingProduct?.createdDate || new Date().toISOString(),
+            currency: existingProduct?.currency || "$",
+            categoryId: existingProduct?.categoryId || "",
           }
         : values;
 
       await updateProduct({ ...transformedValues, id: productId });
+      dispatch(productQueries.endpoints.getProducts.initiate(""));
+
       showNotification("success", "Success", "Product updated successfully");
       options?.onSuccess?.();
     } catch (error) {

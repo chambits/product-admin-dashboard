@@ -1,37 +1,161 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../../../app/store";
-import { useGetProductsQuery } from "../productApi";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../app/store/hooks";
+import { selectCategoryResult } from "../../categories/categoryApi";
+import {
+  selectProductsByCategoryResult,
+  selectProductsResult,
+  useGetProductQuery,
+} from "../api";
 
-// Base selector for products query data
-const selectProductsResult = (state: RootState) =>
-  state.api.queries["getProducts(undefined)"]?.data;
+const selectEnrichedProducts = (searchTerm: string = "") =>
+  createSelector(
+    selectProductsResult(searchTerm),
+    selectCategoryResult,
+    (productRes, categoryRes) => {
+      const products =
+        productRes.data?.ids.map((id) => productRes.data?.entities[id]) || [];
+      const categoryMap = categoryRes?.data?.entities || {};
 
-// Selector for last modified products
-export const selectLastModifiedProducts = createSelector(
-  [selectProductsResult, (_state: RootState, limit: number) => limit],
-  (products, limit) => {
-    if (!products) return [];
+      return products.map((prod) => ({
+        ...prod,
+        categoryName: prod?.categoryId
+          ? categoryMap[prod.categoryId]?.name || "Unknown"
+          : "Unknown",
+      }));
+    }
+  );
 
-    return [...products]
-      .sort((a, b) => {
-        const dateA = new Date(a.modifiedDate).getTime();
-        const dateB = new Date(b.modifiedDate).getTime();
-        return dateB - dateA;
-      })
-      .slice(0, limit);
+const selectEnrichedProductsByCategory = (
+  categoryId: string,
+  searchTerm: string = ""
+) =>
+  createSelector(
+    selectProductsByCategoryResult({ categoryId, searchTerm }),
+    selectCategoryResult,
+    (productRes, categoryRes) => {
+      const products =
+        productRes.data?.ids.map((id) => productRes.data?.entities[id]) || [];
+      const categoryMap = categoryRes?.data?.entities || {};
+
+      return products.map((prod) => ({
+        ...prod,
+        categoryName: prod?.categoryId
+          ? categoryMap[prod.categoryId]?.name || "Unknown"
+          : "Unknown",
+      }));
+    }
+  );
+
+const selectProductWithCategory = createSelector(
+  [
+    selectProductsResult(),
+    selectCategoryResult,
+    (_state: RootState, id: string) => id,
+  ],
+  (productRes, categoryRes, id) => {
+    const product = productRes.data?.entities[id];
+    const categoryMap = categoryRes?.data?.entities || {};
+
+    if (!product) return null;
+    return {
+      ...product,
+      categoryName: product?.categoryId
+        ? categoryMap[product.categoryId]?.name || "Unknown"
+        : "Unknown",
+    };
   }
 );
 
-// Hook to use the selector
+const selectLastModifiedProducts = createSelector(
+  [
+    (state: RootState) => selectProductsResult()(state).data,
+    (_state: RootState, limit: number) => limit,
+  ],
+  (productsData, limit) => {
+    if (!productsData?.entities || !productsData?.ids.length) return [];
+
+    // Create a memoized array of product IDs sorted by modification date
+    const sortedIds = [...productsData.ids].sort((a, b) => {
+      const entityA = productsData.entities[a];
+      const entityB = productsData.entities[b];
+
+      if (!entityA || !entityB) return 0;
+
+      const dateA = new Date(entityA.modifiedDate || "").getTime();
+      const dateB = new Date(entityB.modifiedDate || "").getTime();
+
+      return dateB - dateA; // Descending order (newest first)
+    });
+
+    // Return only the IDs, not the full entities
+    // This allows components to decide what data they need
+    return sortedIds.slice(0, limit);
+  }
+);
+
+// Helper selector to get full product entities from IDs
+export const selectProductEntitiesByIds = createSelector(
+  [
+    (state: RootState) => selectProductsResult()(state).data,
+    (_state: RootState, ids: string[]) => ids,
+  ],
+  (productsData, ids) => {
+    if (!productsData?.entities) return [];
+
+    return ids.map((id) => productsData.entities[id]).filter(Boolean); // Remove any undefined entries
+  }
+);
+
+// Hook that returns both IDs and entities for flexibility
 export const useLastModifiedProducts = (limit: number = 3) => {
-  const { isLoading } = useGetProductsQuery("");
-  const lastModifiedProducts = useSelector((state: RootState) =>
+  const lastModifiedIds = useAppSelector((state: RootState) =>
     selectLastModifiedProducts(state, limit)
   );
 
+  const lastModifiedEntities = useAppSelector((state: RootState) =>
+    selectProductEntitiesByIds(state, lastModifiedIds)
+  );
+
   return {
-    lastModifiedProducts,
-    isLoading,
+    lastModifiedIds,
+    lastModifiedEntities,
   };
+};
+
+export const useEnrichedProducts = (searchTerm: string = "") => {
+  const enrichedProducts = useAppSelector(selectEnrichedProducts(searchTerm));
+  return enrichedProducts;
+};
+
+export const useEnrichedProductsByCategory = (
+  categoryId: string,
+  searchTerm: string = ""
+) => {
+  const enrichedProducts = useAppSelector(
+    selectEnrichedProductsByCategory(categoryId, searchTerm)
+  );
+  return enrichedProducts;
+};
+
+export const useProductWithCategory = (id: string) => {
+  const { isLoading, data: productData } = useGetProductQuery(id);
+  const productWithCategory = useAppSelector((state: RootState) => {
+    const cachedProduct = selectProductWithCategory(state, id);
+    if (cachedProduct) return cachedProduct;
+
+    if (productData) {
+      const categoryMap = selectCategoryResult(state)?.data?.entities || {};
+      return {
+        ...productData,
+        categoryName: productData?.categoryId
+          ? categoryMap[productData.categoryId]?.name || "Unknown"
+          : "Unknown",
+      };
+    }
+
+    return null;
+  });
+
+  return { productWithCategory, isLoading };
 };

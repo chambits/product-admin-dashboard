@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { StatusBadge } from "../../../components/StatusBadge";
 import { Product } from "../types";
 import { useNavigate } from "react-router-dom";
+import { ReactNode } from "react";
 
 const WidgetContainer = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ const Info = styled.div`
 `;
 
 interface ProductInfoWidgetProps {
-  title: string;
+  title: ReactNode;
   product: Product;
 }
 
@@ -47,7 +48,10 @@ const ProductInfoWidget = ({ title, product }: ProductInfoWidgetProps) => {
       <ProductName>{product.name}</ProductName>
       <Info>
         <StatusBadge status={product.status} />
-        <span>Price: {product.price}</span>
+        <span>
+          Price: {product.currency}
+          {product.price}
+        </span>
         <span>Stock: {product.stock}</span>
       </Info>
     </WidgetContainer>

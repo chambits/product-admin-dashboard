@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../../providers/NotificationProvider";
-import { useAddProductMutation } from "../productApi";
-import { ROUTE_MAP } from "../../../components/Menu";
+import { useAddProductMutation } from "../api";
 import { Product } from "../types";
+import { RouteMap } from "../../../constants";
 
 export const useCreateProduct = () => {
   const navigate = useNavigate();
-  const [addProduct] = useAddProductMutation();
+  const [addProduct, { isLoading }] = useAddProductMutation();
   const { showNotification } = useNotification();
 
   const generateSimpleId = () => {
@@ -30,6 +30,8 @@ export const useCreateProduct = () => {
         id: generateSimpleId(),
         createdDate: new Date().toISOString(),
         modifiedDate: new Date().toISOString(),
+        currency: "$",
+        attributes: values.attributes || [],
       };
 
       await addProduct(productWithId);
@@ -40,17 +42,18 @@ export const useCreateProduct = () => {
       }
 
       if (options?.redirectAfterCreate !== false) {
-        navigate(ROUTE_MAP.products);
+        navigate(RouteMap.products);
       }
     } catch (error) {
       console.error(error);
       showNotification("error", "Error", "Failed to add product");
-      throw error; // Re-throw to let component handle if needed
+      throw error;
     }
   };
 
   return {
     createProduct,
     generateSimpleId,
+    isLoading,
   };
 };

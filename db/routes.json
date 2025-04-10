@@ -1,6 +1,0 @@
-{
-  "/api/*": "/$1",
-  "/api/products\\?category=:categoryId": "/products?category_id=:categoryId",
-  "/api/products\\?page=:page&per_page=:per_page": "/products?_page=:page&_limit=:per_page",
-  "/api/products\\?sort=:field&order=:order": "/products?_sort=:field&_order=:order"
-}

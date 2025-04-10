@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../../providers/NotificationProvider";
-import { useDeleteProductMutation } from "../productApi";
-import { ROUTE_MAP } from "../../../components/Menu";
+import { useDeleteProductMutation } from "../api";
+import { RouteMap } from "../../../constants";
 
 export const useDeleteProduct = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const useDeleteProduct = () => {
       }
 
       if (options?.redirectAfterDelete !== false) {
-        navigate(ROUTE_MAP.products);
+        navigate(RouteMap.products);
       }
     } catch (error) {
       console.error(error);

@@ -5,7 +5,7 @@ import { useBreadcrumbs } from "../hooks/useBreadCrumbs";
 
 const Breadcrumb = () => {
   const breadcrumbs = useBreadcrumbs();
-
+  const title = breadcrumbs[breadcrumbs.length - 1]?.title;
   return (
     <>
       <Flex vertical align="flex-start" style={{ margin: 16 }}>
@@ -21,7 +21,7 @@ const Breadcrumb = () => {
             </AntBreadcrumb.Item>
           ))}
         </AntBreadcrumb>
-        <Typography.Title level={3}>Products list</Typography.Title>
+        <Typography.Title level={3}>{title}</Typography.Title>
       </Flex>
     </>
   );

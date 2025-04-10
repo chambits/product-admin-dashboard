@@ -1,22 +1,21 @@
 import { createSelector } from "@reduxjs/toolkit";
 import type { MenuProps } from "antd";
-import { RootState } from "../../../app/store/index";
-import { Category } from "../types";
 import { useAppSelector } from "../../../app/store/hooks";
+import { selectCategoryResult } from "../categoryApi";
+import { Category } from "../types";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-export const selectCategories = (state: RootState) =>
-  state.api.queries["getCategories(undefined)"]?.data;
-
 export const selectCategoryMenuItems = createSelector(
-  [selectCategories],
-  (categories): MenuItem[] => {
-    if (!categories) return [];
+  [selectCategoryResult],
+  (categoryRes): MenuItem[] => {
+    if (!categoryRes.data) return [];
 
     const categoryMap = new Map<string | null, Category[]>();
 
-    categories.forEach((category: Category) => {
+    categoryRes.data.ids.forEach((id) => {
+      const category = categoryRes?.data?.entities[id];
+      if (!category) return;
       const parentId = category.parentId ?? null;
       if (!categoryMap.has(parentId)) {
         categoryMap.set(parentId, []);
@@ -41,14 +40,14 @@ export const selectCategoryMenuItems = createSelector(
 );
 
 export const selectCategoryNames = createSelector(
-  [selectCategories],
-  (categories): { [key: string]: string } => {
-    if (!categories) return {};
+  [selectCategoryResult],
+  (categoryRes): { [key: string]: string } => {
+    if (!categoryRes.data) return {};
 
-    return categories.reduce(
-      (acc: { [key: string]: string }, category: Category) => ({
+    return categoryRes.data.ids.reduce(
+      (acc: { [key: string]: string }, id: string) => ({
         ...acc,
-        [category.id]: category.name,
+        [id]: categoryRes.data?.entities[id]?.name || "",
       }),
       {}
     );

@@ -1,14 +1,25 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Empty, Flex, Popconfirm, Row, Space } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Empty,
+  Flex,
+  Popconfirm,
+  Row,
+  Skeleton,
+  Space,
+} from "antd";
+import { Product } from "../features/products/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ROUTE_MAP } from "../components/Menu";
 import PageTransition from "../components/PageTransition";
 import { ProductEditView } from "../features/products/components/ProductEditView";
 import { ProductView } from "../features/products/components/ProductView";
-import { useGetProductsQuery } from "../features/products/productApi";
 import { useDeleteProduct } from "../features/products/hooks/useDeleteProduct";
+import { useProductWithCategory } from "../features/products/selectors/productSelectors";
+import { RouteMap } from "../constants";
 
 const ProductDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,17 +27,17 @@ const ProductDetailsPage = () => {
   const { deleteProductData } = useDeleteProduct();
   const [isEditing, setIsEditing] = useState(false);
 
-  const { product } = useGetProductsQuery("", {
-    selectFromResult: ({ data }) => ({
-      product: data?.find((p) => p.id === id),
-    }),
-  });
+  const { productWithCategory: product, isLoading } = useProductWithCategory(
+    id ?? ""
+  );
 
-  if (!product)
+  if (isLoading) return <Skeleton active />;
+
+  if (!id)
     return (
       <Flex align="center" vertical gap={16}>
         <Empty description="Product not found" />
-        <Button onClick={() => navigate(ROUTE_MAP.products)}>
+        <Button onClick={() => navigate(RouteMap.products)}>
           Go to products
         </Button>
       </Flex>
@@ -47,13 +58,13 @@ const ProductDetailsPage = () => {
               <Card>
                 {isEditing ? (
                   <ProductEditView
-                    product={product}
+                    product={product as Product}
                     view="advanced"
                     onCancel={() => setIsEditing(false)}
                     onSuccess={() => setIsEditing(false)}
                   />
                 ) : (
-                  <>
+                  <Flex vertical gap={16}>
                     <Flex justify="end" gap={16}>
                       <Space>
                         <Button
@@ -76,8 +87,10 @@ const ProductDetailsPage = () => {
                         </Popconfirm>
                       </Space>
                     </Flex>
-                    <ProductView product={product} />
-                  </>
+                    <Flex vertical gap={16}>
+                      <ProductView product={product as Product} />
+                    </Flex>
+                  </Flex>
                 )}
               </Card>
             </motion.div>

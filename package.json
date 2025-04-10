@@ -1,5 +1,6 @@
 {
   "name": "product-admin-panel",
+  "homepage": "https://chamith.github.io/home-pro",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +13,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -20,22 +23,25 @@
     "@reduxjs/toolkit": "^2.6.1",
     "ag-grid-react": "^33.2.1",
     "antd": "^5.24.6",
-    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
     "framer-motion": "^12.6.3",
+    "jwt-decode": "^4.0.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.4.1",
-    "yup": "^1.6.1"
+    "react-router-dom": "^7.4.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/lodash.debounce": "^4.0.9",
+    "@types/node": "^22.14.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
@@ -44,9 +50,10 @@
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "gh-pages": "^6.3.0",
     "globals": "^15.15.0",
     "jsdom": "^26.0.0",
-    "json-server": "0.17.4",
+    "json-server": "^0.17.4",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",

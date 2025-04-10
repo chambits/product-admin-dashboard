@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
+import { TokenKey } from "../../constants";
 import { User } from "./types";
 
 interface AuthState {
@@ -23,12 +25,26 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
-      localStorage.removeItem("token");
+      localStorage.removeItem(TokenKey);
     },
   },
 });
 
-export const { setAuth, logout } = authSlice.actions;
-export const selectAuth = (state: RootState) => state.auth;
+export const useAuth = () => {
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((state: RootState) => state.auth);
 
+  const setAuth = (auth: AuthState) => {
+    dispatch(authSlice.actions.setAuth(auth));
+  };
+
+  const logout = () => {
+    dispatch(authSlice.actions.logout());
+  };
+  return {
+    auth,
+    setAuth,
+    logout,
+  };
+};
 export default authSlice.reducer;

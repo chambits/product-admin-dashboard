@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "./types";
-import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
+import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
+import { Product } from "./types";
 
 interface ProductState {
   selectedProduct: Product | null;
@@ -22,9 +22,9 @@ const productSlice = createSlice({
 });
 
 export const useProduct = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return {
-    selectedProduct: useSelector(
+    selectedProduct: useAppSelector(
       (state: RootState) => state.product.selectedProduct
     ),
     setSelectedProduct: (product: Product | null) =>

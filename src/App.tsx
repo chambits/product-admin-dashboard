@@ -1,25 +1,25 @@
 import "antd/dist/reset.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import MainLayout from "./layouts/MainLayout";
+import CategoriesDetailsPage from "./pages/CategoriesDetailsPage";
+import CategoryListPage from "./pages/CategoryListPage";
+import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import ProductAddPage from "./pages/ProductAddPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ProductsPage from "./pages/ProductsPage";
-import CategoriesPage from "./pages/CategoriesPage";
-import DashboardPage from "./pages/DashboardPage";
-import { ROUTE_MAP } from "./components/Menu";
-import LoginPage from "./pages/LoginPage";
 import { NotificationProvider } from "./providers/NotificationProvider";
-import ProductAddPage from "./pages/ProductAddPage";
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import { ErrorBoundary } from "./components/ErrorBoundary";
+import { RouteMap } from "./constants";
 
-function App() {
+export function App() {
   return (
     <ErrorBoundary>
       <NotificationProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-
             <Route
               element={
                 <ProtectedRoute>
@@ -27,18 +27,23 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route path={ROUTE_MAP.dashboard} element={<DashboardPage />} />
-              <Route path={ROUTE_MAP.productAdd} element={<ProductAddPage />} />
-              <Route path={ROUTE_MAP.products} element={<ProductsPage />} />
+              <Route path={RouteMap.dashboard} element={<ProductsPage />} />
+              <Route path={RouteMap.productAdd} element={<ProductAddPage />} />
+              <Route path={RouteMap.products} element={<ProductsPage />} />
               <Route
-                path={ROUTE_MAP.productDetails}
+                path={RouteMap.productDetails}
                 element={<ProductDetailsPage />}
               />
               <Route
-                path={ROUTE_MAP.categoryDetails}
-                element={<CategoriesPage />}
+                path={RouteMap.categoryDetails}
+                element={<CategoriesDetailsPage />}
+              />
+              <Route
+                path={RouteMap.categories}
+                element={<CategoryListPage />}
               />
             </Route>
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </NotificationProvider>

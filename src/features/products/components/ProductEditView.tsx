@@ -1,22 +1,28 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
-  Descriptions,
+  Card,
+  Divider,
+  Empty,
   Flex,
   Form,
   Input,
   InputNumber,
   Select,
+  Space,
+  Table,
+  Tag,
+  Tooltip,
   Typography,
 } from "antd";
-import { useMemo, useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNotification } from "../../../providers/NotificationProvider";
+import { formatDate } from "../../../utils/dateFormat";
 import { useFormatAttributeLabel } from "../hooks/useFormatAttributeLabel";
-import { useUpdateProduct } from "../hooks/useUpdateProduct";
 import { useRenderAttribute } from "../hooks/useRenderAttribute";
-import { Product, ProductAttribute } from "../types";
+import { useUpdateProduct } from "../hooks/useUpdateProduct";
+import { Product, ProductAttribute, ProductStatus } from "../types";
 import { AddAttributeModal } from "./AddAttributeModal";
-
 const { Title } = Typography;
 
 interface ProductEditViewProps {
@@ -36,6 +42,9 @@ export const ProductEditView = ({
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [attributeForm] = Form.useForm();
   const [newAttributes, setNewAttributes] = useState<ProductAttribute[]>([]);
+  const [existingAttributes, setExistingAttributes] = useState<
+    ProductAttribute[]
+  >(product.attributes || []);
   const { formatAttributeLabel } = useFormatAttributeLabel();
   const { renderAttribute } = useRenderAttribute(true);
   const { showNotification } = useNotification();
@@ -44,13 +53,15 @@ export const ProductEditView = ({
   const formInitialValues = useMemo(() => {
     return {
       ...product,
-      attributes: product.attributes.reduce(
-        (acc, attr) => ({
-          ...acc,
-          [attr.code]: { value: attr.value },
-        }),
-        {}
-      ),
+      attributes:
+        product.attributes &&
+        product.attributes.reduce(
+          (acc, attr) => ({
+            ...acc,
+            [attr.code]: { value: attr.value },
+          }),
+          {}
+        ),
     };
   }, [product]);
 
@@ -95,6 +106,65 @@ export const ProductEditView = ({
     }
   };
 
+  const handleDeleteAttribute = async (code: string) => {
+    try {
+      const currentAttributes = form.getFieldValue("attributes") || {};
+
+      const { ...remainingAttributes } = currentAttributes;
+      form.setFieldsValue({ attributes: remainingAttributes });
+
+      if (newAttributes.some((attr) => attr.code === code)) {
+        setNewAttributes(newAttributes.filter((attr) => attr.code !== code));
+      } else {
+        const updatedAttributes = (product.attributes || []).filter(
+          (attr) => attr.code !== code
+        );
+
+        setExistingAttributes(updatedAttributes);
+      }
+
+      showNotification("success", "Success", "Attribute removed successfully");
+    } catch (error) {
+      console.error(error);
+      showNotification("error", "Error", "Failed to remove attribute");
+    }
+  };
+
+  const specificationsColumns = [
+    {
+      title: "Attribute",
+      dataIndex: "code",
+      key: "code",
+      render: (code: string) => formatAttributeLabel(code),
+    },
+    {
+      title: "Value",
+      dataIndex: "value",
+      key: "value",
+      render: (_: unknown, record: ProductAttribute) => renderAttribute(record),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      width: 40,
+      render: (record: ProductAttribute) => (
+        <Space size="small">
+          <Tooltip title="Delete">
+            <Button
+              type="text"
+              size="small"
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => handleDeleteAttribute(record.code)}
+            />
+          </Tooltip>
+        </Space>
+      ),
+    },
+  ];
+
+  const allAttributes = [...existingAttributes, ...newAttributes];
+
   return (
     <>
       <Form
@@ -103,136 +173,159 @@ export const ProductEditView = ({
         initialValues={formInitialValues}
         onFinish={handleSubmit}
       >
-        <Title level={2} style={{ marginBottom: 24 }}>
-          <Form.Item
-            name="name"
-            rules={[
-              { required: true, message: "Please input product name!" },
-              { min: 3, message: "Name must be at least 3 characters" },
-            ]}
-            style={{
-              marginBottom: 0,
-              display: "inline-block",
-              width: "calc(100% - 120px)",
-            }}
-          >
-            <Input size="large" />
-          </Form.Item>
-          <Form.Item
-            name="status"
-            rules={[{ required: true, message: "Please select status!" }]}
-            style={{
-              marginBottom: 0,
-              display: "inline-block",
-              width: "120px",
-              paddingLeft: 12,
-            }}
-          >
-            <Select>
-              <Select.Option value="Active">Active</Select.Option>
-              <Select.Option value="Inactive">Inactive</Select.Option>
-              <Select.Option value="Out of stock">Out of stock</Select.Option>
-              <Select.Option value="Archived">Archived</Select.Option>
-              <Select.Option value="Draft">Draft</Select.Option>
-            </Select>
-          </Form.Item>
-        </Title>
+        {view === "advanced" && (
+          <Title level={5} style={{ marginBottom: 16 }}>
+            Basic Information
+          </Title>
+        )}
+        <Flex gap={32}>
+          <Flex vertical>
+            <Typography.Text type="secondary" style={{ marginBottom: 4 }}>
+              Product ID
+            </Typography.Text>
+            <Tag color="blue" style={{ fontSize: "14px", padding: "4px 8px" }}>
+              {product.id}
+            </Tag>
+          </Flex>
 
-        <Title level={5} style={{ marginBottom: 16 }}>
-          Basic Information
-        </Title>
-        <Descriptions bordered>
-          <Descriptions.Item label="ID">{product.id}</Descriptions.Item>
-          <Descriptions.Item label="Price">
-            <Form.Item
-              name="price"
-              rules={[
-                { required: true, message: "Please input price!" },
-                { type: "number", min: 0, message: "Price must be positive!" },
-              ]}
-              style={{ marginBottom: 0 }}
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                formatter={(value) =>
-                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) => value!.replace(/\$\s?|(,*)/g, "")}
-              />
-            </Form.Item>
-          </Descriptions.Item>
-          <Descriptions.Item label="Stock">
-            <Form.Item
-              name="stock"
-              rules={[
-                { required: true, message: "Please input stock!" },
-                {
-                  type: "number",
-                  min: 0,
-                  message: "Stock must be non-negative!",
-                },
-              ]}
-              style={{ marginBottom: 0 }}
-              hasFeedback
-            >
-              <InputNumber style={{ width: "100%" }} />
-            </Form.Item>
-          </Descriptions.Item>
-          <Descriptions.Item label="Category">
-            <Form.Item
-              name="categoryId"
-              rules={[{ required: true, message: "Please input category!" }]}
-              style={{ marginBottom: 0 }}
-            >
-              <Input />
-            </Form.Item>
-          </Descriptions.Item>
-          <Descriptions.Item label="Description" span={3}>
-            <Form.Item
-              name="description"
-              rules={[{ max: 500, message: "Description too long!" }]}
-              style={{ marginBottom: 0 }}
-            >
-              <Input.TextArea rows={4} />
-            </Form.Item>
-          </Descriptions.Item>
-        </Descriptions>
+          <Flex vertical>
+            <Typography.Text type="secondary" style={{ marginBottom: 4 }}>
+              Category
+            </Typography.Text>
+            <Tag color="cyan" style={{ fontSize: "14px", padding: "4px 8px" }}>
+              {product.categoryName}
+            </Tag>
+          </Flex>
+
+          <Flex vertical>
+            <Typography.Text type="secondary" style={{ marginBottom: 4 }}>
+              Created At
+            </Typography.Text>
+            <Typography.Text>
+              {formatDate.short(product.createdDate)}
+            </Typography.Text>
+          </Flex>
+          <Flex vertical>
+            <Typography.Text type="secondary" style={{ marginBottom: 4 }}>
+              Last Modified
+            </Typography.Text>
+            <Typography.Text>
+              {formatDate.relative(product.modifiedDate)}
+            </Typography.Text>
+          </Flex>
+        </Flex>
+        <Divider />
+
+        <Form.Item
+          label="Product Name"
+          name="name"
+          rules={[
+            { required: true, message: "Please input product name!" },
+            { min: 3, message: "Name must be at least 3 characters" },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Status"
+          name="status"
+          rules={[{ required: true, message: "Please select status!" }]}
+        >
+          <Select>
+            {Object.values(ProductStatus).map((status) => (
+              <Select.Option value={status}>{status}</Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Price"
+          name="price"
+          rules={[
+            { required: true, message: "Please input price!" },
+            { type: "number", min: 0, message: "Price must be positive!" },
+          ]}
+        >
+          <InputNumber
+            style={{ width: "100%" }}
+            formatter={(value) =>
+              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            parser={(value) => value!.replace(/\$\s?|(,*)/g, "")}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Stock"
+          name="stock"
+          rules={[
+            { required: true, message: "Please input stock!" },
+            {
+              type: "number",
+              min: 0,
+              message: "Stock must be non-negative!",
+            },
+          ]}
+        >
+          <InputNumber style={{ width: "100%" }} />
+        </Form.Item>
+
+        <Form.Item
+          label="Description"
+          name="description"
+          rules={[{ max: 500, message: "Description too long!" }]}
+        >
+          <Input.TextArea rows={4} />
+        </Form.Item>
 
         {view === "advanced" && (
-          <>
-            <Title level={5} style={{ margin: "24px 0 16px" }}>
-              Product Specifications
-              <Button
-                variant="outlined"
-                icon={<PlusOutlined />}
-                onClick={() => setIsModalVisible(true)}
-                style={{ marginLeft: 16 }}
-              >
-                Add
-              </Button>
-            </Title>
-
-            <Descriptions bordered>
-              {Array.isArray(product.attributes) &&
-                product.attributes.map((attr) => (
-                  <Descriptions.Item
-                    key={attr.code}
-                    label={formatAttributeLabel(attr.code)}
-                  >
-                    {renderAttribute(attr)}
-                  </Descriptions.Item>
-                ))}
-
-              {newAttributes.map((attr) => (
-                <Descriptions.Item
-                  key={attr.code}
-                  label={formatAttributeLabel(attr.code)}
+          <Card
+            title={
+              <Flex justify="space-between" align="center">
+                <Typography.Title level={5} style={{ margin: 0 }}>
+                  Additional Information
+                </Typography.Title>
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={() => setIsModalVisible(true)}
                 >
-                  {renderAttribute(attr)}
-                </Descriptions.Item>
-              ))}
-            </Descriptions>
-          </>
+                  Add Attribute
+                </Button>
+              </Flex>
+            }
+            style={{ marginTop: 24 }}
+          >
+            {allAttributes.length > 0 ? (
+              <Table
+                dataSource={allAttributes}
+                columns={specificationsColumns}
+                pagination={false}
+                rowKey="code"
+                size="middle"
+                bordered
+                style={{ marginTop: 16 }}
+              />
+            ) : (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description={
+                  <Space direction="vertical" align="center">
+                    <Typography.Text type="secondary">
+                      No attributes added yet
+                    </Typography.Text>
+                    <Button
+                      type="primary"
+                      icon={<PlusOutlined />}
+                      onClick={() => setIsModalVisible(true)}
+                    >
+                      Add Attribute
+                    </Button>
+                  </Space>
+                }
+                style={{ margin: "32px 0" }}
+              />
+            )}
+          </Card>
         )}
         <Form.Item style={{ marginTop: 24 }}>
           <Flex justify="end" gap={16}>
@@ -259,7 +352,7 @@ export const ProductEditView = ({
         }}
         onOk={handleAddAttribute}
         form={attributeForm}
-        existingAttributes={[...product.attributes, ...newAttributes]}
+        existingAttributes={allAttributes}
       />
     </>
   );

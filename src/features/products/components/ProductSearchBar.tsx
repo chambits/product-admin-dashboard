@@ -7,8 +7,6 @@ interface ProductSearchBarProps {
 }
 
 const ProductSearchBar = React.memo(({ onSearch }: ProductSearchBarProps) => {
-  console.log("ProductSearchBar");
-
   return (
     <Input
       placeholder="Search products..."

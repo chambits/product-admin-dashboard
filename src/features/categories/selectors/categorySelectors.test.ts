@@ -1,74 +1,121 @@
-import { describe, test, expect } from "vitest";
-import { selectCategoryMenuItems } from "./categorySelectors";
-import { RootState } from "../../../app/store";
-import { Category } from "../types";
+import { describe, it, expect } from "vitest";
+import {
+  selectCategoryMenuItems,
+  selectCategoryNames,
+} from "./categorySelectors";
 
-const mockCategories: Category[] = [
-  { id: "c1", parentId: null, name: "Electronics" },
-  { id: "c2", parentId: "c1", name: "Smartphones" },
-  { id: "c3", parentId: "c1", name: "Laptops" },
-  { id: "c4", parentId: null, name: "Furniture" },
-  { id: "c5", parentId: "c4", name: "Chairs" },
-  { id: "c6", parentId: "c4", name: "Tables" },
-];
-
-describe("selectCategoryMenuItems", () => {
-  test("should transform categories into nested menu items", () => {
-    const mockState = {
-      api: {
-        queries: {
-          "getCategories(undefined)": {
-            status: "fulfilled",
-            endpointName: "getCategories",
-            requestId: "mockRequest",
-            originalArgs: undefined,
-            startedTimeStamp: 123,
-            data: mockCategories,
-          },
+describe("Category Selectors", () => {
+  const mockCategoryResult = {
+    data: {
+      ids: ["1", "2", "3", "4"],
+      entities: {
+        "1": {
+          id: "1",
+          name: "Electronics",
+          parentId: null,
         },
-        provided: {},
-        subscriptions: {},
-        mutations: {},
-        config: {},
+        "2": {
+          id: "2",
+          name: "Phones",
+          parentId: "1",
+        },
+        "3": {
+          id: "3",
+          name: "Laptops",
+          parentId: "1",
+        },
+        "4": {
+          id: "4",
+          name: "iPhone",
+          parentId: "2",
+        },
       },
-    } as unknown as RootState;
+    },
+  };
 
-    const result = selectCategoryMenuItems(mockState);
+  describe("selectCategoryMenuItems", () => {
+    it("should return empty array when no data", () => {
+      const result = selectCategoryMenuItems({
+        api: { queries: { "getCategories(undefined)": { data: null } } },
+      } as any);
+      expect(result).toEqual([]);
+    });
 
-    expect(result).toEqual([
-      {
-        key: "c1",
-        label: "Electronics",
-        children: [
-          { key: "c2", label: "Smartphones", children: undefined },
-          { key: "c3", label: "Laptops", children: undefined },
-        ],
-      },
-      {
-        key: "c4",
-        label: "Furniture",
-        children: [
-          { key: "c5", label: "Chairs", children: undefined },
-          { key: "c6", label: "Tables", children: undefined },
-        ],
-      },
-    ]);
+    it("should transform categories into menu items with correct hierarchy", () => {
+      const result = selectCategoryMenuItems({
+        api: { queries: { "getCategories(undefined)": mockCategoryResult } },
+      } as any);
+
+      expect(result).toEqual([
+        {
+          key: "1",
+          label: "Electronics",
+          children: [
+            {
+              key: "2",
+              label: "Phones",
+              children: [
+                {
+                  key: "4",
+                  label: "iPhone",
+                  children: undefined,
+                },
+              ],
+            },
+            {
+              key: "3",
+              label: "Laptops",
+              children: undefined,
+            },
+          ],
+        },
+      ]);
+    });
   });
 
-  test("should return empty array when no categories exist", () => {
-    const emptyState = {
-      api: {
-        queries: {
-          "getCategories(undefined)": {
-            status: "fulfilled",
-            endpointName: "getCategories",
-            data: undefined,
+  describe("selectCategoryNames", () => {
+    it("should return empty object when no data", () => {
+      const result = selectCategoryNames({
+        api: { queries: { "getCategories(undefined)": { data: null } } },
+      } as any);
+      expect(result).toEqual({});
+    });
+
+    it("should return flat object with category ids as keys and names as values", () => {
+      const result = selectCategoryNames({
+        api: { queries: { "getCategories(undefined)": mockCategoryResult } },
+      } as any);
+
+      expect(result).toEqual({
+        "1": "Electronics",
+        "2": "Phones",
+        "3": "Laptops",
+        "4": "iPhone",
+      });
+    });
+
+    it("should handle missing category names", () => {
+      const mockDataWithMissingName = {
+        data: {
+          ids: ["1"],
+          entities: {
+            "1": {
+              id: "1",
+              parentId: null,
+            },
           },
         },
-      },
-    } as unknown as RootState;
+      };
 
-    const result = selectCategoryMenuItems(emptyState);
-    expect(result).toEqual([]);
+      const result = selectCategoryNames({
+        api: {
+          queries: { "getCategories(undefined)": mockDataWithMissingName },
+        },
+      } as any);
+
+      expect(result).toEqual({
+        "1": "",
+      });
+    });
   });
 });

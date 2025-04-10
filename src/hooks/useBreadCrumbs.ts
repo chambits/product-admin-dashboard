@@ -1,13 +1,5 @@
 import { matchPath, useLocation } from "react-router-dom";
-
-export const breadcrumbMap: Record<string, string> = {
-  "/": "Dashboard",
-  "/products": "Products",
-  "/products/new": "Add Product",
-  "/products/:id": "Product Details",
-  "/categories": "Categories",
-  "/categories/:id": "Category Details",
-};
+import { breadcrumbMap } from "../constants";
 
 export const useBreadcrumbs = () => {
   const location = useLocation();
@@ -22,7 +14,8 @@ export const useBreadcrumbs = () => {
 
     return {
       path: url,
-      label: matchedKey ? breadcrumbMap[matchedKey] : url,
+      label: matchedKey ? breadcrumbMap[matchedKey].label : url,
+      title: matchedKey ? breadcrumbMap[matchedKey].title : undefined,
     };
   });
 

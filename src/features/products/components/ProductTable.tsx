@@ -2,16 +2,24 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import type { ColDef } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { Button, Modal, Popconfirm, Space, Tooltip } from "antd";
-import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  Flex,
+  Modal,
+  Popconfirm,
+  Skeleton,
+  Space,
+  Tooltip,
+} from "antd";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ROUTE_MAP } from "../../../components/Menu";
 import { StatusBadge } from "../../../components/StatusBadge";
-import { StatusType } from "../../../hooks/useStatusColor";
+import { RouteMap } from "../../../constants";
 import { formatDate } from "../../../utils/dateFormat";
 import { useCategoryNames } from "../../categories/selectors/categorySelectors";
 import { useDeleteProduct } from "..//hooks/useDeleteProduct";
-import { Product } from "../types";
+import { Product, ProductStatus } from "../types";
 import { ProductEditView } from "./ProductEditView";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -22,8 +30,9 @@ interface IRow {
   price: number;
   description: string;
   categoryId: string;
+  categoryName: string;
   stock: number;
-  status: StatusType;
+  status: ProductStatus;
   modifiedDate: string;
   actions: string;
 }
@@ -46,12 +55,12 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
     }
   }, [selectedProduct]);
 
-  const statusCellRenderer = (params: { value: StatusType }) => {
+  const statusCellRenderer = (params: { value: ProductStatus }) => {
     return <StatusBadge status={params.value} />;
   };
 
-  const priceCellRenderer = (params: { value: number }) => {
-    return `${params.value.toLocaleString()}`;
+  const priceCellRenderer = (params: { value: number; data: Product }) => {
+    return `${params.data.currency}${params.value.toLocaleString()}`;
   };
 
   const categoryCellRenderer = (params: { value: string }) => {
@@ -60,14 +69,6 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
 
   const dateCellRenderer = (params: { value: string }) => {
     return formatDate.full(params.value);
-  };
-
-  const editHandler = (data: Product) => {
-    setSelectedProduct(data);
-  };
-
-  const deleteHandler = (id: string) => {
-    deleteProductData(id);
   };
 
   const actionsCellRenderer = (params: { data: Product }) => {
@@ -97,6 +98,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
           >
             <Button
               type="text"
+              name="delete"
               danger
               icon={<DeleteOutlined />}
               onClick={(e) => e.stopPropagation()}
@@ -107,6 +109,13 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
     );
   };
 
+  const editHandler = (data: Product) => {
+    setSelectedProduct(data);
+  };
+
+  const deleteHandler = (id: string) => {
+    deleteProductData(id);
+  };
   const [colDefs] = useState<ColDef<IRow>[]>([
     {
       field: "id",
@@ -119,9 +128,10 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
       flex: 1.5,
     },
     {
-      field: "categoryId",
+      field: "categoryName",
       headerName: "Category",
       cellRenderer: categoryCellRenderer,
+      filter: "agTextColumnFilter",
       flex: 2,
     },
     {
@@ -139,6 +149,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
       field: "status",
       headerName: "Status",
       cellRenderer: statusCellRenderer,
+      filter: "agTextColumnFilter",
       flex: 1.5,
     },
     {
@@ -159,14 +170,17 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
     },
   ]);
 
-  const defaultColDef: ColDef = {
-    flex: 1,
-  };
+  const defaultColDef = useMemo<ColDef>(() => {
+    return {
+      filter: "agTextColumnFilter",
+      suppressHeaderMenuButton: true,
+      suppressHeaderContextMenu: true,
+    };
+  }, []);
 
-  // TODO: Add loading Skeleton
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  if (isLoading) {
+    return <TableSkeleton />;
+  }
 
   return (
     <>
@@ -177,7 +191,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
               e.event &&
               !(e.event.target as HTMLElement).closest(".action-buttons")
             ) {
-              navigate(`${ROUTE_MAP.products}/${e.data.id}`);
+              navigate(`${RouteMap.products}/${e.data.id}`);
             }
           }}
           rowData={data}
@@ -215,5 +229,31 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
     </>
   );
 });
+
+const TableSkeleton = () => (
+  <Card>
+    <Skeleton.Input active block style={{ marginBottom: 16, height: 32 }} />
+
+    <Skeleton.Input active block style={{ marginBottom: 8, height: 40 }} />
+
+    {[1, 2, 3, 4, 5].map((key) => (
+      <Skeleton.Input
+        key={key}
+        active
+        block
+        style={{
+          marginBottom: 8,
+          height: 32,
+          opacity: 1 - key * 0.15,
+        }}
+      />
+    ))}
+
+    <Flex justify="space-between" align="center" style={{ marginTop: 16 }}>
+      <Skeleton.Input active style={{ width: 100 }} />
+      <Skeleton.Input active style={{ width: 200 }} />
+    </Flex>
+  </Card>
+);
 
 export default ProductTable;

@@ -1,17 +1,22 @@
 import { Col, Row } from "antd";
 import { useCallback, useState } from "react";
 import PageTransition from "../components/PageTransition";
+import { useGetCategoriesQuery } from "../features/categories/categoryApi";
 import AddProductButton from "../features/products/components/AddProductButton";
-import LastModifiedProducts from "../features/products/components/LastModifiedProducts";
 import ProductSearchBar from "../features/products/components/ProductSearchBar";
 import ProductsTable from "../features/products/components/ProductTable";
-import { useGetProductsQuery } from "../features/products/productApi";
+import { useGetProductsQuery } from "../features/products/api";
+import { useEnrichedProducts } from "../features/products/selectors/productSelectors";
+import { Product } from "../features/products/types";
+import LastModifiedProducts from "../features/products/components/LastModifiedProducts";
 
 export default function ProductsPage() {
   const [searchText, setSearchText] = useState("");
-  const { data, isLoading } = useGetProductsQuery(searchText);
+  const { isLoading } = useGetProductsQuery(searchText);
+  useGetCategoriesQuery();
 
-  console.log(searchText);
+  const enrichedProducts = useEnrichedProducts(searchText);
+
   const searchHandler = useCallback((value: string) => {
     setSearchText(value);
   }, []);
@@ -33,7 +38,10 @@ export default function ProductsPage() {
           <AddProductButton />
         </Col>
       </Row>
-      <ProductsTable data={data} isLoading={isLoading} />
+      <ProductsTable
+        data={enrichedProducts as Product[]}
+        isLoading={isLoading}
+      />
     </PageTransition>
   );
 }
