@@ -132,6 +132,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
       headerName: "Category",
       cellRenderer: categoryCellRenderer,
       filter: "agTextColumnFilter",
+      sortable: false,
       flex: 2,
     },
     {
@@ -165,7 +166,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
       cellRenderer: actionsCellRenderer,
       sortable: false,
       filter: false,
-      width: 120,
+      width: 100,
       pinned: "right",
     },
   ]);

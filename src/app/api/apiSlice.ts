@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://mock-json-server-75fe176df02c.herokuapp.com/",
+    baseUrl: "http://localhost:3002/",
     // prepareHeaders: (headers, { getState }) => {
     //   const token = (getState() as RootState).auth.token;
     //   if (token) {

@@ -2,18 +2,17 @@ import "antd/dist/reset.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { RouteMap } from "./constants";
 import MainLayout from "./layouts/MainLayout";
 import CategoriesDetailsPage from "./pages/CategoriesDetailsPage";
-import CategoryListPage from "./pages/CategoryListPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductAddPage from "./pages/ProductAddPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ProductsPage from "./pages/ProductsPage";
 import { NotificationProvider } from "./providers/NotificationProvider";
-import { RouteMap } from "./constants";
 
-export function App() {
+function App() {
   return (
     <ErrorBoundary>
       <NotificationProvider>

@@ -1,5 +1,5 @@
 import { matchPath, useLocation } from "react-router-dom";
-import { breadcrumbMap } from "../constants";
+import { BreadcrumbMap } from "../constants";
 
 export const useBreadcrumbs = () => {
   const location = useLocation();
@@ -8,14 +8,14 @@ export const useBreadcrumbs = () => {
   const breadcrumbs = pathnames.map((_, index) => {
     const url = `/${pathnames.slice(0, index + 1).join("/")}`;
 
-    const matchedKey = Object.keys(breadcrumbMap).find((pattern) =>
+    const matchedKey = Object.keys(BreadcrumbMap).find((pattern) =>
       matchPath(pattern, url)
     );
 
     return {
       path: url,
-      label: matchedKey ? breadcrumbMap[matchedKey].label : url,
-      title: matchedKey ? breadcrumbMap[matchedKey].title : undefined,
+      label: matchedKey ? BreadcrumbMap[matchedKey].label : url,
+      title: matchedKey ? BreadcrumbMap[matchedKey].title : undefined,
     };
   });
 

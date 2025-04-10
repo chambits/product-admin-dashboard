@@ -7,9 +7,9 @@ export const RouteMap: Record<string, string> = {
   categoryDetails: "/categories/:id",
 };
 
-export const breadcrumbMap: Record<string, { label: string; title?: string }> =
+export const BreadcrumbMap: Record<string, { label: string; title?: string }> =
   {
-    "/": { label: "Products", title: "Products List" },
+    "/": { label: "Home", title: "Home" },
     "/products": { label: "Products", title: "Products List" },
     "/products/new": { label: "Add Product", title: "Add Product" },
     "/products/:id": { label: "Product Details", title: "Product Details" },
