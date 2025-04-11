@@ -13,7 +13,7 @@ const ProductSkeleton = () => (
   </Card>
 );
 
-const LastModifiedProducts = React.memo(() => {
+const LastModifiedProducts: React.FC = React.memo(() => {
   const { lastModifiedEntities } = useLastModifiedProducts(3);
 
   if (lastModifiedEntities.length === 0) {

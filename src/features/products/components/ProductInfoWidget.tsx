@@ -43,7 +43,10 @@ interface ProductInfoWidgetProps {
   product: Product;
 }
 
-const ProductInfoWidget = ({ title, product }: ProductInfoWidgetProps) => {
+const ProductInfoWidget: React.FC<ProductInfoWidgetProps> = ({
+  title,
+  product,
+}) => {
   const navigate = useNavigate();
   const { getStatusColor } = useStatusColor();
   return (

@@ -6,7 +6,7 @@ import { RouteMap } from "../constants";
 
 const { Text, Title } = Typography;
 
-export default function NotFoundPage() {
+const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -43,4 +43,6 @@ export default function NotFoundPage() {
       />
     </PageTransition>
   );
-}
+};
+
+export default NotFoundPage;

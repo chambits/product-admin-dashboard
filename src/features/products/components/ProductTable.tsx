@@ -44,202 +44,206 @@ interface ProductsTableProps {
   isLoading: boolean;
 }
 
-const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
-  const [editModalVisible, setEditModalVisible] = useState(false);
-  const navigate = useNavigate();
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const { deleteProductData } = useDeleteProduct();
-  const { getStatusColor } = useStatusColor();
-
-  useEffect(() => {
-    if (selectedProduct) {
-      setEditModalVisible(true);
-    }
-  }, [selectedProduct]);
-
-  const statusCellRenderer = (params: { value: ProductStatus }) => {
-    return (
-      <Badge color={getStatusColor(params.value)} content={params.value} />
+const ProductTable: React.FC<ProductsTableProps> = React.memo(
+  ({ data, isLoading }) => {
+    const [editModalVisible, setEditModalVisible] = useState(false);
+    const navigate = useNavigate();
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(
+      null
     );
-  };
+    const { deleteProductData } = useDeleteProduct();
+    const { getStatusColor } = useStatusColor();
 
-  const priceCellRenderer = (params: { value: number; data: Product }) => {
-    return `${params.data.currency}${params.value.toLocaleString()}`;
-  };
+    useEffect(() => {
+      if (selectedProduct) {
+        setEditModalVisible(true);
+      }
+    }, [selectedProduct]);
 
-  const categoryCellRenderer = (params: { value: Category }) => {
-    return params.value.name;
-  };
+    const statusCellRenderer = (params: { value: ProductStatus }) => {
+      return (
+        <Badge color={getStatusColor(params.value)} content={params.value} />
+      );
+    };
 
-  const dateCellRenderer = (params: { value: string }) => {
-    return formatDate.full(params.value);
-  };
+    const priceCellRenderer = (params: { value: number; data: Product }) => {
+      return `${params.data.currency}${params.value.toLocaleString()}`;
+    };
 
-  const actionsCellRenderer = (params: { data: Product }) => {
-    return (
-      <Space className="action-buttons">
-        <Tooltip title="Edit">
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={(e) => {
-              e.stopPropagation();
-              editHandler(params.data);
-            }}
-          />
-        </Tooltip>
-        <Tooltip title="Delete">
-          <Popconfirm
-            title="Delete Product"
-            description="Are you sure you want to delete this product?"
-            onConfirm={(e) => {
-              e?.stopPropagation();
-              deleteHandler(params.data.id);
-            }}
-            onCancel={(e) => e?.stopPropagation()}
-            okText="Yes"
-            cancelText="No"
-          >
+    const categoryCellRenderer = (params: { value: Category }) => {
+      return params.value.name;
+    };
+
+    const dateCellRenderer = (params: { value: string }) => {
+      return formatDate.full(params.value);
+    };
+
+    const actionsCellRenderer = (params: { data: Product }) => {
+      return (
+        <Space className="action-buttons">
+          <Tooltip title="Edit">
             <Button
               type="text"
-              name="delete"
-              danger
-              icon={<DeleteOutlined />}
-              onClick={(e) => e.stopPropagation()}
+              icon={<EditOutlined />}
+              onClick={(e) => {
+                e.stopPropagation();
+                editHandler(params.data);
+              }}
             />
-          </Popconfirm>
-        </Tooltip>
-      </Space>
-    );
-  };
-
-  const editHandler = (data: Product) => {
-    setSelectedProduct(data);
-  };
-
-  const deleteHandler = (id: string) => {
-    deleteProductData(id);
-  };
-  const [colDefs] = useState<ColDef<IRow>[]>([
-    {
-      field: "id",
-      headerName: "ID",
-      flex: 1.5,
-    },
-    {
-      field: "name",
-      headerName: "Product Name",
-      flex: 1.5,
-    },
-    {
-      field: "category",
-      headerName: "Category",
-      cellRenderer: categoryCellRenderer,
-      filter: "agTextColumnFilter",
-      flex: 2,
-    },
-    {
-      field: "price",
-      headerName: "Price",
-      cellRenderer: priceCellRenderer,
-      flex: 1,
-    },
-    {
-      field: "stock",
-      headerName: "Stock",
-      flex: 1,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      cellRenderer: statusCellRenderer,
-      filter: "agTextColumnFilter",
-      flex: 1.5,
-    },
-    {
-      field: "modifiedDate",
-      headerName: "Last Modified",
-      cellRenderer: dateCellRenderer,
-      flex: 1.5,
-      sort: "desc",
-    },
-    {
-      headerName: "Actions",
-      field: "actions",
-      cellRenderer: actionsCellRenderer,
-      sortable: false,
-      filter: false,
-      width: 120,
-      pinned: "right",
-    },
-  ]);
-
-  const defaultColDef = useMemo<ColDef>(() => {
-    return {
-      filter: "agTextColumnFilter",
-      suppressHeaderMenuButton: true,
-      suppressHeaderContextMenu: true,
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Popconfirm
+              title="Delete Product"
+              description="Are you sure you want to delete this product?"
+              onConfirm={(e) => {
+                e?.stopPropagation();
+                deleteHandler(params.data.id);
+              }}
+              onCancel={(e) => e?.stopPropagation()}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                type="text"
+                name="delete"
+                danger
+                icon={<DeleteOutlined />}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </Popconfirm>
+          </Tooltip>
+        </Space>
+      );
     };
-  }, []);
 
-  if (isLoading) {
-    return <TableSkeleton />;
-  }
+    const editHandler = (data: Product) => {
+      setSelectedProduct(data);
+    };
 
-  return (
-    <>
-      <div style={{ width: "100%", height: "50vh" }}>
-        <AgGridReact
-          onRowClicked={(e) => {
-            if (
-              e.event &&
-              !(e.event.target as HTMLElement).closest(".action-buttons")
-            ) {
-              navigate(`${RouteMap.products}/${e.data.id}`);
-            }
+    const deleteHandler = (id: string) => {
+      deleteProductData(id);
+    };
+    const [colDefs] = useState<ColDef<IRow>[]>([
+      {
+        field: "id",
+        headerName: "ID",
+        flex: 1.5,
+      },
+      {
+        field: "name",
+        headerName: "Product Name",
+        flex: 1.5,
+      },
+      {
+        field: "category",
+        headerName: "Category",
+        cellRenderer: categoryCellRenderer,
+        filter: "agTextColumnFilter",
+        flex: 2,
+      },
+      {
+        field: "price",
+        headerName: "Price",
+        cellRenderer: priceCellRenderer,
+        flex: 1,
+      },
+      {
+        field: "stock",
+        headerName: "Stock",
+        flex: 1,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        cellRenderer: statusCellRenderer,
+        filter: "agTextColumnFilter",
+        flex: 1.5,
+      },
+      {
+        field: "modifiedDate",
+        headerName: "Last Modified",
+        cellRenderer: dateCellRenderer,
+        flex: 1.5,
+        sort: "desc",
+      },
+      {
+        headerName: "Actions",
+        field: "actions",
+        cellRenderer: actionsCellRenderer,
+        sortable: false,
+        filter: false,
+        width: 120,
+        pinned: "right",
+      },
+    ]);
+
+    const defaultColDef = useMemo<ColDef>(() => {
+      return {
+        filter: "agTextColumnFilter",
+        suppressHeaderMenuButton: true,
+        suppressHeaderContextMenu: true,
+      };
+    }, []);
+
+    if (isLoading) {
+      return <TableSkeleton />;
+    }
+
+    return (
+      <>
+        <div style={{ width: "100%", height: "50vh" }}>
+          <AgGridReact
+            onRowClicked={(e) => {
+              if (
+                e.event &&
+                !(e.event.target as HTMLElement).closest(".action-buttons")
+              ) {
+                navigate(`${RouteMap.products}/${e.data.id}`);
+              }
+            }}
+            rowData={data}
+            columnDefs={colDefs}
+            defaultColDef={defaultColDef}
+            loading={isLoading}
+            pagination={true}
+            paginationPageSize={20}
+            paginationPageSizeSelector={[5, 10, 20, 50]}
+          />
+        </div>
+
+        <Modal
+          title="Quick Edit"
+          open={editModalVisible}
+          onCancel={() => {
+            setEditModalVisible(false);
+            setSelectedProduct(null);
           }}
-          rowData={data}
-          columnDefs={colDefs}
-          defaultColDef={defaultColDef}
-          loading={isLoading}
-          pagination={true}
-          paginationPageSize={20}
-          paginationPageSizeSelector={[5, 10, 20, 50]}
-        />
-      </div>
-
-      <Modal
-        title="Quick Edit"
-        open={editModalVisible}
-        onCancel={() => {
-          setEditModalVisible(false);
-          setSelectedProduct(null);
-        }}
-        width={1000}
-        footer={null}
-      >
-        <Flex vertical gap={16}>
-          <Alert
-            message="For full edit options, go to product details view"
-            type="info"
-            showIcon
-          />
-          <ProductEditView
-            product={selectedProduct ?? ({} as Product)}
-            onSuccess={() => {
-              setEditModalVisible(false);
-              setSelectedProduct(null);
-            }}
-            onCancel={() => {
-              setEditModalVisible(false);
-              setSelectedProduct(null);
-            }}
-          />
-        </Flex>
-      </Modal>
-    </>
-  );
-});
+          width={1000}
+          footer={null}
+        >
+          <Flex vertical gap={16}>
+            <Alert
+              message="For full edit options, go to product details view"
+              type="info"
+              showIcon
+            />
+            <ProductEditView
+              product={selectedProduct ?? ({} as Product)}
+              onSuccess={() => {
+                setEditModalVisible(false);
+                setSelectedProduct(null);
+              }}
+              onCancel={() => {
+                setEditModalVisible(false);
+                setSelectedProduct(null);
+              }}
+            />
+          </Flex>
+        </Modal>
+      </>
+    );
+  }
+);
 
 const TableSkeleton = () => (
   <Card>

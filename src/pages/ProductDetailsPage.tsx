@@ -15,7 +15,7 @@ import { useDeleteProduct } from "../features/products/hooks/useDeleteProduct";
 import { useProductById } from "../features/products/selectors/productSelectors";
 import { Product } from "../features/products/types";
 
-const ProductDetailsPage = () => {
+const ProductDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { deleteProductData } = useDeleteProduct();

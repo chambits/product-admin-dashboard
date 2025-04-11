@@ -9,7 +9,7 @@ import ProductSearchBar from "../features/products/components/ProductSearchBar";
 import ProductsTable from "../features/products/components/ProductTable";
 import { useProducts } from "../features/products/selectors/productSelectors";
 
-export default function ProductsPage() {
+const ProductsPage: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const { isLoading } = useGetProductsQuery(searchText);
   useGetCategoriesQuery();
@@ -38,4 +38,6 @@ export default function ProductsPage() {
       <ProductsTable data={products} isLoading={isLoading} />
     </PageTransition>
   );
-}
+};
+
+export default ProductsPage;

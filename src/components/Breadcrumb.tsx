@@ -6,24 +6,25 @@ import { useBreadcrumbs } from "../hooks/useBreadCrumbs";
 const Breadcrumb = () => {
   const breadcrumbs = useBreadcrumbs();
   const title = breadcrumbs[breadcrumbs.length - 1]?.title;
+
+  const items = [
+    {
+      title: (
+        <Link to="/">
+          <HomeOutlined />
+        </Link>
+      ),
+    },
+    ...breadcrumbs.map((crumb) => ({
+      title: <Link to={crumb.path}>{crumb.label}</Link>,
+    })),
+  ];
+
   return (
-    <>
-      <Flex vertical align="flex-start" style={{ margin: 16 }}>
-        <AntBreadcrumb>
-          <AntBreadcrumb.Item>
-            <Link to="/">
-              <HomeOutlined />
-            </Link>
-          </AntBreadcrumb.Item>
-          {breadcrumbs.map((crumb) => (
-            <AntBreadcrumb.Item key={crumb.path}>
-              <Link to={crumb.path}>{crumb.label}</Link>
-            </AntBreadcrumb.Item>
-          ))}
-        </AntBreadcrumb>
-        <Typography.Title level={3}>{title}</Typography.Title>
-      </Flex>
-    </>
+    <Flex vertical align="flex-start" style={{ margin: 16 }}>
+      <AntBreadcrumb items={items} />
+      <Typography.Title level={3}>{title}</Typography.Title>
+    </Flex>
   );
 };
 

@@ -3,7 +3,7 @@ import { Button } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const AddProductButton = React.memo(() => {
+const AddProductButton: React.FC = React.memo(() => {
   const navigate = useNavigate();
 
   return (

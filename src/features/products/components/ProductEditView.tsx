@@ -37,7 +37,7 @@ interface ProductEditViewProps {
   onCancel?: () => void;
 }
 
-export const ProductEditView = ({
+export const ProductEditView: React.FC<ProductEditViewProps> = ({
   product,
   view = "basic",
   onSuccess,

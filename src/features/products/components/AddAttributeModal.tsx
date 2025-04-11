@@ -9,7 +9,7 @@ interface AddAttributeModalProps {
   existingAttributes: ProductAttribute[];
 }
 
-export const AddAttributeModal = ({
+export const AddAttributeModal: React.FC<AddAttributeModalProps> = ({
   open,
   onCancel,
   onOk,

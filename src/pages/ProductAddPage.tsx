@@ -22,7 +22,7 @@ import { useMemo } from "react";
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const ProductAddPage = () => {
+const ProductAddPage: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { createProduct, isLoading } = useCreateProduct();

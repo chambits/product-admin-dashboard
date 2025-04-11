@@ -21,7 +21,7 @@ interface IRow {
   actions: string;
 }
 
-const Categories = () => {
+const CategoriesPage: React.FC = () => {
   const { data: categories, isLoading } = useGetCategoriesQuery();
   const navigate = useNavigate();
 
@@ -107,4 +107,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default CategoriesPage;

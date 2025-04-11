@@ -19,7 +19,7 @@ interface ProductViewProps {
   product: Product;
 }
 
-export const ProductView = ({ product }: ProductViewProps) => {
+export const ProductView: React.FC<ProductViewProps> = ({ product }) => {
   const { formatAttributeLabel } = useFormatAttributeLabel();
   const { renderAttribute } = useRenderAttribute(false);
   const { getStatusColor } = useStatusColor();
