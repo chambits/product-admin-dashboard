@@ -48,7 +48,7 @@ export const AddAttributeModal: React.FC<AddAttributeModalProps> = ({
         <Form.Item
           name="type"
           label="Value Type"
-          rules={[{ required: true, message: "Please select value type!" }]}
+          rules={[{ required: true, message: "Please select type!" }]}
         >
           <Select>
             <Select.Option value="string">Text</Select.Option>

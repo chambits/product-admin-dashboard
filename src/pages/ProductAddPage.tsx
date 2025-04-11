@@ -167,20 +167,20 @@ const ProductAddPage: React.FC = () => {
                         {...restField}
                         name={[name, "code"]}
                         rules={[
-                          { required: true, message: "Missing code" },
                           {
-                            pattern: /^[a-z_]+$/,
-                            message:
-                              "Use lowercase letters and underscores only",
+                            required: true,
+                            message: "Please input attribute name!",
                           },
                         ]}
                       >
-                        <Input placeholder="Attribute Code" />
+                        <Input placeholder="Attribute Name" />
                       </Form.Item>
                       <Form.Item
                         {...restField}
                         name={[name, "type"]}
-                        rules={[{ required: true, message: "Missing type" }]}
+                        rules={[
+                          { required: true, message: "Please select type!" },
+                        ]}
                       >
                         <Select placeholder="Type" style={{ width: 120 }}>
                           <Select.Option value="string">Text</Select.Option>
@@ -201,7 +201,10 @@ const ProductAddPage: React.FC = () => {
                               {...restField}
                               name={[name, "value"]}
                               rules={[
-                                { required: true, message: "Missing value" },
+                                {
+                                  required: true,
+                                  message: "Please input value!",
+                                },
                               ]}
                             >
                               {type === "boolean" ? (
