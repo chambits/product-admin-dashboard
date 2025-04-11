@@ -4,6 +4,10 @@ import React from "react";
 import { formatDate } from "../../../utils/dateFormat";
 import { useLastModifiedProducts } from "../selectors/productSelectors";
 import ProductInfoWidget from "./ProductInfoWidget";
+import { Badge } from "../../../components/ui/Badge";
+import { ProductStatus } from "../types";
+import { useStatusColor } from "../../../hooks/useStatusColor";
+import { useNavigate } from "react-router-dom";
 
 const ProductSkeleton = () => (
   <Card>
@@ -15,6 +19,8 @@ const ProductSkeleton = () => (
 
 const LastModifiedProducts: React.FC = React.memo(() => {
   const { lastModifiedEntities } = useLastModifiedProducts(3);
+  const { getStatusColor } = useStatusColor();
+  const navigate = useNavigate();
 
   if (lastModifiedEntities.length === 0) {
     return (
@@ -40,7 +46,18 @@ const LastModifiedProducts: React.FC = React.memo(() => {
                   Updated {formatDate.relative(product.modifiedDate)}
                 </>
               }
-              product={product}
+              mainContent={product.name}
+              info={
+                <>
+                  <Badge
+                    color={getStatusColor(product.status as ProductStatus)}
+                    content={product.status}
+                  />
+                  <Badge color="cyan" content={product.category.name} />
+                  <span>Stock: {product.stock}</span>
+                </>
+              }
+              onClick={() => navigate(`/products/${product.id}`)}
             />
           </Col>
         );

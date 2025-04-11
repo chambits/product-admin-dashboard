@@ -1,9 +1,9 @@
 import {
+  ArrowLeftOutlined,
   DeleteOutlined,
   EditOutlined,
-  ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Col, Empty, Flex, Popconfirm, Row, Space } from "antd";
+import { Button, Card, Col, Empty, Flex, Popconfirm, Row } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -59,35 +59,33 @@ const ProductDetailsPage: React.FC = () => {
                     />
                   ) : (
                     <Flex vertical gap={16}>
-                      <Flex justify="end" gap={16}>
-                        <Space>
-                          <Button
-                            icon={<ArrowLeftOutlined />}
-                            onClick={() => navigate(RouteMap.products)}
-                            type="link"
-                            style={{ marginLeft: -8 }}
-                          >
-                            Back to Products
+                      <Flex justify="end" gap={16} style={{ flexWrap: "wrap" }}>
+                        <Button
+                          icon={<ArrowLeftOutlined />}
+                          onClick={() => navigate(RouteMap.products)}
+                          type="link"
+                          style={{ marginLeft: -8 }}
+                        >
+                          Back to Products
+                        </Button>
+                        <Button
+                          icon={<EditOutlined />}
+                          onClick={() => setIsEditing(true)}
+                        >
+                          Edit
+                        </Button>
+                        <Popconfirm
+                          title="Delete Product"
+                          description="Are you sure you want to delete this product?"
+                          onConfirm={() => deleteProductData(product!.id)}
+                          okText="Yes"
+                          cancelText="No"
+                          okButtonProps={{ danger: true }}
+                        >
+                          <Button danger icon={<DeleteOutlined />}>
+                            Delete
                           </Button>
-                          <Button
-                            icon={<EditOutlined />}
-                            onClick={() => setIsEditing(true)}
-                          >
-                            Edit
-                          </Button>
-                          <Popconfirm
-                            title="Delete Product"
-                            description="Are you sure you want to delete this product?"
-                            onConfirm={() => deleteProductData(product!.id)}
-                            okText="Yes"
-                            cancelText="No"
-                            okButtonProps={{ danger: true }}
-                          >
-                            <Button danger icon={<DeleteOutlined />}>
-                              Delete
-                            </Button>
-                          </Popconfirm>
-                        </Space>
+                        </Popconfirm>
                       </Flex>
                       <Flex vertical gap={16}>
                         <ProductView product={product as Product} />

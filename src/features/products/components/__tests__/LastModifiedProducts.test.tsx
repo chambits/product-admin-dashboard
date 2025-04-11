@@ -11,10 +11,21 @@ vi.mock("../../selectors/productSelectors", () => ({
 vi.mock("../ProductInfoWidget", () => ({
   __esModule: true,
   default: vi.fn(
-    ({ title, product }: { title: React.ReactNode; product: Product }) => (
-      <div data-testid={`product-widget-${product.id}`}>
+    ({
+      title,
+      mainContent,
+      info,
+      onClick,
+    }: {
+      title: React.ReactNode;
+      mainContent: React.ReactNode;
+      info: React.ReactNode;
+      onClick: () => void;
+    }) => (
+      <div onClick={onClick}>
         <div data-testid="widget-title">{title}</div>
-        <div>{product.name}</div>
+        <div data-testid="widget-content">{mainContent}</div>
+        <div data-testid="widget-info">{info}</div>
       </div>
     )
   ),
@@ -68,8 +79,17 @@ describe("LastModifiedProducts", () => {
 
     render(<LastModifiedProducts />);
 
-    expect(screen.getByText("Recent Product 1")).toBeInTheDocument();
-    expect(screen.getByText("Recent Product 2")).toBeInTheDocument();
+    mockProducts.forEach((product) => {
+      expect(screen.getByText(product.name)).toBeInTheDocument();
+    });
+
+    expect(screen.getAllByTestId("widget-title")).toHaveLength(
+      mockProducts.length
+    );
+
+    expect(screen.getAllByTestId("widget-info")).toHaveLength(
+      mockProducts.length
+    );
   });
 
   it("renders skeleton loading state when no products", () => {
