@@ -21,7 +21,12 @@ import { formatDate } from "../../../utils/dateFormat";
 import { useFormatAttributeLabel } from "../hooks/useFormatAttributeLabel";
 import { useRenderAttribute } from "../hooks/useRenderAttribute";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
-import { Product, ProductAttribute, ProductStatus } from "../types";
+import {
+  Product,
+  ProductAttribute,
+  ProductStatus,
+  UpdateProductRequest,
+} from "../types";
 import { AddAttributeModal } from "./AddAttributeModal";
 const { Title } = Typography;
 
@@ -70,10 +75,9 @@ export const ProductEditView = ({
     setNewAttributes([]);
   }, [form, formInitialValues, product.id]);
 
-  const handleSubmit = async (values: Product) => {
+  const handleSubmit = async (values: UpdateProductRequest) => {
     try {
       await updateProductData(product.id, values, {
-        transformValues: true,
         onSuccess,
       });
     } catch (error) {

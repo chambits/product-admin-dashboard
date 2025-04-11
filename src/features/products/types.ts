@@ -5,7 +5,7 @@ export interface Product {
   name: string;
   price: number;
   currency: string;
-  description: string;
+  description?: string;
   category: Category;
   stock: number;
   status: ProductStatus;
@@ -33,8 +33,7 @@ export interface NormalizedProduct {
   ids: string[];
   entities: { [key: string]: Product };
 }
-
-export interface CreateProductInput {
+export interface CreateProductRequest {
   name: string;
   description?: string;
   price: number;
@@ -42,4 +41,18 @@ export interface CreateProductInput {
   status: ProductStatus;
   category: string;
   attributes?: ProductAttribute[];
+  id?: string;
+  createdDate?: string;
+  modifiedDate?: string;
+  currency?: string;
+}
+
+export interface UpdateProductRequest {
+  name: string;
+  description?: string;
+  price: number;
+  stock: number;
+  status: ProductStatus;
+  category: string;
+  attributes?: Record<string, ProductAttribute>;
 }

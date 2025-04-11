@@ -1,4 +1,8 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ArrowLeftOutlined,
+} from "@ant-design/icons";
 import { Button, Card, Col, Empty, Flex, Popconfirm, Row, Space } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -36,54 +40,64 @@ const ProductDetailsPage = () => {
     <PageTransition>
       <Row gutter={[16, 16]}>
         <Col xs={24}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={isEditing ? "edit" : "view"}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.1, ease: "easeOut" }}
-            >
-              <Card>
-                {isEditing ? (
-                  <ProductEditView
-                    product={product as Product}
-                    view="advanced"
-                    onCancel={() => setIsEditing(false)}
-                    onSuccess={() => setIsEditing(false)}
-                  />
-                ) : (
-                  <Flex vertical gap={16}>
-                    <Flex justify="end" gap={16}>
-                      <Space>
-                        <Button
-                          icon={<EditOutlined />}
-                          onClick={() => setIsEditing(true)}
-                        >
-                          Edit
-                        </Button>
-                        <Popconfirm
-                          title="Delete Product"
-                          description="Are you sure you want to delete this product?"
-                          onConfirm={() => deleteProductData(product!.id)}
-                          okText="Yes"
-                          cancelText="No"
-                          okButtonProps={{ danger: true }}
-                        >
-                          <Button danger icon={<DeleteOutlined />}>
-                            Delete
-                          </Button>
-                        </Popconfirm>
-                      </Space>
-                    </Flex>
+          <Flex vertical gap={16}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isEditing ? "edit" : "view"}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
+              >
+                <Card>
+                  {isEditing ? (
+                    <ProductEditView
+                      product={product as Product}
+                      view="advanced"
+                      onCancel={() => setIsEditing(false)}
+                      onSuccess={() => setIsEditing(false)}
+                    />
+                  ) : (
                     <Flex vertical gap={16}>
-                      <ProductView product={product as Product} />
+                      <Flex justify="end" gap={16}>
+                        <Space>
+                          <Button
+                            icon={<ArrowLeftOutlined />}
+                            onClick={() => navigate(RouteMap.products)}
+                            type="link"
+                            style={{ marginLeft: -8 }}
+                          >
+                            Back to Products
+                          </Button>
+                          <Button
+                            icon={<EditOutlined />}
+                            onClick={() => setIsEditing(true)}
+                          >
+                            Edit
+                          </Button>
+                          <Popconfirm
+                            title="Delete Product"
+                            description="Are you sure you want to delete this product?"
+                            onConfirm={() => deleteProductData(product!.id)}
+                            okText="Yes"
+                            cancelText="No"
+                            okButtonProps={{ danger: true }}
+                          >
+                            <Button danger icon={<DeleteOutlined />}>
+                              Delete
+                            </Button>
+                          </Popconfirm>
+                        </Space>
+                      </Flex>
+                      <Flex vertical gap={16}>
+                        <ProductView product={product as Product} />
+                      </Flex>
                     </Flex>
-                  </Flex>
-                )}
-              </Card>
-            </motion.div>
-          </AnimatePresence>
+                  )}
+                </Card>
+              </motion.div>
+            </AnimatePresence>
+          </Flex>
         </Col>
       </Row>
     </PageTransition>

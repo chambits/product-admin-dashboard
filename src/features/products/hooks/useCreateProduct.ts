@@ -1,9 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { useNotification } from "../../../providers/NotificationProvider";
-import { useAddProductMutation } from "../api";
-import { Product } from "../types";
 import { RouteMap } from "../../../constants";
+import { useNotification } from "../../../providers/NotificationProvider";
 import { useGetCategoriesQuery } from "../../categories/categoryApi";
+import { Category } from "../../categories/types";
+import { useAddProductMutation } from "../api";
+import { CreateProductRequest, Product } from "../types";
+
+interface ProductToCreate extends Omit<Product, "id" | "category"> {
+  id: string;
+  createdDate: string;
+  modifiedDate: string;
+  currency: string;
+  category: Category;
+  description: string;
+}
 
 export const useCreateProduct = () => {
   const navigate = useNavigate();
@@ -20,31 +30,31 @@ export const useCreateProduct = () => {
   };
 
   const createProduct = async (
-    values: Product,
+    values: CreateProductRequest,
     options?: {
       onSuccess?: () => void;
       redirectAfterCreate?: boolean;
     }
   ) => {
     try {
-      const category =
-        categories?.entities[values.category as unknown as string];
+      const category = categories?.entities[values.category];
 
       if (!category) {
         throw new Error("Category not found");
       }
 
-      const productWithId = {
+      const productToCreate: ProductToCreate = {
         ...values,
         id: generateSimpleId(),
         createdDate: new Date().toISOString(),
         modifiedDate: new Date().toISOString(),
         currency: "$",
+        description: values.description || "",
         attributes: values.attributes || [],
         category,
       };
 
-      await addProduct(productWithId);
+      await addProduct(productToCreate);
       showNotification("success", "Success", "Product added successfully");
 
       if (options?.onSuccess) {

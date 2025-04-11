@@ -2,7 +2,20 @@ import { useAppDispatch } from "../../../app/store/hooks";
 import { useNotification } from "../../../providers/NotificationProvider";
 import { useUpdateProductMutation } from "../api";
 import { productQueries } from "../api/productQueries";
-import { Product, ProductAttribute } from "../types";
+import { Product, ProductAttribute, UpdateProductRequest } from "../types";
+
+interface ProductToUpdate extends Omit<Product, "id" | "category"> {
+  id: string;
+  createdDate: string;
+  modifiedDate: string;
+  currency: string;
+  category: {
+    id: string;
+    name: string;
+    parentId?: string;
+  };
+  attributes: ProductAttribute[];
+}
 
 export const useUpdateProduct = () => {
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
@@ -22,10 +35,9 @@ export const useUpdateProduct = () => {
 
   const updateProductData = async (
     productId: string,
-    values: Product,
+    values: UpdateProductRequest,
     options?: {
       onSuccess?: () => void;
-      transformValues?: boolean;
     }
   ) => {
     try {
@@ -34,30 +46,25 @@ export const useUpdateProduct = () => {
       );
 
       const existingProduct = productResult.data;
-      const transformedValues = options?.transformValues
-        ? {
-            ...values,
-            attributes: values.attributes
-              ? transformAttributes(
-                  values.attributes as unknown as Record<
-                    string,
-                    ProductAttribute
-                  >
-                )
-              : [],
-            modifiedDate: new Date().toISOString(),
-            createdDate:
-              existingProduct?.createdDate || new Date().toISOString(),
-            currency: existingProduct?.currency || "$",
-            category: {
-              id: existingProduct?.category?.id || "",
-              name: existingProduct?.category?.name || "",
-              parentId: existingProduct?.category?.parentId || "",
-            },
-          }
-        : values;
+      const productToUpdate: ProductToUpdate = {
+        ...values,
+        id: productId,
+        attributes: values.attributes
+          ? transformAttributes(
+              values.attributes as unknown as Record<string, ProductAttribute>
+            )
+          : [],
+        modifiedDate: new Date().toISOString(),
+        createdDate: existingProduct?.createdDate || new Date().toISOString(),
+        currency: existingProduct?.currency || "$",
+        category: {
+          id: existingProduct?.category?.id || "",
+          name: existingProduct?.category?.name || "",
+          parentId: existingProduct?.category?.parentId || "",
+        },
+      };
 
-      await updateProduct({ ...transformedValues, id: productId });
+      await updateProduct({ ...productToUpdate, id: productId });
       dispatch(productQueries.endpoints.getProducts.initiate(""));
 
       showNotification("success", "Success", "Product updated successfully");

@@ -11,6 +11,7 @@ import {
   Skeleton,
   Space,
   Tooltip,
+  Alert,
 } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -208,7 +209,7 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
       </div>
 
       <Modal
-        title="Edit Product"
+        title="Quick Edit"
         open={editModalVisible}
         onCancel={() => {
           setEditModalVisible(false);
@@ -217,17 +218,24 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
         width={1000}
         footer={null}
       >
-        <ProductEditView
-          product={selectedProduct ?? ({} as Product)}
-          onSuccess={() => {
-            setEditModalVisible(false);
-            setSelectedProduct(null);
-          }}
-          onCancel={() => {
-            setEditModalVisible(false);
-            setSelectedProduct(null);
-          }}
-        />
+        <Flex vertical gap={16}>
+          <Alert
+            message="For full edit options, go to product details view"
+            type="info"
+            showIcon
+          />
+          <ProductEditView
+            product={selectedProduct ?? ({} as Product)}
+            onSuccess={() => {
+              setEditModalVisible(false);
+              setSelectedProduct(null);
+            }}
+            onCancel={() => {
+              setEditModalVisible(false);
+              setSelectedProduct(null);
+            }}
+          />
+        </Flex>
       </Modal>
     </>
   );
