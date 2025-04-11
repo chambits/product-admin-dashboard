@@ -14,7 +14,7 @@ const LazyProductDetailsPage = lazy(() => import("./pages/ProductDetailsPage"));
 const LazyCategoriesDetailsPage = lazy(
   () => import("./pages/CategoriesDetailsPage")
 );
-const LazyCategoryListPage = lazy(() => import("./pages/Categories"));
+const LazyCategoryListPage = lazy(() => import("./pages/CategoriesPage"));
 const LazyNotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const LazyProductAddPage = lazy(() => import("./pages/ProductAddPage"));
 
