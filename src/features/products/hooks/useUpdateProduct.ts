@@ -49,7 +49,11 @@ export const useUpdateProduct = () => {
             createdDate:
               existingProduct?.createdDate || new Date().toISOString(),
             currency: existingProduct?.currency || "$",
-            categoryId: existingProduct?.categoryId || "",
+            category: {
+              id: existingProduct?.category?.id || "",
+              name: existingProduct?.category?.name || "",
+              parentId: existingProduct?.category?.parentId || "",
+            },
           }
         : values;
 

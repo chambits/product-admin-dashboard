@@ -3,11 +3,13 @@ import { useNotification } from "../../../providers/NotificationProvider";
 import { useAddProductMutation } from "../api";
 import { Product } from "../types";
 import { RouteMap } from "../../../constants";
+import { useGetCategoriesQuery } from "../../categories/categoryApi";
 
 export const useCreateProduct = () => {
   const navigate = useNavigate();
   const [addProduct, { isLoading }] = useAddProductMutation();
   const { showNotification } = useNotification();
+  const { data: categories } = useGetCategoriesQuery();
 
   const generateSimpleId = () => {
     const timestamp = Date.now().toString().slice(-6);
@@ -25,6 +27,13 @@ export const useCreateProduct = () => {
     }
   ) => {
     try {
+      const category =
+        categories?.entities[values.category as unknown as string];
+
+      if (!category) {
+        throw new Error("Category not found");
+      }
+
       const productWithId = {
         ...values,
         id: generateSimpleId(),
@@ -32,6 +41,7 @@ export const useCreateProduct = () => {
         modifiedDate: new Date().toISOString(),
         currency: "$",
         attributes: values.attributes || [],
+        category,
       };
 
       await addProduct(productWithId);

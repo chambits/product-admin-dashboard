@@ -1,10 +1,9 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
-import { Col, Row, Skeleton, Card } from "antd";
+import { Card, Col, Row, Skeleton } from "antd";
 import React from "react";
 import { formatDate } from "../../../utils/dateFormat";
 import { useLastModifiedProducts } from "../selectors/productSelectors";
 import ProductInfoWidget from "./ProductInfoWidget";
-import { useGetCategoriesQuery } from "../../categories/categoryApi";
 
 const ProductSkeleton = () => (
   <Card>
@@ -15,8 +14,7 @@ const ProductSkeleton = () => (
 );
 
 const LastModifiedProducts = React.memo(() => {
-  const { lastModifiedEntities } = useLastModifiedProducts();
-  const { data: categories } = useGetCategoriesQuery();
+  const { lastModifiedEntities } = useLastModifiedProducts(3);
 
   if (lastModifiedEntities.length === 0) {
     return (
@@ -33,10 +31,6 @@ const LastModifiedProducts = React.memo(() => {
   return (
     <Row gutter={[16, 16]}>
       {lastModifiedEntities.map((product) => {
-        const category = categories?.entities[product.categoryId];
-        if (!product || !category) return null;
-        product = { ...product, categoryName: category.name };
-
         return (
           <Col xs={24} md={8} lg={8} key={product.id}>
             <ProductInfoWidget

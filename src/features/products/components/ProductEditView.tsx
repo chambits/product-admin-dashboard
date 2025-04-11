@@ -193,7 +193,7 @@ export const ProductEditView = ({
               Category
             </Typography.Text>
             <Tag color="cyan" style={{ fontSize: "14px", padding: "4px 8px" }}>
-              {product.categoryName}
+              {product.category?.name}
             </Tag>
           </Flex>
 

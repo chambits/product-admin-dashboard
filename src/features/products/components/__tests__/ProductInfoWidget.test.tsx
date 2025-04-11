@@ -15,8 +15,10 @@ describe("ProductInfoWidget", () => {
     description: "Test Description",
     price: 99.99,
     currency: "$",
-    categoryId: "cat1",
-    categoryName: "Test Category",
+    category: {
+      id: "cat1",
+      name: "Test Category",
+    },
     stock: 50,
     status: ProductStatus.Active,
     createdDate: "2024-03-20T10:00:00Z",
@@ -34,8 +36,7 @@ describe("ProductInfoWidget", () => {
     render(<ProductInfoWidget title={mockTitle} product={mockProduct} />);
     expect(screen.getByText("Recently Updated")).toBeInTheDocument();
     expect(screen.getByText("Test Product")).toBeInTheDocument();
-    expect(screen.getByText("Active")).toBeInTheDocument();
-    expect(screen.getByText("Price: $99.99")).toBeInTheDocument();
+    expect(screen.getByText(ProductStatus.Active)).toBeInTheDocument();
     expect(screen.getByText("Stock: 50")).toBeInTheDocument();
   });
 

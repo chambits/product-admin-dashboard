@@ -55,7 +55,7 @@ const ProductInfoWidget = ({ title, product }: ProductInfoWidgetProps) => {
           color={getStatusColor(product.status as ProductStatus)}
           content={product.status}
         />
-        <Badge color="cyan" content={product.categoryName} />
+        <Badge color="cyan" content={product.category.name} />
         <span>Stock: {product.stock}</span>
       </Info>
     </WidgetContainer>

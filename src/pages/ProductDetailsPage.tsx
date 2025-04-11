@@ -8,7 +8,7 @@ import { RouteMap } from "../constants";
 import { ProductEditView } from "../features/products/components/ProductEditView";
 import { ProductView } from "../features/products/components/ProductView";
 import { useDeleteProduct } from "../features/products/hooks/useDeleteProduct";
-import { useProductWithCategory } from "../features/products/selectors/productSelectors";
+import { useProductById } from "../features/products/selectors/productSelectors";
 import { Product } from "../features/products/types";
 
 const ProductDetailsPage = () => {
@@ -16,8 +16,7 @@ const ProductDetailsPage = () => {
   const navigate = useNavigate();
   const { deleteProductData } = useDeleteProduct();
   const [isEditing, setIsEditing] = useState(false);
-
-  const { productWithCategory: product } = useProductWithCategory(id ?? "");
+  const { product } = useProductById(id ?? "");
 
   if (!product) {
     return (

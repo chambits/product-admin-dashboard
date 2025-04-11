@@ -1,5 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import type { MenuProps } from "antd";
+import { RootState } from "../../../app/store";
 import { useAppSelector } from "../../../app/store/hooks";
 import { selectCategoryResult } from "../categoryApi";
 import { Category } from "../types";
@@ -39,6 +40,15 @@ export const selectCategoryMenuItems = createSelector(
   }
 );
 
+const selectCategories = createSelector(
+  [selectCategoryResult],
+  (categoryRes): Category[] => {
+    return (
+      categoryRes.data?.ids.map((id) => categoryRes.data?.entities[id]) || []
+    ).filter((category): category is Category => category !== undefined);
+  }
+);
+
 export const selectCategoryNames = createSelector(
   [selectCategoryResult],
   (categoryRes): { [key: string]: string } => {
@@ -51,6 +61,32 @@ export const selectCategoryNames = createSelector(
       }),
       {}
     );
+  }
+);
+
+export const selectCategoryById = (id: string) =>
+  createSelector(
+    [selectCategoryResult],
+    (categoryRes): Category | undefined => {
+      if (!categoryRes.data) return undefined;
+      return categoryRes.data?.entities[id];
+    }
+  );
+
+export const useCategories = () => {
+  const categories = useAppSelector(selectCategories);
+  return categories;
+};
+
+export const selectCategoryEntitiesByIds = createSelector(
+  [
+    (state: RootState) => selectCategoryResult(state).data,
+    (_state: RootState, ids: string[]) => ids,
+  ],
+  (categoriesData, ids) => {
+    if (!categoriesData?.entities) return [];
+
+    return ids.map((id) => categoriesData.entities[id]).filter(Boolean);
   }
 );
 

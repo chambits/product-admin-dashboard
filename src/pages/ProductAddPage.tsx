@@ -1,6 +1,9 @@
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
+  Col,
+  Divider,
   Flex,
   Form,
   Input,
@@ -8,16 +11,14 @@ import {
   Select,
   Space,
   Typography,
-  Col,
-  Divider,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import PageTransition from "../components/PageTransition";
+import { RouteMap } from "../constants";
 import { useGetCategoriesQuery } from "../features/categories/categoryApi";
 import { useCreateProduct } from "../features/products/hooks/useCreateProduct";
 import { ProductStatus } from "../features/products/types";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { RouteMap } from "../constants";
+import { useMemo } from "react";
 const { Title } = Typography;
 const { TextArea } = Input;
 
@@ -27,10 +28,19 @@ const ProductAddPage = () => {
   const { createProduct, isLoading } = useCreateProduct();
   const { data: categories } = useGetCategoriesQuery();
 
-  const categoryOptions = categories?.ids.map((id) => ({
-    label: categories?.entities[id]?.name,
-    value: id,
-  }));
+  const categoryOptions = useMemo(() => {
+    return categories?.ids
+      .map((id) => {
+        const category = categories?.entities[id];
+        if (!category?.parentId) return;
+
+        return {
+          label: category?.name,
+          value: id,
+        };
+      })
+      .filter(Boolean) as { label: string; value: string }[];
+  }, [categories]);
 
   return (
     <PageTransition>
@@ -83,7 +93,7 @@ const ProductAddPage = () => {
 
           <Form.Item
             label="Category"
-            name="categoryId"
+            name="category"
             rules={[{ required: true, message: "Please select category!" }]}
           >
             <Select placeholder="Select category" options={categoryOptions} />

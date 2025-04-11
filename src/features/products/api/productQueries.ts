@@ -33,8 +33,8 @@ export const productQueries = apiSlice.injectEndpoints({
     >({
       query: ({ categoryId, searchTerm }) =>
         searchTerm
-          ? `${endpoints.products}?categoryId=${categoryId}&q=${searchTerm}`
-          : `${endpoints.products}?categoryId=${categoryId}`,
+          ? `${endpoints.products}?category.id=${categoryId}&q=${searchTerm}`
+          : `${endpoints.products}?category.id=${categoryId}`,
       transformResponse: (responseData: Product[]) =>
         productsAdapter.setAll(initialState, responseData),
       providesTags: (result) =>

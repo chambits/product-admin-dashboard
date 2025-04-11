@@ -1,70 +1,39 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../../../app/store";
 import { useAppSelector } from "../../../app/store/hooks";
-import { selectCategoryResult } from "../../categories/categoryApi";
 import {
   selectProductsByCategoryResult,
   selectProductsResult,
   useGetProductQuery,
 } from "../api";
+import { Product } from "../types";
 
-const selectEnrichedProducts = (searchTerm: string = "") =>
-  createSelector(
-    selectProductsResult(searchTerm),
-    selectCategoryResult,
-    (productRes, categoryRes) => {
-      const products =
-        productRes.data?.ids.map((id) => productRes.data?.entities[id]) || [];
-      const categoryMap = categoryRes?.data?.entities || {};
+const selectProducts = (searchTerm: string = "") =>
+  createSelector(selectProductsResult(searchTerm), (productRes) => {
+    const products =
+      productRes.data?.ids.map((id) => productRes.data?.entities[id]) || [];
+    return products;
+  });
 
-      return products.map((prod) => ({
-        ...prod,
-        categoryName: prod?.categoryId
-          ? categoryMap[prod.categoryId]?.name || "Unknown"
-          : "Unknown",
-      }));
-    }
-  );
-
-const selectEnrichedProductsByCategory = (
+const selectProductsByCategory = (
   categoryId: string,
   searchTerm: string = ""
 ) =>
   createSelector(
     selectProductsByCategoryResult({ categoryId, searchTerm }),
-    selectCategoryResult,
-    (productRes, categoryRes) => {
+    (productRes) => {
       const products =
         productRes.data?.ids.map((id) => productRes.data?.entities[id]) || [];
-      const categoryMap = categoryRes?.data?.entities || {};
-
-      return products.map((prod) => ({
-        ...prod,
-        categoryName: prod?.categoryId
-          ? categoryMap[prod.categoryId]?.name || "Unknown"
-          : "Unknown",
-      }));
+      return products;
     }
   );
 
-const selectProductWithCategory = createSelector(
+const selectProductById = createSelector(
   [
-    selectProductsResult(),
-    selectCategoryResult,
+    (state: RootState) => selectProductsResult()(state).data,
     (_state: RootState, id: string) => id,
   ],
-  (productRes, categoryRes, id) => {
-    const product = productRes.data?.entities[id];
-    const categoryMap = categoryRes?.data?.entities || {};
-
-    if (!product) return null;
-    return {
-      ...product,
-      categoryName: product?.categoryId
-        ? categoryMap[product.categoryId]?.name || "Unknown"
-        : "Unknown",
-    };
-  }
+  (productsData, id) => productsData?.entities[id]
 );
 
 const selectLastModifiedProducts = createSelector(
@@ -118,39 +87,32 @@ export const useLastModifiedProducts = (limit: number = 3) => {
   };
 };
 
-export const useEnrichedProducts = (searchTerm: string = "") => {
-  const enrichedProducts = useAppSelector(selectEnrichedProducts(searchTerm));
-  return enrichedProducts;
+export const useProducts = (searchTerm: string = "") => {
+  const products = useAppSelector(selectProducts(searchTerm));
+  return products as Product[];
 };
 
-export const useEnrichedProductsByCategory = (
+export const useProductsByCategory = (
   categoryId: string,
   searchTerm: string = ""
 ) => {
-  const enrichedProducts = useAppSelector(
-    selectEnrichedProductsByCategory(categoryId, searchTerm)
+  const products = useAppSelector(
+    selectProductsByCategory(categoryId, searchTerm)
   );
-  return enrichedProducts;
+  return products as Product[];
 };
 
-export const useProductWithCategory = (id: string) => {
-  const { isLoading, data: productData } = useGetProductQuery(id);
-  const productWithCategory = useAppSelector((state: RootState) => {
-    const cachedProduct = selectProductWithCategory(state, id);
-    if (cachedProduct) return cachedProduct;
+export const useProductById = (id: string) => {
+  const cachedProduct = useAppSelector((state: RootState) =>
+    selectProductById(state, id)
+  );
 
-    if (productData) {
-      const categoryMap = selectCategoryResult(state)?.data?.entities || {};
-      return {
-        ...productData,
-        categoryName: productData?.categoryId
-          ? categoryMap[productData.categoryId]?.name || "Unknown"
-          : "Unknown",
-      };
-    }
-
-    return null;
+  const { isLoading, data: productData } = useGetProductQuery(id, {
+    skip: !!cachedProduct,
   });
 
-  return { productWithCategory, isLoading };
+  return {
+    product: cachedProduct || productData,
+    isLoading,
+  };
 };

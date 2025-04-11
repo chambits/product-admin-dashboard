@@ -17,12 +17,11 @@ import { useNavigate } from "react-router-dom";
 import { Badge } from "../../../components/ui/Badge";
 import { RouteMap } from "../../../constants";
 import { formatDate } from "../../../utils/dateFormat";
-import { useCategoryNames } from "../../categories/selectors/categorySelectors";
+import { Category } from "../../categories/types";
 import { useDeleteProduct } from "..//hooks/useDeleteProduct";
 import { useStatusColor } from "../hooks/useStatusColor";
 import { Product, ProductStatus } from "../types";
 import { ProductEditView } from "./ProductEditView";
-
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 interface IRow {
@@ -32,6 +31,7 @@ interface IRow {
   description: string;
   categoryId: string;
   categoryName: string;
+  category: Category;
   stock: number;
   status: ProductStatus;
   modifiedDate: string;
@@ -46,7 +46,6 @@ interface ProductsTableProps {
 const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const navigate = useNavigate();
-  const categoryNames = useCategoryNames();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const { deleteProductData } = useDeleteProduct();
   const { getStatusColor } = useStatusColor();
@@ -67,8 +66,8 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
     return `${params.data.currency}${params.value.toLocaleString()}`;
   };
 
-  const categoryCellRenderer = (params: { value: string }) => {
-    return categoryNames[params.value] || params.value;
+  const categoryCellRenderer = (params: { value: Category }) => {
+    return params.value.name;
   };
 
   const dateCellRenderer = (params: { value: string }) => {
@@ -132,11 +131,10 @@ const ProductTable = React.memo(({ data, isLoading }: ProductsTableProps) => {
       flex: 1.5,
     },
     {
-      field: "categoryName",
+      field: "category",
       headerName: "Category",
       cellRenderer: categoryCellRenderer,
       filter: "agTextColumnFilter",
-      sortable: false,
       flex: 2,
     },
     {

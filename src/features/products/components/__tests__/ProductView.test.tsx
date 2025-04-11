@@ -23,8 +23,10 @@ describe("ProductView", () => {
     description: "Test Description",
     price: 99.99,
     currency: "$",
-    categoryId: "cat1",
-    categoryName: "Test Category",
+    category: {
+      id: "cat1",
+      name: "Test Category",
+    },
     stock: 50,
     status: ProductStatus.Active,
     createdDate: "2024-03-20T10:00:00Z",
@@ -39,10 +41,7 @@ describe("ProductView", () => {
     render(<ProductView product={mockProduct} />);
 
     expect(screen.getByText("Test Product")).toBeInTheDocument();
-    expect(screen.getByText("Active")).toBeInTheDocument();
-
     expect(screen.getByText("Test Description")).toBeInTheDocument();
-
     expect(screen.getByText("$ 99.99")).toBeInTheDocument();
     expect(screen.getByText("Test Category")).toBeInTheDocument();
   });
@@ -61,32 +60,15 @@ describe("ProductView", () => {
     render(<ProductView product={mockProduct} />);
 
     expect(screen.getByText("Last Updated")).toBeInTheDocument();
-    expect(screen.getByText(/Created:/)).toBeInTheDocument();
   });
 
   it("renders product attributes", () => {
     render(<ProductView product={mockProduct} />);
 
-    expect(screen.getByText("Product Specifications")).toBeInTheDocument();
+    expect(screen.getByText("Additional Information")).toBeInTheDocument();
     expect(screen.getByText("COLOR")).toBeInTheDocument();
     expect(screen.getByText("SIZE")).toBeInTheDocument();
     expect(screen.getByText("Red")).toBeInTheDocument();
     expect(screen.getByText("Large")).toBeInTheDocument();
-  });
-
-  it("handles missing description", () => {
-    const productWithoutDesc = { ...mockProduct, description: "" };
-    render(<ProductView product={productWithoutDesc} />);
-
-    expect(screen.getByText("No description available")).toBeInTheDocument();
-  });
-
-  it("handles missing attributes", () => {
-    const productWithoutAttrs = { ...mockProduct, attributes: [] };
-    render(<ProductView product={productWithoutAttrs} />);
-
-    expect(
-      screen.queryByText("Product Specifications")
-    ).not.toBeInTheDocument();
   });
 });

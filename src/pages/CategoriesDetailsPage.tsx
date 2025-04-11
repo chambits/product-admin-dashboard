@@ -10,8 +10,7 @@ import AddProductButton from "../features/products/components/AddProductButton";
 import LastModifiedProducts from "../features/products/components/LastModifiedProducts";
 import ProductSearchBar from "../features/products/components/ProductSearchBar";
 import ProductsTable from "../features/products/components/ProductTable";
-import { useEnrichedProductsByCategory } from "../features/products/selectors/productSelectors";
-import { Product } from "../features/products/types";
+import { useProductsByCategory } from "../features/products/selectors/productSelectors";
 
 const CategoriesDetailsPage = () => {
   const [searchText, setSearchText] = useState("");
@@ -24,7 +23,7 @@ const CategoriesDetailsPage = () => {
     },
     { skip: !id }
   );
-  const enrichedProducts = useEnrichedProductsByCategory(id || "", searchText);
+  const products = useProductsByCategory(id || "", searchText);
 
   const searchHandler = useCallback((value: string) => {
     setSearchText(value);
@@ -46,10 +45,7 @@ const CategoriesDetailsPage = () => {
           <AddProductButton />
         </Col>
       </Row>
-      <ProductsTable
-        data={enrichedProducts as Product[]}
-        isLoading={isProductsLoading}
-      />
+      <ProductsTable data={products} isLoading={isProductsLoading} />
     </PageTransition>
   );
 };

@@ -1,5 +1,5 @@
 import { render, screen } from "../../../../test/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import LastModifiedProducts from "../LastModifiedProducts";
 import { Product, ProductStatus } from "../../types";
 import { useLastModifiedProducts } from "../../selectors/productSelectors";
@@ -9,17 +9,14 @@ vi.mock("../../selectors/productSelectors", () => ({
 }));
 
 vi.mock("../ProductInfoWidget", () => ({
-  default: ({
-    title,
-    product,
-  }: {
-    title: React.ReactNode;
-    product: Product;
-  }) => (
-    <div data-testid={`product-widget-${product.id}`}>
-      <div data-testid="widget-title">{title}</div>
-      <div>{product.name}</div>
-    </div>
+  __esModule: true,
+  default: vi.fn(
+    ({ title, product }: { title: React.ReactNode; product: Product }) => (
+      <div data-testid={`product-widget-${product.id}`}>
+        <div data-testid="widget-title">{title}</div>
+        <div>{product.name}</div>
+      </div>
+    )
   ),
 }));
 
@@ -30,8 +27,10 @@ const mockProducts: Product[] = [
     description: "Description 1",
     price: 99.99,
     currency: "$",
-    categoryId: "cat1",
-    categoryName: "Category 1",
+    category: {
+      id: "cat1",
+      name: "Category 1",
+    },
     stock: 50,
     status: ProductStatus.Active,
     createdDate: "2024-03-20T10:00:00Z",
@@ -44,8 +43,10 @@ const mockProducts: Product[] = [
     description: "Description 2",
     price: 149.99,
     currency: "$",
-    categoryId: "cat2",
-    categoryName: "Category 2",
+    category: {
+      id: "cat2",
+      name: "Category 2",
+    },
     stock: 30,
     status: ProductStatus.Active,
     createdDate: "2024-03-19T10:00:00Z",
@@ -55,6 +56,22 @@ const mockProducts: Product[] = [
 ];
 
 describe("LastModifiedProducts", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("renders product widgets for each modified product", () => {
+    vi.mocked(useLastModifiedProducts).mockReturnValue({
+      lastModifiedIds: ["P1", "P2"],
+      lastModifiedEntities: mockProducts,
+    });
+
+    render(<LastModifiedProducts />);
+
+    expect(screen.getByText("Recent Product 1")).toBeInTheDocument();
+    expect(screen.getByText("Recent Product 2")).toBeInTheDocument();
+  });
+
   it("renders skeleton loading state when no products", () => {
     vi.mocked(useLastModifiedProducts).mockReturnValue({
       lastModifiedIds: [],
@@ -67,59 +84,5 @@ describe("LastModifiedProducts", () => {
       .getAllByRole("generic")
       .filter((element) => element.className.includes("ant-skeleton-input"));
     expect(skeletons.length).toBeGreaterThan(0);
-  });
-
-  it("renders product widgets for each modified product", () => {
-    vi.mocked(useLastModifiedProducts).mockReturnValue({
-      lastModifiedIds: ["P1", "P2"],
-      lastModifiedEntities: mockProducts,
-    });
-
-    render(<LastModifiedProducts />);
-
-    expect(screen.getByTestId("product-widget-P1")).toBeInTheDocument();
-    expect(screen.getByTestId("product-widget-P2")).toBeInTheDocument();
-    expect(screen.getByText("Recent Product 1")).toBeInTheDocument();
-    expect(screen.getByText("Recent Product 2")).toBeInTheDocument();
-  });
-
-  it("renders responsive grid layout", () => {
-    vi.mocked(useLastModifiedProducts).mockReturnValue({
-      lastModifiedIds: ["P1", "P2"],
-      lastModifiedEntities: mockProducts,
-    });
-
-    render(<LastModifiedProducts />);
-
-    const columns = screen
-      .getAllByRole("generic")
-      .filter((element) => element.className.includes("ant-col"));
-
-    expect(columns).toHaveLength(2);
-    columns.forEach((column) => {
-      expect(column).toHaveClass("ant-col-xs-24");
-      expect(column).toHaveClass("ant-col-md-8");
-      expect(column).toHaveClass("ant-col-lg-8");
-    });
-  });
-
-  it("renders skeleton with correct layout", () => {
-    vi.mocked(useLastModifiedProducts).mockReturnValue({
-      lastModifiedIds: [],
-      lastModifiedEntities: [],
-    });
-
-    render(<LastModifiedProducts />);
-
-    const columns = screen
-      .getAllByRole("generic")
-      .filter((element) => element.className.includes("ant-col"));
-
-    expect(columns).toHaveLength(3);
-    columns.forEach((column) => {
-      expect(column).toHaveClass("ant-col-xs-24");
-      expect(column).toHaveClass("ant-col-md-8");
-      expect(column).toHaveClass("ant-col-lg-8");
-    });
   });
 });

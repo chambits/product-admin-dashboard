@@ -2,7 +2,7 @@ import { EntityState } from "@reduxjs/toolkit";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useGetCategoriesQuery } from "../../features/categories/categoryApi";
 import { useGetProductsQuery } from "../../features/products/api";
-import { useEnrichedProducts } from "../../features/products/selectors/productSelectors";
+import { useProducts } from "../../features/products/selectors/productSelectors";
 import { Product, ProductStatus } from "../../features/products/types";
 import { fireEvent, render, screen } from "../../test/test-utils";
 import ProductsPage from "../ProductsPage";
@@ -16,7 +16,7 @@ vi.mock("../../features/categories/categoryApi", () => ({
 }));
 
 vi.mock("../../features/products/selectors/productSelectors", () => ({
-  useEnrichedProducts: vi.fn(),
+  useProducts: vi.fn(),
 }));
 
 vi.mock("../../features/products/components/LastModifiedProducts", () => ({
@@ -52,8 +52,10 @@ describe("ProductsPage", () => {
       price: 100,
       currency: "$",
       description: "Description 1",
-      categoryId: "cat1",
-      categoryName: "Category 1",
+      category: {
+        id: "cat1",
+        name: "Category 1",
+      },
       stock: 10,
       status: ProductStatus.Active,
       attributes: [],
@@ -66,8 +68,10 @@ describe("ProductsPage", () => {
       price: 200,
       currency: "$",
       description: "Description 2",
-      categoryId: "cat2",
-      categoryName: "Category 2",
+      category: {
+        id: "cat2",
+        name: "Category 2",
+      },
       stock: 20,
       status: ProductStatus.Active,
       attributes: [],
@@ -97,7 +101,7 @@ describe("ProductsPage", () => {
       refetch: vi.fn(),
     });
 
-    vi.mocked(useEnrichedProducts).mockReturnValue(mockProducts);
+    vi.mocked(useProducts).mockReturnValue(mockProducts);
   });
 
   it("renders all main components", () => {
@@ -135,7 +139,7 @@ describe("ProductsPage", () => {
   });
 
   it("handles empty product list", () => {
-    vi.mocked(useEnrichedProducts).mockReturnValue([]);
+    vi.mocked(useProducts).mockReturnValue([]);
     render(<ProductsPage />);
     expect(screen.getByText("Products: 0")).toBeInTheDocument();
   });

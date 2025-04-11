@@ -18,7 +18,4 @@ export const BreadcrumbMap: Record<string, { label: string; title?: string }> =
   };
 
 export const TokenKey = "home-pro-token";
-export const BaseUrl =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3002"
-    : "https://mock-json-server-75fe176df02c.herokuapp.com/";
+export const BaseUrl = "http://localhost:3002";

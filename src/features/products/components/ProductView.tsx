@@ -4,23 +4,14 @@ import {
   ShoppingOutlined,
   TagOutlined,
 } from "@ant-design/icons";
-import {
-  Badge,
-  Card,
-  Col,
-  Row,
-  Space,
-  Statistic,
-  Tag,
-  theme,
-  Typography,
-} from "antd";
+import { Card, Col, Row, Space, Statistic, Tag, theme, Typography } from "antd";
 import CopyButton from "../../../components/ui/CopyButton";
 import { formatDate } from "../../../utils/dateFormat";
 import { useFormatAttributeLabel } from "../hooks/useFormatAttributeLabel";
 import { useRenderAttribute } from "../hooks/useRenderAttribute";
 import { useStatusColor } from "../hooks/useStatusColor";
 import { Product, ProductStatus } from "../types";
+import { Badge } from "../../../components/ui/Badge";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -58,7 +49,7 @@ export const ProductView = ({ product }: ProductViewProps) => {
                 {product.currency} {product.price}
               </Tag>
               <Tag color="cyan" icon={<TagOutlined />}>
-                {product.categoryName}
+                {product.category?.name}
               </Tag>
             </Space>
           </Col>
