@@ -9,13 +9,13 @@ const { Sider: AntSider } = Layout;
 const StyledSider = styled(AntSider)`
   background: "#001529";
   overflow: auto;
-  height: "100vh";
-  position: "sticky";
+  height: 100vh;
+  position: sticky;
   inset-inline-start: 0;
   top: 0;
   bottom: 0;
-  scrollbar-width: "thin";
-  scrollbar-gutter: "stable";
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
 `;
 
 const Sider = () => {
