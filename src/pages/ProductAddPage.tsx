@@ -15,10 +15,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import PageTransition from "../components/PageTransition";
 import { RouteMap } from "../constants";
-import { useGetCategoriesQuery } from "../features/categories/categoryApi";
+import { useCategoryOptions } from "../features/categories/hooks/useCategoryOptions";
 import { useCreateProduct } from "../features/products/hooks/useCreateProduct";
 import { ProductStatus } from "../features/products/types";
-import { useMemo } from "react";
 const { Title } = Typography;
 const { TextArea } = Input;
 
@@ -26,21 +25,8 @@ const ProductAddPage: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { createProduct, isLoading } = useCreateProduct();
-  const { data: categories } = useGetCategoriesQuery();
 
-  const categoryOptions = useMemo(() => {
-    return categories?.ids
-      .map((id) => {
-        const category = categories?.entities[id];
-        if (!category?.parentId) return;
-
-        return {
-          label: category?.name,
-          value: id,
-        };
-      })
-      .filter(Boolean) as { label: string; value: string }[];
-  }, [categories]);
+  const categoryOptions = useCategoryOptions({ onlySubcategories: true });
 
   return (
     <PageTransition>
