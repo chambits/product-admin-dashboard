@@ -11,13 +11,15 @@ export const useCategoryOptions = (options?: {
 }) => {
   const { data: categories } = useGetCategoriesQuery();
 
-  const categoryOptions = useMemo(() => {
+  return useMemo(() => {
     if (!categories) return [];
 
     return categories.ids
       .map((id) => {
         const category = categories.entities[id];
+
         if (options?.onlySubcategories && !category?.parentId) return null;
+
         return {
           label: category?.name || "",
           value: id,
@@ -25,6 +27,4 @@ export const useCategoryOptions = (options?: {
       })
       .filter(Boolean) as SelectOption[];
   }, [categories, options?.onlySubcategories]);
-
-  return categoryOptions;
 };

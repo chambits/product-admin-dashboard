@@ -3,9 +3,9 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Col, Empty, Flex, Popconfirm, Row } from "antd";
+import { Button, Card, Col, Empty, Flex, Popconfirm, Row, Space } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageTransition from "../components/PageTransition";
 import { RouteMap } from "../constants";
@@ -21,6 +21,42 @@ const ProductDetailsPage: React.FC = () => {
   const { deleteProductData } = useDeleteProduct();
   const [isEditing, setIsEditing] = useState(false);
   const { product } = useProductById(id ?? "");
+
+  const editHandler = useCallback(() => {
+    setIsEditing(true);
+  }, []);
+
+  const cancelHandler = useCallback(() => {
+    setIsEditing(false);
+  }, []);
+
+  const deleteHandler = useCallback(() => {
+    deleteProductData(product!.id);
+  }, [deleteProductData, product]);
+
+  const actionButtons = useMemo(
+    () => (
+      <Flex justify="end" gap={16}>
+        <Space>
+          <Button icon={<EditOutlined />} onClick={editHandler}>
+            Edit
+          </Button>
+          <Popconfirm
+            title="Delete Product"
+            onConfirm={deleteHandler}
+            okText="Yes"
+            cancelText="No"
+            okButtonProps={{ danger: true }}
+          >
+            <Button danger icon={<DeleteOutlined />}>
+              Delete
+            </Button>
+          </Popconfirm>
+        </Space>
+      </Flex>
+    ),
+    [editHandler, deleteHandler]
+  );
 
   if (!product) {
     return (
@@ -54,7 +90,7 @@ const ProductDetailsPage: React.FC = () => {
                     <ProductEditView
                       product={product as Product}
                       view="advanced"
-                      onCancel={() => setIsEditing(false)}
+                      onCancel={cancelHandler}
                       onSuccess={() => setIsEditing(false)}
                     />
                   ) : (
@@ -68,24 +104,7 @@ const ProductDetailsPage: React.FC = () => {
                         >
                           Back to Products
                         </Button>
-                        <Button
-                          icon={<EditOutlined />}
-                          onClick={() => setIsEditing(true)}
-                        >
-                          Edit
-                        </Button>
-                        <Popconfirm
-                          title="Delete Product"
-                          description="Are you sure you want to delete this product?"
-                          onConfirm={() => deleteProductData(product!.id)}
-                          okText="Yes"
-                          cancelText="No"
-                          okButtonProps={{ danger: true }}
-                        >
-                          <Button danger icon={<DeleteOutlined />}>
-                            Delete
-                          </Button>
-                        </Popconfirm>
+                        {actionButtons}
                       </Flex>
                       <Flex vertical gap={16}>
                         <ProductView product={product as Product} />

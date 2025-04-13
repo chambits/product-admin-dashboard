@@ -1,6 +1,6 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { Card, Col, Row, Skeleton } from "antd";
-import React from "react";
+import React, { useCallback } from "react";
 import { formatDate } from "../../../utils/dateFormat";
 import { useLastModifiedProducts } from "../selectors/productSelectors";
 import ProductInfoWidget from "./ProductInfoWidget";
@@ -21,6 +21,13 @@ const LastModifiedProducts: React.FC = React.memo(() => {
   const { lastModifiedEntities } = useLastModifiedProducts(3);
   const { getStatusColor } = useStatusColor();
   const navigate = useNavigate();
+
+  const navigateHandler = useCallback(
+    (id: string) => {
+      navigate(`/products/${id}`);
+    },
+    [navigate]
+  );
 
   if (lastModifiedEntities.length === 0) {
     return (
@@ -57,7 +64,7 @@ const LastModifiedProducts: React.FC = React.memo(() => {
                   <span>Stock: {product.stock}</span>
                 </>
               }
-              onClick={() => navigate(`/products/${product.id}`)}
+              onClick={() => navigateHandler(product.id)}
             />
           </Col>
         );

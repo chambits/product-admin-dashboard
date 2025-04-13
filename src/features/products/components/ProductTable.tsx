@@ -13,7 +13,7 @@ import {
   Tooltip,
   Alert,
 } from "antd";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "../../../components/ui/Badge";
 import { RouteMap } from "../../../constants";
@@ -116,13 +116,17 @@ const ProductTable: React.FC<ProductsTableProps> = React.memo(
       );
     };
 
-    const editHandler = (data: Product) => {
+    const editHandler = useCallback((data: Product) => {
       setSelectedProduct(data);
-    };
+    }, []);
 
-    const deleteHandler = (id: string) => {
-      deleteProductData(id);
-    };
+    const deleteHandler = useCallback(
+      (id: string) => {
+        deleteProductData(id);
+      },
+      [deleteProductData]
+    );
+
     const [colDefs] = useState<ColDef<IRow>[]>([
       {
         field: "id",
