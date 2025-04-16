@@ -1,5 +1,5 @@
 import { Button, Result, Typography } from "antd";
-import { CloseCircleOutlined, ReloadOutlined } from "@ant-design/icons";
+import { ReloadOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -11,8 +11,7 @@ interface ErrorViewProps {
 export const ErrorView = ({ resetError }: ErrorViewProps) => {
   return (
     <Result
-      status="error"
-      icon={<CloseCircleOutlined style={{ color: "#ff4d4f" }} />}
+      status="500"
       title="Oops! Something went wrong"
       subTitle={<Text type="secondary">{"An unexpected error occurred"}</Text>}
       extra={[
