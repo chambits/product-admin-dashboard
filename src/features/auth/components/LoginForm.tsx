@@ -13,7 +13,7 @@ export const LoginForm = () => {
     setError(null);
     const result = await handleLogin(values);
     if (!result.success) {
-      setError(result.error || "An error occurred");
+      setError(result.error || "Unable to login. Please try again.");
     }
   };
 
@@ -45,7 +45,6 @@ export const LoginForm = () => {
         <Input
           prefix={<UserOutlined style={{ color: "#9ca3af" }} />}
           placeholder="Username"
-          style={{ borderRadius: "6px" }}
         />
       </Form.Item>
 
@@ -59,21 +58,11 @@ export const LoginForm = () => {
         <Input.Password
           prefix={<LockOutlined style={{ color: "#9ca3af" }} />}
           placeholder="Password"
-          style={{ borderRadius: "6px" }}
         />
       </Form.Item>
 
       <Form.Item style={{ marginBottom: 0, marginTop: 16 }}>
-        <Button
-          type="primary"
-          htmlType="submit"
-          block
-          loading={isLoading}
-          style={{
-            borderRadius: "6px",
-            fontWeight: 500,
-          }}
-        >
+        <Button type="primary" htmlType="submit" block loading={isLoading}>
           Sign In
         </Button>
       </Form.Item>

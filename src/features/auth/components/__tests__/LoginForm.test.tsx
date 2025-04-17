@@ -10,6 +10,7 @@ import {
 import { LoginForm } from "../../components/LoginForm";
 
 const mockHandleLogin = vi.fn();
+
 vi.mock("../../hooks/useLogin", () => ({
   useLogin: () => ({
     handleLogin: mockHandleLogin,
@@ -92,7 +93,7 @@ describe("LoginForm", () => {
   it("shows error message for network error", async () => {
     mockHandleLogin.mockResolvedValueOnce({
       success: false,
-      error: "An error occurred",
+      error: "Unable to login. Please try again.",
     });
 
     render(<LoginForm />);
@@ -104,7 +105,9 @@ describe("LoginForm", () => {
 
     await user.click(screen.getByRole("button", { name: /sign in/i }));
 
-    expect(await screen.findByText("An error occurred")).toBeInTheDocument();
+    expect(
+      await screen.findByText("Unable to login. Please try again.")
+    ).toBeInTheDocument();
     expect(localStorage.getItem(TokenKey)).toBeNull();
     expect(mockNavigate).not.toHaveBeenCalled();
   });

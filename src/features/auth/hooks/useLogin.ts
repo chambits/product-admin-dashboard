@@ -38,7 +38,7 @@ export const useLogin = () => {
     } catch {
       return {
         success: false,
-        error: "An error occurred",
+        error: "Unable to login. Please try again.",
       };
     }
   };

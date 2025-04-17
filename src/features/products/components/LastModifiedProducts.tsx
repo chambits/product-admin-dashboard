@@ -9,7 +9,7 @@ import { ProductStatus } from "../types";
 import { useStatusColor } from "../../../hooks/useStatusColor";
 import { useNavigate } from "react-router-dom";
 
-const ProductSkeleton = () => (
+const ProductInfoWidgetSkeleton = () => (
   <Card>
     <Skeleton.Input active block style={{ marginBottom: 16 }} />
     <Skeleton.Input active block size="large" style={{ marginBottom: 8 }} />
@@ -34,7 +34,7 @@ const LastModifiedProducts: React.FC = React.memo(() => {
       <Row gutter={[16, 16]}>
         {[1, 2, 3].map((key) => (
           <Col xs={24} md={8} lg={8} key={key}>
-            <ProductSkeleton />
+            <ProductInfoWidgetSkeleton />
           </Col>
         ))}
       </Row>
