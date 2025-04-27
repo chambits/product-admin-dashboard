@@ -1,7 +1,7 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Input } from "antd";
-import React, { useCallback } from "react";
+import { Input, Spin } from "antd";
 import debounce from "lodash.debounce";
+import React, { useCallback, useTransition } from "react";
 
 interface ProductSearchBarProps {
   onSearch: (value: string) => void;
@@ -9,25 +9,29 @@ interface ProductSearchBarProps {
 
 const ProductSearchBar: React.FC<ProductSearchBarProps> = React.memo(
   ({ onSearch }) => {
+    const [isPending, startTransition] = useTransition();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedSearch = useCallback(
       debounce((value: string) => {
-        onSearch(value);
+        startTransition(() => {
+          onSearch(value);
+        });
       }, 300),
       [onSearch]
     );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      debouncedSearch(e.target.value);
+      const value = e.target.value;
+      debouncedSearch(value);
     };
 
     return (
       <Input
         placeholder="Search products..."
         allowClear
-        prefix={<SearchOutlined />}
+        prefix={isPending ? <Spin size="small" /> : <SearchOutlined />}
         size="large"
-        style={{ width: "100%" }}
         onChange={handleChange}
       />
     );

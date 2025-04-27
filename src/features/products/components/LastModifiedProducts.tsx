@@ -1,5 +1,5 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
-import { Card, Col, Row, Skeleton } from "antd";
+import { Card, Col, Row, Skeleton, Space } from "antd";
 import React, { useCallback } from "react";
 import { formatDate } from "../../../utils/dateFormat";
 import { useLastModifiedProducts } from "../selectors/productSelectors";
@@ -48,10 +48,10 @@ const LastModifiedProducts: React.FC = React.memo(() => {
           <Col xs={24} md={8} lg={8} key={product.id}>
             <ProductInfoWidget
               title={
-                <>
-                  <ClockCircleOutlined style={{ marginRight: 8 }} />
+                <Space>
+                  <ClockCircleOutlined />
                   Updated {formatDate.relative(product.modifiedDate)}
-                </>
+                </Space>
               }
               mainContent={product.name}
               info={

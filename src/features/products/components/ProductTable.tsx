@@ -60,62 +60,6 @@ const ProductTable: React.FC<ProductsTableProps> = React.memo(
       }
     }, [selectedProduct]);
 
-    const statusCellRenderer = (params: { value: ProductStatus }) => {
-      return (
-        <Badge color={getStatusColor(params.value)} content={params.value} />
-      );
-    };
-
-    const priceCellRenderer = (params: { value: number; data: Product }) => {
-      return `${params.data.currency}${params.value.toLocaleString()}`;
-    };
-
-    const categoryCellRenderer = (params: { value: Category }) => {
-      return params.value.name;
-    };
-
-    const dateCellRenderer = (params: { value: string }) => {
-      return formatDate.full(params.value);
-    };
-
-    const actionsCellRenderer = (params: { data: Product }) => {
-      return (
-        <Space className="action-buttons">
-          <Tooltip title="Edit">
-            <Button
-              type="text"
-              icon={<EditOutlined />}
-              onClick={(e) => {
-                e.stopPropagation();
-                editHandler(params.data);
-              }}
-            />
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Popconfirm
-              title="Delete Product"
-              description="Are you sure you want to delete this product?"
-              onConfirm={(e) => {
-                e?.stopPropagation();
-                deleteHandler(params.data.id);
-              }}
-              onCancel={(e) => e?.stopPropagation()}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button
-                type="text"
-                name="delete"
-                danger
-                icon={<DeleteOutlined />}
-                onClick={(e) => e.stopPropagation()}
-              />
-            </Popconfirm>
-          </Tooltip>
-        </Space>
-      );
-    };
-
     const editHandler = useCallback((data: Product) => {
       setSelectedProduct(data);
     }, []);
@@ -125,6 +69,71 @@ const ProductTable: React.FC<ProductsTableProps> = React.memo(
         deleteProductData(id);
       },
       [deleteProductData]
+    );
+
+    const statusCellRenderer = useCallback(
+      (params: { value: ProductStatus }) => {
+        return (
+          <Badge color={getStatusColor(params.value)} content={params.value} />
+        );
+      },
+      [getStatusColor]
+    );
+
+    const priceCellRenderer = useCallback(
+      (params: { value: number; data: Product }) => {
+        return `${params.data.currency}${params.value.toLocaleString()}`;
+      },
+      []
+    );
+
+    const categoryCellRenderer = useCallback((params: { value: Category }) => {
+      return params.value.name;
+    }, []);
+
+    const dateCellRenderer = useCallback((params: { value: string }) => {
+      return formatDate.full(params.value);
+    }, []);
+
+    const actionsCellRenderer = useCallback(
+      (params: { data: Product }) => {
+        return (
+          <Space className="action-buttons">
+            <Tooltip title="Edit">
+              <Button
+                type="text"
+                icon={<EditOutlined />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  editHandler(params.data);
+                }}
+              />
+            </Tooltip>
+            <Tooltip title="Delete">
+              <Popconfirm
+                title="Delete Product"
+                description="Are you sure you want to delete this product?"
+                onConfirm={(e) => {
+                  e?.stopPropagation();
+                  deleteHandler(params.data.id);
+                }}
+                onCancel={(e) => e?.stopPropagation()}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button
+                  type="text"
+                  name="delete"
+                  danger
+                  icon={<DeleteOutlined />}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </Popconfirm>
+            </Tooltip>
+          </Space>
+        );
+      },
+      [deleteHandler, editHandler]
     );
 
     const [colDefs] = useState<ColDef<IRow>[]>([

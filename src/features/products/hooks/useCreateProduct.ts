@@ -2,18 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { RouteMap } from "../../../constants";
 import { useNotification } from "../../../providers/NotificationProvider";
 import { useGetCategoriesQuery } from "../../categories/categoryApi";
-import { Category } from "../../categories/types";
 import { useAddProductMutation } from "../api";
 import { CreateProductRequest, Product } from "../types";
-
-interface ProductToCreate extends Omit<Product, "id" | "category"> {
-  id: string;
-  createdDate: string;
-  modifiedDate: string;
-  currency: string;
-  category: Category;
-  description: string;
-}
 
 export const useCreateProduct = () => {
   const navigate = useNavigate();
@@ -43,13 +33,12 @@ export const useCreateProduct = () => {
         throw new Error("Category not found");
       }
 
-      const productToCreate: ProductToCreate = {
+      const productToCreate: Product = {
         ...values,
         id: generateSimpleId(),
         createdDate: new Date().toISOString(),
         modifiedDate: new Date().toISOString(),
         currency: "$",
-        description: values.description || "",
         attributes: values.attributes || [],
         category,
       };

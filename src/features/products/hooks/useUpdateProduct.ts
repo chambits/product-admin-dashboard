@@ -1,18 +1,8 @@
 import { useAppDispatch } from "../../../app/store/hooks";
 import { useNotification } from "../../../providers/NotificationProvider";
-import { Category } from "../../categories/types";
 import { useUpdateProductMutation } from "../api";
 import { productQueries } from "../api/productQueries";
 import { Product, ProductAttribute, UpdateProductRequest } from "../types";
-
-interface ProductToUpdate extends Omit<Product, "id" | "category"> {
-  id: string;
-  createdDate: string;
-  modifiedDate: string;
-  currency: string;
-  category: Category;
-  attributes: ProductAttribute[];
-}
 
 export const useUpdateProduct = () => {
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
@@ -43,7 +33,7 @@ export const useUpdateProduct = () => {
       );
 
       const existingProduct = productResult.data;
-      const productToUpdate: ProductToUpdate = {
+      const productToUpdate: Product = {
         ...values,
         id: productId,
         attributes: values.attributes

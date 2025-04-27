@@ -33,26 +33,17 @@ export interface NormalizedProduct {
   ids: string[];
   entities: { [key: string]: Product };
 }
-export interface CreateProductRequest {
-  name: string;
-  description?: string;
-  price: number;
-  stock: number;
-  status: ProductStatus;
+
+export interface CreateProductRequest
+  extends Omit<Product, "id" | "createdDate" | "modifiedDate" | "category"> {
   category: string;
-  attributes?: ProductAttribute[];
-  id?: string;
-  createdDate?: string;
-  modifiedDate?: string;
-  currency?: string;
 }
 
-export interface UpdateProductRequest {
-  name: string;
-  description?: string;
-  price: number;
-  stock: number;
-  status: ProductStatus;
+export interface UpdateProductRequest
+  extends Omit<
+    Product,
+    "id" | "createdDate" | "modifiedDate" | "category" | "attributes"
+  > {
   category: string;
   attributes?: Record<string, ProductAttribute>;
 }
