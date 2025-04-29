@@ -20,7 +20,6 @@ export const productQueries = apiSlice.injectEndpoints({
               { type: "Products", id: "LIST" },
             ]
           : [{ type: "Products", id: "LIST" }],
-      keepUnusedDataFor: 60,
     }),
 
     getProduct: builder.query<Product, string>({

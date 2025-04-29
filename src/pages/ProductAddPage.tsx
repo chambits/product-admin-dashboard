@@ -1,4 +1,3 @@
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -16,8 +15,10 @@ import { useNavigate } from "react-router-dom";
 import PageTransition from "../components/PageTransition";
 import { RouteMap } from "../constants";
 import { useCategoryOptions } from "../features/categories/hooks/useCategoryOptions";
+import { ProductAttributeFields } from "../features/products/components/ProductAttributeFields";
 import { useCreateProduct } from "../features/products/hooks/useCreateProduct";
 import { ProductStatus } from "../features/products/types";
+
 const { Title } = Typography;
 const { TextArea } = Input;
 
@@ -140,107 +141,7 @@ const ProductAddPage: React.FC = () => {
               codes.
             </Typography.Paragraph>
 
-            <Form.List name="attributes">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{ display: "flex", marginBottom: 8 }}
-                      align="baseline"
-                    >
-                      <Form.Item
-                        {...restField}
-                        name={[name, "code"]}
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please input attribute name!",
-                          },
-                        ]}
-                      >
-                        <Input placeholder="Attribute Name" />
-                      </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "type"]}
-                        rules={[
-                          { required: true, message: "Please select type!" },
-                        ]}
-                      >
-                        <Select placeholder="Type" style={{ width: 120 }}>
-                          <Select.Option value="string">Text</Select.Option>
-                          <Select.Option value="number">Number</Select.Option>
-                          <Select.Option value="boolean">Yes/No</Select.Option>
-                          <Select.Option value="array">Tags</Select.Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item noStyle shouldUpdate>
-                        {({ getFieldValue }) => {
-                          const type = getFieldValue([
-                            "attributes",
-                            name,
-                            "type",
-                          ]);
-                          return (
-                            <Form.Item
-                              {...restField}
-                              name={[name, "value"]}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: "Please input value!",
-                                },
-                              ]}
-                            >
-                              {type === "boolean" ? (
-                                <Select
-                                  placeholder="Value"
-                                  style={{ width: 120 }}
-                                >
-                                  <Select.Option value={true}>
-                                    Yes
-                                  </Select.Option>
-                                  <Select.Option value={false}>
-                                    No
-                                  </Select.Option>
-                                </Select>
-                              ) : type === "number" ? (
-                                <InputNumber
-                                  placeholder="Value"
-                                  style={{ width: 120 }}
-                                />
-                              ) : type === "array" ? (
-                                <Select
-                                  mode="tags"
-                                  placeholder="Value"
-                                  style={{ width: 200 }}
-                                />
-                              ) : (
-                                <Input
-                                  placeholder="Value"
-                                  style={{ width: 120 }}
-                                />
-                              )}
-                            </Form.Item>
-                          );
-                        }}
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      icon={<PlusOutlined />}
-                    >
-                      Add Attribute
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
+            <ProductAttributeFields />
           </Col>
           <Form.Item>
             <Flex justify="end">
