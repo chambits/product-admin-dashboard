@@ -16,6 +16,7 @@ export const useUpdateProduct = () => {
       ([code, attribute]: [string, ProductAttribute]) => ({
         code,
         value: attribute.value,
+        type: attribute.type,
       })
     );
   };

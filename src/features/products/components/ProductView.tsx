@@ -5,13 +5,13 @@ import {
   TagOutlined,
 } from "@ant-design/icons";
 import { Card, Col, Row, Space, Statistic, Tag, theme, Typography } from "antd";
+import { Badge } from "../../../components/ui/Badge";
 import CopyButton from "../../../components/ui/CopyButton";
 import { formatDate } from "../../../utils/dateFormat";
+import { getAttributeType } from "../attribute-types";
 import { useFormatAttributeLabel } from "../hooks/useFormatAttributeLabel";
-import { useRenderAttribute } from "../hooks/useRenderAttribute";
 import { useStatusColor } from "../hooks/useStatusColor";
 import { Product, ProductStatus } from "../types";
-import { Badge } from "../../../components/ui/Badge";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -21,7 +21,7 @@ interface ProductViewProps {
 
 export const ProductView: React.FC<ProductViewProps> = ({ product }) => {
   const { formatAttributeLabel } = useFormatAttributeLabel();
-  const { renderAttribute } = useRenderAttribute(false);
+  // const { renderAttribute } = useRenderAttribute(false);
   const { getStatusColor } = useStatusColor();
   const { token } = theme.useToken();
 
@@ -101,24 +101,33 @@ export const ProductView: React.FC<ProductViewProps> = ({ product }) => {
           }
         >
           <Row gutter={[16, 16]}>
-            {product.attributes.map((attr) => (
-              <Col xs={24} sm={12} md={8} key={attr.code}>
-                <Card
-                  size="small"
-                  style={{
-                    background: token.colorFillQuaternary,
-                    borderColor: token.colorBorderSecondary,
-                  }}
-                >
-                  <Space direction="vertical" size={4}>
-                    <Text type="secondary">
-                      {formatAttributeLabel(attr.code)}
-                    </Text>
-                    <Text strong>{renderAttribute(attr)}</Text>
-                  </Space>
-                </Card>
-              </Col>
-            ))}
+            {product.attributes.map((attr) => {
+              const attributeType = getAttributeType(attr.type);
+              return (
+                <>
+                  <Col xs={24} sm={12} md={8} key={attr.code}>
+                    <Card
+                      size="small"
+                      style={{
+                        background: token.colorFillQuaternary,
+                        borderColor: token.colorBorderSecondary,
+                      }}
+                    >
+                      <Space direction="vertical" size={4}>
+                        <Text type="secondary">
+                          {formatAttributeLabel(attr.code)}
+                        </Text>
+                        <Text strong>
+                          {attributeType
+                            ? attributeType?.show(attr.value)
+                            : String(attr.value)}
+                        </Text>
+                      </Space>
+                    </Card>
+                  </Col>
+                </>
+              );
+            })}
           </Row>
         </Card>
       )}
