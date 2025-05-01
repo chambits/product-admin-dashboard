@@ -1,42 +1,6 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, Select, Space } from "antd";
-
-interface AttributeType {
-  value: string;
-  label: string;
-}
-
-const attributeTypes: AttributeType[] = [
-  { value: "string", label: "Text" },
-  { value: "number", label: "Number" },
-  { value: "boolean", label: "Yes/No" },
-  { value: "array", label: "Tags" },
-];
-
-const renderValueInput = (type: string | undefined) => {
-  switch (type) {
-    case "boolean":
-      return (
-        <Select placeholder="Value" style={{ width: 120 }}>
-          <Select.Option value={true}>Yes</Select.Option>
-          <Select.Option value={false}>No</Select.Option>
-        </Select>
-      );
-    case "number":
-      return <InputNumber placeholder="Value" style={{ width: 120 }} />;
-    case "array":
-      return (
-        <Select
-          mode="tags"
-          placeholder="Value"
-          style={{ width: 200 }}
-          tokenSeparators={[","]}
-        />
-      );
-    default:
-      return <Input placeholder="Value" style={{ width: 120 }} />;
-  }
-};
+import { Button, Form, Input, Select, Space } from "antd";
+import { attributeTypes, getAttributeType } from "../attribute-types";
 
 export const ProductAttributeFields = () => {
   return (
@@ -85,47 +49,29 @@ export const ProductAttributeFields = () => {
                 <Select
                   placeholder="Type"
                   style={{ width: 120 }}
-                  options={attributeTypes}
+                  options={attributeTypes.map((type) => ({
+                    label: type.label,
+                    value: type.name,
+                  }))}
                 />
               </Form.Item>
 
               <Form.Item noStyle shouldUpdate>
                 {({ getFieldValue }) => {
-                  const type = getFieldValue(["attributes", name, "type"]);
+                  const typeValue = getFieldValue(["attributes", name, "type"]);
+                  const attributeType = getAttributeType(typeValue);
+
+                  if (!attributeType) {
+                    return null;
+                  }
+
                   return (
                     <Form.Item
                       {...restField}
                       name={[name, "value"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input value!",
-                        },
-                        {
-                          validator: (_, value) => {
-                            const type = getFieldValue([
-                              "attributes",
-                              name,
-                              "type",
-                            ]);
-                            if (type === "number" && isNaN(value)) {
-                              return Promise.reject(
-                                "Please enter a valid number"
-                              );
-                            }
-                            if (
-                              type === "array" &&
-                              Array.isArray(value) &&
-                              value.length > 10
-                            ) {
-                              return Promise.reject("Maximum 10 tags allowed");
-                            }
-                            return Promise.resolve();
-                          },
-                        },
-                      ]}
+                      rules={attributeType.rules}
                     >
-                      {renderValueInput(type)}
+                      {attributeType.edit(`${name}`)}
                     </Form.Item>
                   );
                 }}

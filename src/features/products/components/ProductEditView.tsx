@@ -93,13 +93,13 @@ export const ProductEditView: React.FC<ProductEditViewProps> = ({
       form.setFieldsValue({
         attributes: {
           ...attributes,
-          [values.code]: { value: values.value },
+          [values.code]: { value: values.value, type: values.type },
         },
       });
 
       setNewAttributes([
         ...newAttributes,
-        { code: values.code, value: values.value },
+        { code: values.code, value: values.value, type: values.type },
       ]);
 
       attributeForm.resetFields();

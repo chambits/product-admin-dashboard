@@ -1,4 +1,7 @@
+import { Rule } from "antd/es/form";
+import { ReactNode } from "react";
 import { Category } from "../categories/types";
+import { AttributeNameType } from "./attribute-types";
 
 export interface Product {
   id: string;
@@ -14,11 +17,17 @@ export interface Product {
   modifiedDate: string;
 }
 
-export type ProductAttributeValue = string | number | boolean | string[];
+export type AttributeValueType =
+  | string
+  | number
+  | boolean
+  | string[]
+  | Record<string, unknown>;
 
 export interface ProductAttribute {
   code: string;
-  value: ProductAttributeValue;
+  type: AttributeNameType;
+  value: AttributeValueType;
 }
 
 export enum ProductStatus {
@@ -27,6 +36,14 @@ export enum ProductStatus {
   "Out of stock" = "Out of stock",
   Archived = "Archived",
   Draft = "Draft",
+}
+
+export interface ProductAttributeFieldType {
+  name: string;
+  label: string;
+  show: (value: AttributeValueType) => ReactNode;
+  edit: (name: string, value?: AttributeValueType) => ReactNode;
+  rules?: Rule[];
 }
 
 export interface NormalizedProduct {
